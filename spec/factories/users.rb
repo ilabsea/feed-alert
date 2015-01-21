@@ -6,5 +6,4 @@ FactoryGirl.define do
     phone "0975553553"
     password "password"
   end
-
 end

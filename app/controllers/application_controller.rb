@@ -16,16 +16,16 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     unless user_signed_in?
-      redirect_to login_path, alert: "You need to sign in first"
+      redirect_to sign_in_path, alert: "You need to sign in first"
     end
   end
 
   def after_signed_in_path_for(user)
-    feed_path
+    root_path
   end
 
   def after_signed_out_path_for(user)
-    login_path
+    sign_in_path
   end
 
   def user_signed_in?

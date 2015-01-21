@@ -1,0 +1,20 @@
+<% content_for(:title) { "Login" } %>
+
+
+
+<div class='form-box'>
+  <%= form_tag sessions_path, role: 'form', class: 'form-center radius' do %>
+    <div class='form-control'>
+      <%= email_field_tag :email, params[:email], class: 'form-control radius', placeholder: 'Email address' %>
+    </div>
+
+    <div class='form-control'>
+      <%= password_field_tag :password, '', class: 'form-control radius', placeholder: 'Password' %>
+    </div>
+
+    <div class='div-row' style='text-align:right ;'>
+      <%= button_tag "Login", class: 'button button-tny radius' %>
+    </div>
+
+  <% end %>
+</div>

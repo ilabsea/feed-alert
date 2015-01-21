@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  layout "static_page"
+  layout "sign_in"
 
   skip_before_action :authenticate_user!, except: [:destroy]
 
