@@ -10,30 +10,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate(params[:email], params[:password])
-      sign_in(user)
-
-      respond_to do |format|
-        format.html do
-          redirect_to after_signed_in_path_for(user), notice: "Signed in successfully"
-        end
-        format.json { head :ok }
-      end
-
+    if user = User.authenticate(params[:user_name], params[:password])
+      redirect_to sign_in_and_redirect_for(user), notice: "Signed in successfully"
     else
-      respond_to do |format|
-        format.html do
-          flash.now[:alert] = "Invalid email/password"
-          render :new
-        end
-
-        format.json do 
-          errors = { success: false, error: "The email or password is incorrect." }
-          render json: errors, status: 401
-        end
-      end
+      flash.now[:alert] = "Invalid user name/password"
+      render :new
     end
-
   end
 
   def destroy

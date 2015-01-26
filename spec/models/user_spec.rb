@@ -3,30 +3,41 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
   describe 'validations' do
 
-    it { should validate_presence_of(:email) }
-    it { should_not allow_value('invalid_email').for(:email) }
-    it { should validate_presence_of(:email) }
-    it { should validate_presence_of(:password).on(:create) }
-    it { should ensure_length_of(:password).is_at_least(6) }
-    it { should have_secure_password }
+    it { should validate_confirmation_of(:password)}
+    it { should ensure_length_of(:password).is_at_least(6).is_at_most(72) }
+    it { should validate_uniqueness_of(:user_name)}
 
+    describe 'uniqueness of email ' do
+      context 'is validated if it has value' do
+        before{ allow(subject).to receive(:email) { build(:user).email} }
+        # it { should validate_uniqueness_of(:email)}
+      end
+
+      context 'is not validated if it does not have any value' do
+        before { allow(subject).to receive(:email) {nil} }
+        it {should_not validate_uniqueness_of(:email)}
+      end
+    end
   end
 
   describe User, '.authenticate' do
-    it "authenticates user's email and password" do
-      user = create(:user, email: 'user@example.com', password: 'secret123')
+    context 'allow admin user login' do
+      it "with correct username/password system authenticates user" do
+        user = create(:user, user_name: 'vicheka', password: 'password')
 
-      result = User.authenticate('User@example.com', 'secret123')
+        result = User.authenticate('vicheka', 'password')
 
-      expect(result).to eq(user)
-    end
+        expect(result).to eq(user)
+      end
 
-    it 'return false if there is no matchs' do
-      create(:user, email: 'user@example.com')
+      it 'reject user if user_name/password incorrect' do
+        create(:user, user_name: 'user@example.com', password: 'incorrect')
 
-      result = User.authenticate('no_user@example.com', 'secret123')
+        result = User.authenticate('user@example.com', 'password')
 
-      expect(result).to eq(false)
+        expect(result).to eq(false)
+      end
+
     end
   end
 

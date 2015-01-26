@@ -15,5 +15,10 @@
 //= require foundation
 //= require foundation/init
 
+//= require shared/alert-animate
+//= require shared/hidden-content
+
+
+
 
 

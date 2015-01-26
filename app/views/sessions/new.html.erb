@@ -5,7 +5,7 @@
 <div class='form-box'>
   <%= form_tag sessions_path, role: 'form', class: 'form-center radius' do %>
     <div class='form-control'>
-      <%= email_field_tag :email, params[:email], class: 'form-control radius', placeholder: 'Email address' %>
+      <%= text_field_tag :user_name, params[:user_name], class: 'form-control radius', placeholder: 'User name' %>
     </div>
 
     <div class='form-control'>

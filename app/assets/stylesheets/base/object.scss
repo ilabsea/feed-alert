@@ -1,0 +1,40 @@
+// .input {
+//   label {
+//     display: block;
+//     float: left;
+//     max-width: 220px;
+//   }
+
+//   input {
+//     margin-left: 240px;
+//   }
+
+// }
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.alert-animate {
+  position: absolute;
+  left: 50%;
+  top: -80px;
+  z-index: 9999;
+  .alert-body{
+    position: relative;
+    left: -50%;
+    background: #eee;
+    min-width: 300px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+    @include border-radius(5px);
+    border: 1px solid #fff;
+  }
+}
+
+label.required abbr{
+  color: red;
+  font-weight: bold;
+}

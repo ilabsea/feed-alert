@@ -1,14 +1,40 @@
 class User < ActiveRecord::Base
-  validates :email, :password, presence: true
-  validates :email, email: true
-  validates :password, length: { in: 6..72}
+  has_secure_password(validations: false)
 
-  has_secure_password
+  # password must be present within 6..72
+  validates :password, presence: true, on: :create
+  validates :password, length: { in: 6..72}, on: :create
+  validates :password, confirmation: true
 
-  def self.authenticate(email, password)
-    user = User.find_by!(email: email.downcase)
+  # email must be in a valid format and has unique value if it is being provided
+  validates :email, email: true, if: ->(u) { u.email.present? }
+  validates :email, uniqueness: true, if: ->(u) { u.email.present? }
+
+  validates :user_name, presence: true
+  validates :user_name, uniqueness: true
+
+  ROLE_ADMIN  = 'Admin'
+  ROLE_NORMAL = 'Normal'
+
+  before_save :clean_user_name
+
+  def clean_user_name
+    self.user_name.downcase! if self.user_name.present?
+  end
+
+  def self.authenticate(user_name, password)
+    user = User.find_by!(user_name: user_name.downcase)
     user.authenticate(password)
   rescue ActiveRecord::RecordNotFound
     false
   end
+
+  def self.visible_roles
+    [ROLE_NORMAL, ROLE_ADMIN]
+  end
+
+  def is_admin?
+    role == User::ROLE_ADMIN
+  end
+
 end
