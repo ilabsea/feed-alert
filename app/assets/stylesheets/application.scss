@@ -1,4 +1,7 @@
-@import "framework/foundation_and_overrides";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@import "typeaheadjs";
 
 @import "base/variable";
 @import "base/mix_in";

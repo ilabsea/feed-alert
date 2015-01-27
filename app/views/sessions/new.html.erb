@@ -3,17 +3,19 @@
 
 
 <div class='form-box'>
+  
   <%= form_tag sessions_path, role: 'form', class: 'form-center radius' do %>
-    <div class='form-control'>
+    <%= page_header "Please login" %>
+    <div class='input-row'>
       <%= text_field_tag :user_name, params[:user_name], class: 'form-control radius', placeholder: 'User name' %>
     </div>
 
-    <div class='form-control'>
+    <div class='input-row'>
       <%= password_field_tag :password, '', class: 'form-control radius', placeholder: 'Password' %>
     </div>
 
-    <div class='div-row' style='text-align:right ;'>
-      <%= button_tag "Login", class: 'button button-tny radius' %>
+    <div class='input-row' style='text-align:right ;'>
+      <%= button_tag "Login", class: 'btn btn-info' %>
     </div>
 
   <% end %>

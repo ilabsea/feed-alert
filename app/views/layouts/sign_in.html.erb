@@ -7,12 +7,16 @@
     <title><%= content_for?(:title) ? yield(:title) : "Alert system" %></title>
 
     <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "vendor/modernizr" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
-    <div class='sign-in'> <%= yield %> </div>
+    <div class='container'>
+      <div class='sign-in'> 
+         <%= yield %>
+      </div>
+    </div>
+    
     <%= javascript_include_tag "application" %>
   </body>
 </html>

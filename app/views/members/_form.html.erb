@@ -1,0 +1,33 @@
+<%=simple_form_for(@member, html: { class: 'form-inline form'}) do |f| %>
+  <%= errors_for @member %>
+
+  <div class='input-row'>
+    <%=f.input :full_name, input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :email, input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :email_alert, label: 'Email Alert', input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :sms_alert, label: 'SMS Alert', input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <label></label>
+    <%=f.submit 'Save', label: false, class: 'btn btn-primary form-control' %>
+  </div>
+
+  <% if !@member.new_record? %>
+   <%= render 'memberships' %>
+  <%end %>
+
+<% end %>

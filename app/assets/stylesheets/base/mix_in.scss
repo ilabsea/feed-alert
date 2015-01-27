@@ -4,3 +4,10 @@
       -ms-border-radius: $radius;
           border-radius: $radius;
 }
+
+@mixin form-inline($width) {
+  label {
+    width: $width;
+    margin-right: 0.5em;
+  }
+}

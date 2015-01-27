@@ -6,7 +6,14 @@ Rails.application.routes.draw do
   get 'sign_in' => 'sessions#new'
   delete 'sign_out' => 'sessions#destroy'
 
+  resources :groups do
+    member do
+      get 'new_members'
+    end
+  end
 
+  resources :memberships
+  
   resources :members
   resources :users do
     member do

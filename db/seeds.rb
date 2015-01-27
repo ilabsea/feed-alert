@@ -12,10 +12,14 @@ user_attributes = [
   { user_name: 'normal', email: 'normal@ilabsea.org', role: User::ROLE_NORMAL, full_name: "Admin", phone: "0975553553", password: "password" }
 ]
 
-
 user_attributes.each do |attrs|
-  p attrs
   user = User.where(email: attrs[:email]).first_or_initialize
-  user.update_attributes(attrs.except(:email, :user_name))
+  user.update_attributes(attrs)
   user.save!
+end
+
+10.times.each do |i|
+  attrs = { full_name:  Faker::Name.name , email: Faker::Internet.email, phone: "#{Faker::Number.number(10)}" }
+  member = Member.where(email: attrs[:email]).first_or_initialize
+  member.update_attributes(attrs)
 end

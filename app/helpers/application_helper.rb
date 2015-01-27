@@ -1,6 +1,6 @@
 module ApplicationHelper
   def paginate_for(records)
-    content_tag :div, paginate(@users), class: 'paginate-nav'
+    content_tag :div, paginate(records), class: 'paginate-nav'
   end
 
   def errors_for(record)

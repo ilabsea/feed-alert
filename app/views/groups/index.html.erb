@@ -1,0 +1,26 @@
+<%= paginate_for(@groups) %>
+<%= page_header "List Group" do %>
+  <%= link_to 'New Group', new_group_path() %>
+<% end %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= link_to group.name, edit_group_path(group) %></td>
+        <td><%=group.description %></td>
+        <td>
+           <%= link_to "Delete", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate_for(@groups) %>

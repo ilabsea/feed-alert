@@ -12,11 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require foundation
-//= require foundation/init
+
+//= require bootstrap-sprockets
+//= require twitter/typeahead
 
 //= require shared/alert-animate
 //= require shared/hidden-content
+
+//= require membership/group-member
 
 
 

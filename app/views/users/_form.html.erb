@@ -1,21 +1,23 @@
 <%=simple_form_for(@user, html: { class: 'form-horizontal form'}) do |f| %>
   <%= errors_for @user %>
-  <%=f.input :user_name, label: 'Login', input_html: {class: 'radius'} %>
-  <%=f.input :full_name, input_html: {class: 'radius'} %>
-  <%=f.input :email, input_html: {class: 'radius'} %>
-  <%=f.input :phone, label: 'Number', input_html: {class: 'radius'} %>
-  <%=f.select :role, User.visible_roles, label: 'Role', input_html: {class: 'radius'} %>
+  <%=f.input :user_name, label: 'Login', input_html: {class: 'form-control'} %>
+  <%=f.input :full_name, input_html: {class: 'form-control'} %>
+  <%=f.input :email, input_html: {class: 'form-control'} %>
+  <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'} %>
+  <%=f.select :role, User.visible_roles, label: 'Role', input_html: {class: 'form-control'} %>
   
   <% if @user.new_record? %>
-    <%=f.input :password, input_html: {class: 'radius'} %>
-    <%=f.input :password_confirmation, required: true, label: 'Confirm', input_html: {class: 'radius'} %>
+    <%=f.input :password, input_html: {class: 'form-control'} %>
+    <%=f.input :password_confirmation, required: true, label: 'Confirm', input_html: {class: 'form-control'} %>
   <% end %>
 
-  <%=f.submit 'Save', class: 'button radius' %>
+  <%=f.submit 'Save', class: 'btn btn-primary form-control' %>
 
   <% if !@user.new_record? && @user != current_user  %>
-  <%= link_to "Reset password", reset_user_path(@user), :method => :put, 
-                      :confirm => 'Are you sure to reset password for this user?' ,:class => 'button radius' %>
+  <%= link_to "Reset password", reset_user_path(@user), 
+              :method => :put, 
+              :confirm => 'Are you sure to reset password for this user?' ,
+              :class => 'btn btn-primary form-control' %>
   <%end %>
 
 <% end %>

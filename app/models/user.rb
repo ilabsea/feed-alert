@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   before_save :clean_user_name
 
   def clean_user_name
-    self.user_name.downcase! if self.user_name.present?
+    self.user_name.downcase!
   end
 
   def self.authenticate(user_name, password)

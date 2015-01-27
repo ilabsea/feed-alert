@@ -28,10 +28,12 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers'
 gem 'unicorn'
 
-gem 'foundation-rails'
+gem 'bootstrap-sass', '~> 3.3.3'
 gem 'email_validator'
 gem 'kaminari'
 gem 'simple_form'
+gem 'twitter-typeahead-rails'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -48,7 +50,8 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
-  
+
+  gem 'faker'
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'spring-commands-rspec'
@@ -62,7 +65,6 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
-  gem 'faker'
   gem 'launchy'
   gem 'simplecov', require: false
 end
