@@ -1,0 +1,21 @@
+<% if member.memberships.size > 0 %>
+  <table class='table'>
+   <thead>
+      <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% member.memberships.each do |membership| %>
+        <tr id='membership-<%=membership.id%>'>
+          <td><%= membership.group.name %></td>
+          <td><%= truncate(membership.group.description) %></td>
+          <td><%= link_to 'Remove', membership_path(membership.id), class: 'remove-group', data: {id: membership.id } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

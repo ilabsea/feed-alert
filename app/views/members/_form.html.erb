@@ -6,28 +6,18 @@
   </div>
 
   <div class='input-row'>
-    <%=f.input :email, input_html: {class: 'form-control'} %>
+    <%=f.input :email, input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
+    <%=f.input :email_alert, label: 'Email Alert', input_html: {class: 'form-control input-inline'}, wrapper_html: { class: 'inline'} %>
   </div>
 
   <div class='input-row'>
-    <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'} %>
+    <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
+    <%=f.input :sms_alert, label: 'SMS Alert', input_html: {class: 'form-control input-inline'}, wrapper_html: { class: 'inline'} %>
   </div>
 
-  <div class='input-row'>
-    <%=f.input :email_alert, label: 'Email Alert', input_html: {class: 'form-control'} %>
-  </div>
-
-  <div class='input-row'>
-    <%=f.input :sms_alert, label: 'SMS Alert', input_html: {class: 'form-control'} %>
-  </div>
 
   <div class='input-row'>
     <label></label>
     <%=f.submit 'Save', label: false, class: 'btn btn-primary form-control' %>
   </div>
-
-  <% if !@member.new_record? %>
-   <%= render 'memberships' %>
-  <%end %>
-
 <% end %>

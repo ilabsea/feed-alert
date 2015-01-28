@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @groups = Group.page(params[:page])
+    @groups = Group.order('name').page(params[:page])
   end
 
   def new_members

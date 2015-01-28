@@ -1,10 +1,10 @@
 $(function(){
-  buildTypeahead()
+  buildMemberTypeahead()
   addMember()
   removeMember()
 })
 
-function buildTypeahead(){
+function buildMemberTypeahead(){
   var urlSearch = $("#member-typeahead").attr("data-url")
   var sources = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('full_name', 'email', 'phone'),
@@ -24,21 +24,21 @@ function buildTypeahead(){
     }
   }).
   on('typeahead:selected', function(event, data){
-    $("#group-member-value").val(data.id)
+    $("#member-value").val(data.id)
   }).
   on('typeahead:autocompleted', function(e, data){
-    $("#group-member-value").val(data.id)
+    $("#member-value").val(data.id)
   });
 }
 
 function addMember(){
   $("#add-member-group").on('click', function(){
 
-    var memberId = $("#group-member-value").val()
-    var groupId = $("#group-member-value").attr("data-group-id")
-    var url = $("#group-member-value").attr("data-url")
+    var memberId = $("#member-value").val()
+    var groupId = $("#member-value").attr("data-group-id")
+    var url = $("#member-value").attr("data-url")
 
-    var data = {member_id: memberId, group_id: groupId }
+    var data = {member_id: memberId, group_id: groupId, is_member: true }
     $.ajax({
       method: 'POST',
       url: url,
@@ -50,7 +50,7 @@ function addMember(){
         alert("Could not be able to add this member to the group")
         //clean
         $("#member-typeahead").val("")
-        $("#group-member-value").val("")
+        $("#member-value").val("")
       }
     })
   });
@@ -61,21 +61,35 @@ function updateMemberList(res){
 
   //clean
   $("#member-typeahead").val("")
-  $("#group-member-value").val("")
+  $("#member-value").val("")
+}
+
+function removeMemberRow(membershipId){
+  $membershipRow = $("#membership-" + membershipId)
+  $membershipRow.fadeOut(1000, function(){
+    $membershipRow.remove()
+  })
+
+  //clean
+  $("#member-typeahead").val("")
+  $("#member-value").val("")
 }
 
 function removeMember(){
-  $(document).on("click", ".remove-membership", function(){
+  $(document).on("click", ".remove-member", function(){
+    var membershipId = $(this).attr("data-id")
+
     if(!confirm("Are you sure to remove this member"))
       return false
 
     $this = $(this)
     var url = $this.attr("href")
     $.ajax({
+      data: {is_member: true},
       url: url,
       method: 'DELETE',
       success: function(res) {
-        updateMemberList(res)
+        removeMemberRow(membershipId)
       },
       error: function(){
 
@@ -85,4 +99,3 @@ function removeMember(){
     return false
   })
 }
-

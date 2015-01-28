@@ -2,8 +2,11 @@
 <%= page_header "Edit Group" %>
 
 <%= render 'form' %>
-<%= render 'search_member' %>
 
-<div id='member-list'>
-  <%= render 'memberships/members', group: @group %>
+<div class='form-association'>
+  <%= render 'search_member' %>
+
+  <div id='member-list'>
+    <%= render 'memberships/members', group: @group %>
+  </div>
 </div>

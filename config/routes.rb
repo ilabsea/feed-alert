@@ -14,7 +14,12 @@ Rails.application.routes.draw do
 
   resources :memberships
   
-  resources :members
+  resources :members do
+    member do
+      get 'new_groups'
+    end
+  end
+
   resources :users do
     member do
       put 'reset'

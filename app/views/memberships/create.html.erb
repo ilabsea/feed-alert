@@ -1,1 +1,5 @@
-<%= render "members", group: @group %>
+<% if params[:is_member].present? %>
+  <%= render "members", group: Group.includes(:memberships, :members).find(@membership.group_id) %>
+<% else %>
+  <%= render "groups", member: Member.includes(:memberships, :groups).find(@membership.member_id) %>
+<% end %>

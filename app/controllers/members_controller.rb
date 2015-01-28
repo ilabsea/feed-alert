@@ -1,12 +1,22 @@
 class MembersController < ApplicationController
   def index
-    @members = Member.all
+    @members = Member.order('full_name')
     @members = @members.from_query(params[:q]) if params[:q]
     @members = @members.page(params[:page])
   end
 
   def new
     @member = Member.new
+  end
+
+  def new_groups
+    member = Member.find(params[:id])
+    existing_groups = member.groups.map(&:id)
+
+    groups = Group.all
+    groups = groups.excludes(existing_groups) if existing_groups.count > 0
+    groups = groups.from_query(params[:q]) if params[:q].present?
+    render json: groups
   end
 
   def create
@@ -20,7 +30,7 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @member = Member.find(params[:id])
+    @member = Member.includes(:memberships, :groups).find(params[:id])
   end
 
   def update

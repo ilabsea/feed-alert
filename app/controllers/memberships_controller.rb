@@ -1,19 +1,22 @@
 class MembershipsController < ApplicationController
 
   def create
-    @group = Group.includes(:memberships).find(params[:group_id])
-    membership = @group.memberships.build(member_id: params[:member_id])
-    membership.save!
-    @group.reload
+    # @group = Group.includes(:memberships).find(params[:group_id])
+    @membership = Membership.new(filter_params)
+    @membership.save!
     render layout: false
+
   end
 
   def destroy
-    membership = Membership.find(params[:id])
-    @group = membership.group
-    membership.destroy
+    @membership = Membership.find(params[:id])
+    @membership.destroy
     render :create, layout: false
+    head :ok
+  end
 
+  def filter_params
+    params.permit(:member_id, :group_id)
   end
 
 

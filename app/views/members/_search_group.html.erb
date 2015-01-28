@@ -1,0 +1,21 @@
+<div>
+  <div class="input-group">
+    <input id='group-typeahead' type="text" 
+          class="form-control typeahead" placeholder="Add Group"
+          data-url="<%= new_groups_member_path(@member) %>"
+
+          >
+    <span class="input-group-btn">
+      <button id='add-group' class="btn btn-default" type="button">Add Group</button>
+    </span>
+  </div>
+
+  <input id='group-value' 
+         type='hidden'
+         value=''
+         data-url='<%=memberships_path() %>'
+         data-member-id='<%=@member.id %>'
+         >
+</div>
+
+<br />

@@ -1,4 +1,11 @@
-<% content_for(:title) { "Edit User"} %>
+<% content_for(:title) { "Edit Member"} %>
 <%= page_header "Edit Member" %>
 
 <%= render 'form' %>
+<div class='form-association'>
+  <%= render 'search_group' %>
+
+  <div id='group-list'>
+    <%= render 'memberships/groups', member: @member %>
+  </div>
+</div>

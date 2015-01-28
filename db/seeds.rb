@@ -23,3 +23,10 @@ end
   member = Member.where(email: attrs[:email]).first_or_initialize
   member.update_attributes(attrs)
 end
+
+10.times.each do |i|
+  attrs = { name:  Faker::Name.name , description: Faker::Name.name }
+  group = Group.where(name: attrs[:name]).first_or_initialize
+  group.update_attributes(attrs)
+end
+

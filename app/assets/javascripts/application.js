@@ -19,7 +19,8 @@
 //= require shared/alert-animate
 //= require shared/hidden-content
 
-//= require membership/group-member
+//= require group/member
+//= require member/group
 
 
 
