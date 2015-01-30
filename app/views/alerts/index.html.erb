@@ -1,0 +1,31 @@
+<%= paginate_for(@alerts) %>
+
+<%= page_header "List Alert" do %>
+  <%= link_to 'New Alert', new_alert_path() %>
+<% end %>
+
+
+<table class='table'>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Url</td>
+      <td>Keywords</td>
+      <td>Action</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @alerts.each do |alert| %>
+      <tr>
+        <td><%= link_to alert.name, edit_alert_path(alert) %></td>
+        <td><%= truncate(alert.url) %></td>
+        <td><%= truncate(alert.keywords.map(&:name).join(",")) %></td>
+        <td>
+           <%= link_to "Delete", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate_for(@alerts) %>

@@ -2,6 +2,9 @@ class Group < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships
 
+  has_many :alert_groups, dependent: :destroy
+  has_many :alerts, through: :alert_groups
+
   validates :name, presence: true
   validates :name, uniqueness: true
 

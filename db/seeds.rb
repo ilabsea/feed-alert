@@ -30,3 +30,10 @@ end
   group.update_attributes(attrs)
 end
 
+
+places = ["Asia", "South East Asia", "Africa", "Asia", "Cambodia", "Thailand", "Lao"]
+places.each do |place_name|
+  place = Place.where(name: place_name).first_or_initialize
+  place.update_attributes(name: place_name)
+end
+

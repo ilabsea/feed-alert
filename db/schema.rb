@@ -11,13 +11,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126035803) do
+ActiveRecord::Schema.define(version: 20150129032650) do
+
+  create_table "alert_groups", force: :cascade do |t|
+    t.integer  "alert_id",   limit: 4
+    t.integer  "group_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "alert_groups", ["alert_id"], name: "index_alert_groups_on_alert_id", using: :btree
+  add_index "alert_groups", ["group_id"], name: "index_alert_groups_on_group_id", using: :btree
+
+  create_table "alert_keywords", force: :cascade do |t|
+    t.integer  "alert_id",   limit: 4
+    t.integer  "keyword_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "alert_keywords", ["alert_id"], name: "index_alert_keywords_on_alert_id", using: :btree
+  add_index "alert_keywords", ["keyword_id"], name: "index_alert_keywords_on_keyword_id", using: :btree
+
+  create_table "alert_places", force: :cascade do |t|
+    t.integer  "alert_id",   limit: 4
+    t.integer  "place_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "alert_places", ["alert_id"], name: "index_alert_places_on_alert_id", using: :btree
+  add_index "alert_places", ["place_id"], name: "index_alert_places_on_place_id", using: :btree
+
+  create_table "alerts", force: :cascade do |t|
+    t.string   "name",                 limit: 255
+    t.string   "url",                  limit: 255
+    t.float    "interval",             limit: 24
+    t.string   "interval_unit",        limit: 255
+    t.text     "email_template",       limit: 65535
+    t.text     "sms_template",         limit: 65535
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "alert_places_count",   limit: 4,     default: 0
+    t.integer  "alert_groups_count",   limit: 4,     default: 0
+    t.integer  "alert_keywords_count", limit: 4,     default: 0
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "members", force: :cascade do |t|
@@ -41,6 +91,13 @@ ActiveRecord::Schema.define(version: 20150126035803) do
   add_index "memberships", ["member_id", "group_id"], name: "index_memberships_on_member_id_and_group_id", unique: true, using: :btree
   add_index "memberships", ["member_id"], name: "index_memberships_on_member_id", using: :btree
 
+  create_table "places", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",           limit: 255
     t.string   "phone",           limit: 255
@@ -54,4 +111,10 @@ ActiveRecord::Schema.define(version: 20150126035803) do
     t.string   "full_name",       limit: 255
   end
 
+  add_foreign_key "alert_groups", "alerts"
+  add_foreign_key "alert_groups", "groups"
+  add_foreign_key "alert_keywords", "alerts"
+  add_foreign_key "alert_keywords", "keywords"
+  add_foreign_key "alert_places", "alerts"
+  add_foreign_key "alert_places", "places"
 end

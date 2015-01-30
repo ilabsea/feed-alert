@@ -21,6 +21,7 @@
 
 //= require group/member
 //= require member/group
+//= require alert/form
 
 
 

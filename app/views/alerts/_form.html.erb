@@ -1,0 +1,58 @@
+<%= simple_form_for @alert, html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
+  <div class='input-row'>
+    <%=f.input :name, input_html: {class: 'form-control'} %>
+  </div>
+  
+  <div class='input-row'>
+    <%=f.input :url, input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :interval, as: :string, input_html: {class: 'form-control inline-short'} %>
+    <%=f.input :interval_unit, label: false, collection: Alert::INTERVAL_UNITS, include_blank: false,
+               wrapper_html: { class: 'inline' }, input_html: {class: 'form-control'} %>
+  </div>
+
+  <div class='input-row'>
+    <label style='display: table-cell;'> Places </label>
+    <div style='display: table-cell;'>
+      <%= f.simple_fields_for :alert_places do |alert_place_form| %>
+
+        <%= alert_place_form.input :id, as: :hidden %>
+        <%= alert_place_form.input :place_id, as: :hidden %>
+        <%= alert_place_form.input :_destroy, as: :boolean, label: false, input_html: {class: 'hidden mark_destroy'} %>
+        <%= alert_place_form.input :place_selected, as: :boolean, label: alert_place_form.object.place.name,
+                                   input_html: {class: 'input-inline-collection mark_selected'} %>
+
+
+      <% end %>
+    </div>
+
+  </div>
+
+
+
+  <div class='input-row'>
+    <%=f.input :email_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>
+  </div>
+
+  <div class='input-row-close'>
+    <label></label>
+    <%=email_template_params_for(:alert_email_template) %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>
+  </div>
+
+  <div class='input-row-close'>
+    <label></label>
+    <%=sms_template_params_for(:alert_sms_template) %>
+  </div>
+
+  <div class='input-row'>
+    <label></label>
+    <%=f.submit 'Save', class: 'btn btn-info', id: 'btn-alert-form' %>
+  </div>
+
+<% end %>

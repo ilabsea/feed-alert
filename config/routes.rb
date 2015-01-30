@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'dashboards#index'
+  root 'alerts#index'
   
   resources :sessions, only: [:new, :create, :destroy]
   get 'sign_in' => 'sessions#new'
@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       put 'reset'
     end
   end
+
+  resources :alerts
 
 
   # The priority is based upon order of creation: first created -> highest priority.
