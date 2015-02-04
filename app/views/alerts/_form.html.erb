@@ -15,22 +15,35 @@
 
   <div class='input-row'>
     <label style='display: table-cell;'> Places </label>
-    <div style='display: table-cell;'>
-      <%= f.simple_fields_for :alert_places do |alert_place_form| %>
+    <div class='row' style='display: table-cell;'>
 
-        <%= alert_place_form.input :id, as: :hidden %>
-        <%= alert_place_form.input :place_id, as: :hidden %>
-        <%= alert_place_form.input :_destroy, as: :boolean, label: false, input_html: {class: 'hidden mark_destroy'} %>
-        <%= alert_place_form.input :place_selected, as: :boolean, label: alert_place_form.object.place.name,
-                                   input_html: {class: 'input-inline-collection mark_selected'} %>
+      <% Place.order('name').all.each_with_index do |place,index| %>
+        <div class='col-lg-6'>
+          <% has_place = false %>
 
+          <% @alert.alert_places.each do |alert_place| %>
+            <% if place.id == alert_place.place_id %>
+                <%= hidden_field_tag "alert[alert_places_attributes][#{index}][id]", alert_place.id %>
+                <%= check_box_tag "alert[alert_places_attributes][#{index}][_destroy]", 1, false, class: 'hidden destroyable-alert-place' %>
+                <%= check_box_tag "alert[alert_places_attributes][#{index}][place_id]", place.id, true, 
+                                  class: 'mark-place', id: "alert_place_place_#{index}", class: 'marked-place' %>
+                <label for='<%="alert_place_place_#{index}" %>'><%= place.name %></label>
+                <% has_place = true %>
+            <% end %>
+          <% end %>
+
+          <% if !has_place %>
+            <%= check_box_tag "alert[alert_places_attributes][#{index}][place_id]", place.id, false,
+                                  class: 'mark-place', id: "alert_place_place_#{index}" %>
+            <label for='<%="alert_place_place_#{index}" %>'><%= place.name %></label>
+          <% end %>
+
+        </div>
 
       <% end %>
+
     </div>
-
   </div>
-
-
 
   <div class='input-row'>
     <%=f.input :email_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>

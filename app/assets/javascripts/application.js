@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 
+//= require jquery.fieldSelection
+
 //= require bootstrap-sprockets
 //= require twitter/typeahead
 
