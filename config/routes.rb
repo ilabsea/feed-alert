@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  require 'admin_constraint'
+  mount Sidekiq::Web => '/sidekiq'
 
   root 'alerts#index'
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129032650) do
+ActiveRecord::Schema.define(version: 20150323083728) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -56,6 +56,35 @@ ActiveRecord::Schema.define(version: 20150129032650) do
     t.integer  "alert_groups_count",   limit: 4,     default: 0
     t.integer  "alert_keywords_count", limit: 4,     default: 0
   end
+
+  create_table "feed_entries", force: :cascade do |t|
+    t.string   "title",        limit: 255
+    t.string   "url",          limit: 255
+    t.datetime "published_at"
+    t.text     "summary",      limit: 65535
+    t.text     "content",      limit: 4294967295
+    t.boolean  "alerted",      limit: 1,          default: false
+    t.string   "fingerprint",  limit: 255
+    t.integer  "alert_id",     limit: 4
+    t.integer  "feed_id",      limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.text     "keywords",     limit: 65535
+  end
+
+  add_index "feed_entries", ["alert_id"], name: "index_feed_entries_on_alert_id", using: :btree
+  add_index "feed_entries", ["feed_id"], name: "index_feed_entries_on_feed_id", using: :btree
+
+  create_table "feeds", force: :cascade do |t|
+    t.string   "url",         limit: 255
+    t.string   "title",       limit: 255
+    t.text     "description", limit: 65535
+    t.integer  "alert_id",    limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "feeds", ["alert_id"], name: "index_feeds_on_alert_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -117,4 +146,7 @@ ActiveRecord::Schema.define(version: 20150129032650) do
   add_foreign_key "alert_keywords", "keywords"
   add_foreign_key "alert_places", "alerts"
   add_foreign_key "alert_places", "places"
+  add_foreign_key "feed_entries", "alerts"
+  add_foreign_key "feed_entries", "feeds"
+  add_foreign_key "feeds", "alerts"
 end

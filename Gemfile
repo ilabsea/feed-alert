@@ -34,6 +34,9 @@ gem 'kaminari'
 gem 'simple_form'
 gem 'twitter-typeahead-rails'
 
+gem 'feedjira'
+gem 'sinatra', :require => nil
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

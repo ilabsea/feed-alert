@@ -78,6 +78,8 @@ GEM
     coffee-script-source (1.8.0)
     colorize (0.7.5)
     columnize (0.9.0)
+    connection_pool (2.1.2)
+    curb (0.8.6)
     database_cleaner (1.4.0)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -97,6 +99,10 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    feedjira (1.6.0)
+      curb (~> 0.8)
+      loofah (~> 2.0)
+      sax-machine (~> 1.0)
     ffi (1.9.6)
     formatador (0.2.5)
     globalid (0.3.0)
@@ -163,6 +169,8 @@ GEM
     pry-rails (0.3.2)
       pry (>= 0.9.10)
     rack (1.6.0)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
@@ -200,6 +208,9 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
+    redis (3.2.1)
+    redis-namespace (1.5.1)
+      redis (~> 3.0, >= 3.0.4)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -227,12 +238,19 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
+    sax-machine (1.3.0)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     shellany (0.0.1)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    sidekiq (3.3.2)
+      celluloid (>= 0.16.0)
+      connection_pool (>= 2.1.1)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -241,6 +259,10 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     spring (1.2.0)
     spring-commands-rspec (1.0.4)
@@ -299,6 +321,7 @@ DEPENDENCIES
   email_validator
   factory_girl_rails
   faker
+  feedjira
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
@@ -312,8 +335,10 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
+  sidekiq
   simple_form
   simplecov
+  sinatra
   spring
   spring-commands-rspec
   turbolinks
