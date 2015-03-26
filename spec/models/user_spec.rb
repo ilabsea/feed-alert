@@ -6,18 +6,6 @@ RSpec.describe User, :type => :model do
     it { should validate_confirmation_of(:password)}
     it { should ensure_length_of(:password).is_at_least(6).is_at_most(72) }
     it { should validate_uniqueness_of(:user_name)}
-
-    describe 'uniqueness of email ' do
-      context 'is validated if it has value' do
-        before{ allow(subject).to receive(:email) { build(:user).email} }
-        # it { should validate_uniqueness_of(:email)}
-      end
-
-      context 'is not validated if it does not have any value' do
-        before { allow(subject).to receive(:email) {nil} }
-        it {should_not validate_uniqueness_of(:email)}
-      end
-    end
   end
 
   describe User, '.authenticate' do

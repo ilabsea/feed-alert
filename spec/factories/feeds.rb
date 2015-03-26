@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :feed do
     url "MyString"
-    alert nil
+    alert
   end
 
 end

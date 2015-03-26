@@ -1,6 +1,6 @@
 class Feed < ActiveRecord::Base
   belongs_to :alert
-  has_many :feed_entries
+  has_many :feed_entries, dependent: :destroy
 
   def self.evaluate_for(alert, reader)
     feed_attrs = {

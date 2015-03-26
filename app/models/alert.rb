@@ -1,4 +1,6 @@
 class Alert < ActiveRecord::Base
+  include AlertMatchCriteria
+
   has_many :alert_groups, dependent: :destroy
   has_many :groups, through: :alert_groups
 
@@ -9,6 +11,7 @@ class Alert < ActiveRecord::Base
   has_many :places, through: :alert_places
 
   has_many :feeds
+  has_many :feed_entries
 
   accepts_nested_attributes_for :alert_places, allow_destroy: true
 
@@ -23,4 +26,10 @@ class Alert < ActiveRecord::Base
   validates :email_template, presence: true
   validates :sms_template, presence: true
 
+  def self.evaluate date_range
+    alerts = Alert.matched(date_range)
+    alerts.each do |alert|
+      AlertMailer.notify_matched(alert, '', '' ).deliver_later if alert.feed_entries.length > 0
+    end
+  end
 end

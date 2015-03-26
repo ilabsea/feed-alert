@@ -29,7 +29,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :alerts
+  resources :alerts do
+    collection do
+      get 'matched'
+    end
+    resources :feed_entries
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.

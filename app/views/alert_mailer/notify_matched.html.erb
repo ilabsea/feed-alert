@@ -1,0 +1,26 @@
+
+<%= content_for(:mailer_header) do %>
+  <h3><%= "#{@alert.name}" %> </h3>
+  
+  <p style='color:gray; font-size: 90%; font-style:italic;'>
+    <a href='<%= @alert.url %>'> <%= @alert.url %> </a>
+  </p>
+
+  <p style='color:gray; font-size: 90%; font-style:italic;'>
+    <%= @alert.feed_entries.length %> feed entries that matched the keywords criteria for from <%= @date_range.from %>, to <%=@date_range.to %>
+  </p>
+<% end %>
+
+<% @alert.feed_entries.each do |feed_entry| %>
+  <p>
+    <h4 class='feed-title'> <%= link_to feed_entry.title, feed_entry.url %> </h4>
+    <p style='color:gray; font-size: 90%; font-style:italic;'><%= feed_entry.keywords.join(", ")%></p>
+    <%
+       summary = StringSummary.instance.set_source(feed_entry.content).html(feed_entry.keywords)
+       highlight = StringSearch.instance.set_source(summary).highlight_keywords(feed_entry.keywords) do |keyword|
+        "<span class='keyword-highlight'><b>#{keyword}</b></span>"
+       end
+    %>
+    <%= highlight.html_safe %>
+  </p>
+<% end %>

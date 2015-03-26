@@ -59,3 +59,10 @@ label.inline {
   margin-top: -15px;
   margin-bottom: 15px;
 }
+.keyword-highlight {
+  background: none repeat scroll 0 0 activecaption;
+  margin: 0 3px;
+  padding: 0 6px;
+  white-space: nowrap;
+  @include border-radius(3px);
+}

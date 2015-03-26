@@ -1,4 +1,8 @@
 class AlertsController < ApplicationController
+  def matched
+    @date_range = DateRange.new(Time.zone.now-30.days, Time.zone.now+30.days)
+    @alerts = Alert.matched(@date_range).page(params[:page])
+  end
 
   def index
     @alerts = Alert.order('created_at DESC').page(params[:page])

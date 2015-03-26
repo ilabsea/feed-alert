@@ -1,4 +1,14 @@
 module ApplicationHelper
+  def index_in_paginate(index)
+    page = params[:page].to_i
+    offset_page = page > 1 ? page - 1 : 0
+    index + Kaminari.config.default_per_page * offset_page
+  end
+  
+  def page_title(title)
+    content_for(:title) { title + " - " + ENV['APP_NAME'] }
+  end
+  
   def paginate_for(records)
     content_tag :div, paginate(records), class: 'paginate-nav'
   end

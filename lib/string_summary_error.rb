@@ -1,0 +1,3 @@
+class StringSummaryError < StandardError
+  
+end

@@ -1,0 +1,13 @@
+<%= page_title "Alert matched" %>
+<h3> Alerts that matched criteria for </h3>
+<p class="color:gray; font-size: 90%;"><%= @date_range.from %>, <%= @date_range.to %></p>
+<% @alerts.each do |alert| %>
+  <div style='padding-top: 15px; margin-bottom: 10px;'>
+    <h3>
+      <%=link_to alert.name, alert_feed_entries_path(alert) %>
+      <span class='badge badge-danger'> <%= alert.feed_entries.length %> </span>
+    </h3>
+
+    <p><%= alert.url%></p>
+  </div>
+<% end %>
