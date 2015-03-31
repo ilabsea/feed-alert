@@ -23,9 +23,8 @@ label.required abbr{
 
 form {
   max-width: 600px;
-  padding: 20px;
   label {
-    font-weight: 500;
+    font-weight: 500
   }
 }
 
@@ -65,4 +64,14 @@ label.inline {
   padding: 0 6px;
   white-space: nowrap;
   @include border-radius(3px);
+}
+
+.param-link {
+  font-size: 90%;
+  font-style: italic;
+  color: gray;
+}
+.header-title {
+  font-size: 120%;
+  font-weight: bold;
 }

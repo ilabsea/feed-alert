@@ -1,4 +1,13 @@
 <% content_for(:title) { "Alert"} %>
 <%= page_header "Edit alert" %>
+<div class='row'>
+  <div class='col-lg-6'>
+    <%= render 'form' %>
+  </div>
+  
+  <div class='col-lg-6'>
+    <%= render 'alert_groups' %>
+    <%= render 'alert_keywords' %>
+  </div>
+</div>
 
-<%= render 'form' %>

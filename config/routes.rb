@@ -33,6 +33,15 @@ Rails.application.routes.draw do
     collection do
       get 'matched'
     end
+
+    member do
+      get 'new_groups'
+      get 'new_keywords'
+    end
+
+    resources :alert_groups
+    resources :alert_keywords
+
     resources :feed_entries
   end
 

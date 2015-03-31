@@ -14,6 +14,7 @@
 //= require jquery_ujs
 
 //= require jquery.fieldSelection
+//= require tmpl
 
 //= require bootstrap-sprockets
 //= require twitter/typeahead
@@ -23,7 +24,10 @@
 
 //= require group/member
 //= require member/group
+
 //= require alert/form
+//= require alert/alert_group
+//= require alert/alert_keyword
 
 
 

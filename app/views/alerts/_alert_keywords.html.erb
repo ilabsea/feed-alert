@@ -1,28 +1,23 @@
-<div id='alert-keyword' >
-  <div class="input-group">
-    <input type="text" 
-          class="form-control typeahead" placeholder="Keywords"
-          data-url="<%= new_keywords_alert_path(@alert) %>" >
+<div style='max-width: 500px;'>
+  <h3 class='header-title'> Alert Keywords </h3>
 
-    <span class="input-group-btn">
-      <%= link_to "Add Keywords", alert_alert_keywords_path(@alert), class: 'btn btn-default typeahead-add' %>
-    </span>
+  <div id='alert-keyword' >
+    <div class="input-group">
+      <input type="text" 
+            class="form-control typeahead" placeholder="Keyword"
+            id="alert-keyword-typeahead"
+            data-url="<%= new_keywords_alert_path(@alert) %>" >
+
+      <span class="input-group-btn">
+        <%= link_to "Add Group", alert_alert_keywords_path(@alert), class: 'btn btn-default typeahead-add', id: 'add-alert-keyword' %>
+      </span>
+    </div>
+
+    <input type='hidden' id='alert-keyword-value' >
   </div>
 
-  <input type='hidden' class='typeahead-value' />
-
+  <div id='alert-keyword-list'>
+    <%= render 'alert_keywords/keywords', alert: @alert %>
+  </div>
 </div>
-
-
-<table>
-  <thead>
-    <tr>
-      <td>Keyword</td>
-      <td></td>
-    </tr>
-  </thead>
-
-  <tbody>
-    
-  </tbody>
-</table>
+<br />

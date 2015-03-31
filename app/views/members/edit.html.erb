@@ -1,13 +1,15 @@
 <% content_for(:title) { "Edit Member"} %>
 <%= page_header "Edit Member" %>
 
-<%= render 'form' %>
+<div class='row'>
+  <div class='col-lg-6'> <%= render 'form' %> </div>
 
-<div class='form-association'>
-  <h4 class='sub-title'> Registering groups</h4>
-  <%= render 'search_group' %>
+  <div class='form-association col-lg-6'>
+    <h4 class='sub-title'> Registering groups</h4>
+    <%= render 'search_group' %>
 
-  <div id='group-list'>
-    <%= render 'memberships/groups', member: @member %>
+    <div id='group-list'>
+      <%= render 'memberships/groups', member: @member %>
+    </div>
   </div>
 </div>

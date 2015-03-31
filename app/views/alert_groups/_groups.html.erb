@@ -1,0 +1,22 @@
+<% if alert.alert_groups.length > 0 %>
+  <table class='table panel'>
+   <thead>
+      <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td width="50"></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% alert.alert_groups.each do |alert_group| %>
+        <tr id='alert-group-<%=alert_group.id%>'>
+          <td><%= alert_group.group.name %></td>
+          <td><%= truncate(alert_group.group.description) %></td>
+          <td><%= link_to 'Remove', alert_alert_group_path(alert, alert_group),
+                          class: 'remove-alert-group', data: {id: alert_group.id } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

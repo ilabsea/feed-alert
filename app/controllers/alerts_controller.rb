@@ -1,4 +1,24 @@
 class AlertsController < ApplicationController
+  def new_groups
+    alert = Alert.find(params[:id])
+    existing_groups = alert.groups.ids
+
+    groups = Group.all
+    groups = groups.excludes(existing_groups) if existing_groups.length > 0
+    groups = groups.from_query(params[:q]) if params[:q].present?
+    render json: groups
+  end
+
+  def new_keywords
+    alert = Alert.find(params[:id])
+    existing_keywords = alert.keywords.ids
+
+    keywords = Keyword.all
+    keywords = keywords.excludes(existing_keywords) if existing_keywords.length > 0
+    keywords = keywords.from_query(params[:q]) if params[:q].present?
+    render json: keywords
+  end
+
   def matched
     @date_range = DateRange.new(Time.zone.now-30.days, Time.zone.now+30.days)
     @alerts = Alert.matched(@date_range).page(params[:page])

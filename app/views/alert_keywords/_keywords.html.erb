@@ -1,0 +1,20 @@
+<% if alert.alert_keywords.length > 0 %>
+  <table class='table panel'>
+   <thead>
+      <tr>
+        <td>Name</td>
+        <td width="50"></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% alert.alert_keywords.each do |alert_keyword| %>
+        <tr id='alert-keyword-<%=alert_keyword.id%>'>
+          <td><%= alert_keyword.keyword.name %></td>
+          <td><%= link_to 'Remove', alert_alert_keyword_path(alert, alert_keyword),
+                          class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

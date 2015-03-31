@@ -16,5 +16,4 @@ class Group < ActiveRecord::Base
     like = "%#{query}%"
     where([ "name LIKE ? OR description LIKE ? ", like, like ])
   end
-  
 end

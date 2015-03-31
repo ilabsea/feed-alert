@@ -73,7 +73,7 @@ module ApplicationHelper
             content_link = content_tag(:div, output, {:class => " right"})
             content_title + content_link
         else
-            content_tag :div , :class => "row" do 
+            content_tag :div , :class => "" do 
                content_tag(:h3, title, :class => "header-title")
             end
         end 

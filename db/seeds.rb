@@ -24,12 +24,15 @@ end
   member.update_attributes(attrs)
 end
 
+30.times.each do |i|
+  Keyword.find_or_create_by(name: Faker::Name.name)
+end
+
 10.times.each do |i|
   attrs = { name:  Faker::Name.name , description: Faker::Name.name }
   group = Group.where(name: attrs[:name]).first_or_initialize
   group.update_attributes(attrs)
 end
-
 
 places = ["Asia", "South East Asia", "Africa", "Asia", "Cambodia", "Thailand", "Lao"]
 places.each do |place_name|
