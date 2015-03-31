@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :feed do
-    url "MyString"
+    url "http://rss.cnn.com/rss/edition_asia.rss"
     alert
   end
 

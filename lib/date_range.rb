@@ -1,4 +1,5 @@
 class DateRange
+  include ActiveModel::Serialization
   def initialize from, to
     @from = from
     @to   = to
@@ -10,6 +11,10 @@ class DateRange
 
   def to
     @to
+  end
+
+  def attributes
+    {from: from, to: to}
   end
 
 end

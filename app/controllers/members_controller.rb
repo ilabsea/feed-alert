@@ -11,7 +11,7 @@ class MembersController < ApplicationController
 
   def new_groups
     member = Member.find(params[:id])
-    existing_groups = member.groups.map(&:id)
+    existing_groups = member.groups.ids
 
     groups = Group.all
     groups = groups.excludes(existing_groups) if existing_groups.count > 0

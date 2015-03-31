@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :group do
-    name "MyString"
-    description "MyText"
+    sequence(:name) {|n| "#{Faker::Number.name}-#{n}"}
+    sequence(:description) {|n| "#{Faker::Number.name}-#{n}"}
   end
 
 end

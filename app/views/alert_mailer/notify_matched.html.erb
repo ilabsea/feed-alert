@@ -7,11 +7,13 @@
   </p>
 
   <p style='color:gray; font-size: 90%; font-style:italic;'>
-    <%= @alert.feed_entries.length %> feed entries that matched the keywords criteria for from <%= @date_range.from %>, to <%=@date_range.to %>
+    <b><%= @alert.feed_entries.length %></b> feed entries that matched the keywords criteria for from 
+    <%= @date_range.from.to_date %>, to <%=@date_range.to.to_date %> for group :
+    <b><%= "#{@group.name}" %></b>
   </p>
 <% end %>
 
-<% @alert.feed_entries.each do |feed_entry| %>
+<% @alert.matched_in_between(@date_range).each do |feed_entry| %>
   <p>
     <h4 class='feed-title'> <%= link_to feed_entry.title, feed_entry.url %> </h4>
     <p style='color:gray; font-size: 90%; font-style:italic;'><%= feed_entry.keywords.join(", ")%></p>

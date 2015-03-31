@@ -26,10 +26,20 @@ class Alert < ActiveRecord::Base
   validates :email_template, presence: true
   validates :sms_template, presence: true
 
+  def matched_in_between(date_range)
+    self.feed_entries.matched.between(date_range)
+  end
+
   def self.evaluate date_range
     alerts = Alert.matched(date_range)
+
     alerts.each do |alert|
-      AlertMailer.notify_matched(alert, '', '' ).deliver_later if alert.feed_entries.length > 0
+      alert.groups.each do |group|
+        emails_to = group.members.map(:email)
+        if emails_to.length > 0 && alert.feed_entries.length > 0
+          AlertMailer.notify_matched(alert, group, emails_to, date_range)
+        end
+      end
     end
   end
 end

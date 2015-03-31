@@ -20,7 +20,7 @@
       <tr>
         <td><%= link_to alert.name, edit_alert_path(alert) %></td>
         <td><%= alert.url %></td>
-        <td><%= truncate(alert.keywords.map(&:name).join(",")) %></td>
+        <td><%= truncate(alert.keywords.map(&:name).join(","), length: 120) %></td>
         <td>
            <%= link_to "Delete", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert' } %>
         </td>

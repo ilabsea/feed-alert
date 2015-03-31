@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
 
   def new_members
     group = Group.find(params[:id])
-    existing_members = group.members.map(&:id)
+    existing_members = group.members.ids
 
     members = Member.all
     members = members.excludes(existing_members) if existing_members.count > 0

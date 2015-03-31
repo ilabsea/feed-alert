@@ -1,9 +1,10 @@
 class AlertMailer < ApplicationMailer
-  def notify_matched(alert, from, to)
+  def notify_matched(alert, group, emails_to, date_range)
+
     @alert = alert
-    @date_range = DateRange.new(Time.zone.now-10.days, Time.zone.now)
-    
-    email  = 'channa.info@gmail.com'
-    mail(to: email, subject: "Keywords matched your #{alert.name}")
+    @group = group
+    @date_range = date_range
+
+    mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
   end
 end

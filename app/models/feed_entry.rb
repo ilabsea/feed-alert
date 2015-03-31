@@ -5,11 +5,6 @@ class FeedEntry < ActiveRecord::Base
   belongs_to :alert
   belongs_to :feed
 
-  KEYWORDS = ['virus', 'disease', 'west', 'africa', 'transmission', 'outbreak', 'spread', 'public health',
-     'hygiene',  'preventive', 'behavior', 'Risk', 'threat', 'sex', 'education', 'vaccination', 'epidemic', 'influenza',
-     'emerging', 'misinformation', 'patients', 'hospitals', 'healthcare', 'hiv', 'malaria', 'aid', 'Infection'
-  ]
-
   validates :title, uniqueness: { scope: :feed_id }
 
   before_save :invoke_fingerprint

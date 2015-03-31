@@ -21,23 +21,33 @@ class AlertMailerPreview < ActionMailer::Preview
     eos
 
     Struct.new("FeedEntry", :title, :url, :content, :keywords)
-    Struct.new("Alert", :name, :url, :feed_entries)
 
     url = "http://www.google.com"
     keywords1 = ['disease', 'mosquito', 'malaria', 'blood', 'medications']
     keywords2 = ['insecticides', 'polymerase', 'diagnostic', 'resistance', 'outbreak']
     keywords3 = ['asia', 'drug', 'prevent', 'antimalarial', 'concerns']
 
-
-
     feed_entry_1 = Struct::FeedEntry.new('CDC Malaria', url, content, keywords1)
     feed_entry_2 = Struct::FeedEntry.new('Disease surveilance', url, content, keywords2)
     feed_entry_3 = Struct::FeedEntry.new('Outbreak Asia', url, content, keywords3)
 
-    alert = Struct::Alert.new("Weekly CDC Feed", "http://cdc.com" , [feed_entry_1, feed_entry_2, feed_entry_3])
+    feed_entries = [feed_entry_1, feed_entry_2, feed_entry_3]
 
+    Struct.new("Alert", :name, :url, :feed_entries ) do
+      def matched_in_between(date_range)
+        feed_entries
+      end
+    end
+
+    alert = Struct::Alert.new("CDC Disease Surveilance Report", 'http://www.example.com/rss.xml', feed_entries)
+
+    Struct.new("Group", :name, :description)
+    group = Struct::Group.new('Department of Help', "We are a team to monitor all the help related things...")
+
+    emails_to = ['channa.info@gmail.com', 'channa.info+1@gmail.com']
     date_range = DateRange.new(Time.zone.now - 7.days, Time.zone.now)
-    AlertMailer.notify_matched(alert, '', '')
+
+    AlertMailer.notify_matched(alert, group, emails_to, date_range)
   end
 
 

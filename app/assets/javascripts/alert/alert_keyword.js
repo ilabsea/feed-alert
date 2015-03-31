@@ -53,8 +53,8 @@ function updateAlertKeywordList(res){
   cleanAlertKeywordTypeAhead()
 }
 
-function removeAlertKeywordRow(alertGroupId){
-  $alertKeywordRow = $("#alert-group-" + alertKeywordId)
+function removeAlertKeywordRow(alertKeywordId){
+  $alertKeywordRow = $("#alert-keyword-" + alertKeywordId)
   $alertKeywordRow.fadeOut(1000, function(){
     $alertKeywordRow.remove()
   })
