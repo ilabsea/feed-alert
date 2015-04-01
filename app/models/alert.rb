@@ -32,14 +32,34 @@ class Alert < ActiveRecord::Base
 
   def self.evaluate date_range
     alerts = Alert.matched(date_range)
-
     alerts.each do |alert|
       alert.groups.each do |group|
-        emails_to = group.members.map(&:email)
-        if emails_to.length > 0 && alert.feed_entries.length > 0
-          AlertMailer.notify_matched(alert, group, emails_to, date_range).deliver_now
+      emails_to = []
+      smses_to  = []
+
+      group.members.each do |member|
+        emails_to << member.email if member.email_alert
+        smses_to  << member.phone if member.sms_alert
+      end
+
+      matched_entries = alert.feed_entries
+
+      if emails_to.length > 0 && matched_entries.length > 0
+        AlertMailer.notify_matched(alert, group, date_range).deliver_now
+      end
+
+      if smses_to.length > 0 && matched_entries.length > 0
+        smses_to.each do |sms|
+          to = "sms://#{sms}"
+          options = { from: ENV['APP_NAME'],
+                      to: 'sms://0975553553',
+                      body: "#{alert.name} has #{pluralize(matched_entries.length, 'feed entry')}" }
+          SmsAlertJob.set(wait: 10.seconds).perform_later(options)
         end
       end
     end
+
+    end
   end
+
 end

@@ -38,6 +38,7 @@ gem 'feedjira'
 gem 'sinatra', :require => nil
 gem 'sidekiq'
 gem 'roadie-rails'
+gem 'nuntium_api'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

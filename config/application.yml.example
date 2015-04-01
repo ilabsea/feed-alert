@@ -1,8 +1,25 @@
 default: &default
-  APP_NAME:""
-  FEED_ALERT_MAIL:""
+  APP_NAME: "Feed Alert"
+  FEED_ALERT_MAIL: "channa.ly@gmail.com"
 
-  MANDRILL_USERNAME:''
-  MANDRILL_PASSWORD:''
+  MANDRILL_USERNAME: 'channa.info@gmail.com'
+  MANDRILL_PASSWORD: 'f3dQZgGqJGiojkNQfcpiBg'
 
-  HOST=localhost
+  HOST: "http://localhost:3000"
+
+  NUNTIUM_URL: http://nuntium.instedd.org
+  NUNTIUM_ACCOUNT: ''
+  NUNTIUM_APP: ''
+  NUNTIUM_PWD: ""
+  NUNTIUM_INCOMING_USER: ''
+  NUNTIUM_INCOMING_PWD: ''
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  SECRET_KEY_BASE: ''
