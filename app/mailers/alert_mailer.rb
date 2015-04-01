@@ -5,6 +5,6 @@ class AlertMailer < ApplicationMailer
     @group = group
     @date_range = date_range
 
-    mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
+    roadie_mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
   end
 end

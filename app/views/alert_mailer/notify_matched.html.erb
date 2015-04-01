@@ -1,6 +1,9 @@
 
 <%= content_for(:mailer_header) do %>
   <h3><%= "#{@alert.name}" %> </h3>
+  <p>
+    <%= link_to 'View on website', alert_feed_entries_url(@alert.id) %>
+  </p>
   
   <p style='color:gray; font-size: 90%; font-style:italic;'>
     <a href='<%= @alert.url %>'> <%= @alert.url %> </a>
@@ -16,9 +19,12 @@
 <% @alert.matched_in_between(@date_range).each do |feed_entry| %>
   <p>
     <h4 class='feed-title'> <%= link_to feed_entry.title, feed_entry.url %> </h4>
-    <p style='color:gray; font-size: 90%; font-style:italic;'><%= feed_entry.keywords.join(", ")%></p>
+    <p style='color:gray; font-size: 90%; font-style:italic;'>
+      <%= feed_entry.keywords.join(", ")%>
+      <%= link_to 'Original Source', feed_entry.url %>
+    </p>
     <%
-       summary = StringSummary.instance.set_source(feed_entry.content).html(feed_entry.keywords)
+       summary = StringSummary.instance.set_source(feed_entry.content).text(feed_entry.keywords)
        highlight = StringSearch.instance.set_source(summary).highlight_keywords(feed_entry.keywords) do |keyword|
         "<span class='keyword-highlight'><b>#{keyword}</b></span>"
        end

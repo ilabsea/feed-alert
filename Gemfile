@@ -37,6 +37,7 @@ gem 'twitter-typeahead-rails'
 gem 'feedjira'
 gem 'sinatra', :require => nil
 gem 'sidekiq'
+gem 'roadie-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -49,8 +50,7 @@ group :development, :test do
   gem 'spring'
   gem 'capistrano-rails'
 
-
-  gem 'dotenv-rails'
+  # gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
 

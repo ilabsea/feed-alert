@@ -35,9 +35,9 @@ class Alert < ActiveRecord::Base
 
     alerts.each do |alert|
       alert.groups.each do |group|
-        emails_to = group.members.map(:email)
+        emails_to = group.members.map(&:email)
         if emails_to.length > 0 && alert.feed_entries.length > 0
-          AlertMailer.notify_matched(alert, group, emails_to, date_range)
+          AlertMailer.notify_matched(alert, group, emails_to, date_range).deliver_now
         end
       end
     end

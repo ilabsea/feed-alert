@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+ENV.update YAML.load_file('config/application.yml')[Rails.env] rescue {}
+
 module StreamAlert
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -25,5 +27,7 @@ module StreamAlert
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
+
+    config.action_mailer.default_url_options = { :host => ENV['HOST'] }
   end
 end

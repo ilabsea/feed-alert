@@ -1,0 +1,8 @@
+default: &default
+  APP_NAME:""
+  FEED_ALERT_MAIL:""
+
+  MANDRILL_USERNAME:''
+  MANDRILL_PASSWORD:''
+
+  HOST=localhost

@@ -33,13 +33,13 @@ class AlertMailerPreview < ActionMailer::Preview
 
     feed_entries = [feed_entry_1, feed_entry_2, feed_entry_3]
 
-    Struct.new("Alert", :name, :url, :feed_entries ) do
+    Struct.new("Alert", :id, :name, :url, :feed_entries ) do
       def matched_in_between(date_range)
         feed_entries
       end
     end
 
-    alert = Struct::Alert.new("CDC Disease Surveilance Report", 'http://www.example.com/rss.xml', feed_entries)
+    alert = Struct::Alert.new(1, "CDC Disease Surveilance Report", 'http://www.example.com/rss.xml', feed_entries)
 
     Struct.new("Group", :name, :description)
     group = Struct::Group.new('Department of Help', "We are a team to monitor all the help related things...")
