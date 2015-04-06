@@ -5,19 +5,14 @@
     <%=f.input :full_name, input_html: {class: 'form-control'} %>
   </div>
 
-  <div class='input-row'>
-    <%=f.input :email, input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
-    <%=f.input :email_alert, label: 'Email Alert', input_html: {class: 'form-control input-inline'}, wrapper_html: { class: 'inline'} %>
-  </div>
+  <%=f.input :email, input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
+  <%=f.input :email_alert, label: 'Email Alert', input_html: {class: 'input-inline'}, wrapper_html: { class: 'cb-block'} %>
 
-  <div class='input-row'>
-    <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
-    <%=f.input :sms_alert, label: 'SMS Alert', input_html: {class: 'form-control input-inline'}, wrapper_html: { class: 'inline'} %>
-  </div>
+  <%=f.input :phone, label: 'Number', input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
+  <%=f.input :sms_alert, label: 'SMS Alert', input_html: {class: 'input-inline'}, wrapper_html: { class: 'cb-block'} %>
 
-
-  <div class='input-row'>
+  <div class='form-group form-action-group'>
     <label></label>
-    <%=f.submit 'Save', label: false, class: 'btn btn-primary form-control' %>
+    <%=f.submit 'Save', label: false, class: 'btn btn-primary' %>
   </div>
 <% end %>

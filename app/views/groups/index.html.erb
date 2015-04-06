@@ -1,6 +1,6 @@
 <%= paginate_for(@groups) %>
 <%= page_header "List Group" do %>
-  <%= link_to 'New Group', new_group_path() %>
+  <%= link_new 'New Group', new_group_path() %>
 <% end %>
 
 <table class='table panel'>
@@ -8,7 +8,7 @@
     <tr>
       <td>Name</td>
       <td>Description</td>
-      <td width="60">Action</td>
+      <td class='td-last'>Action</td>
     </tr>
   </thead>
 
@@ -18,7 +18,8 @@
         <td><%= link_to group.name, edit_group_path(group) %></td>
         <td><%= truncate(group.description) %></td>
         <td>
-           <%= link_to "Delete", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group' } %>
+           <%= link_edit " ", edit_group_path(group) %>
+           <%= link_destroy " ", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group' } %>
         </td>
       </tr>
     <% end %>

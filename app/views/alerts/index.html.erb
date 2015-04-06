@@ -1,7 +1,7 @@
 <%= paginate_for(@alerts) %>
 
 <%= page_header "List Alert" do %>
-  <%= link_to 'New Alert', new_alert_path() %>
+  <%= link_new 'New Alert', new_alert_path() %>
 <% end %>
 
 
@@ -11,7 +11,7 @@
       <td>Name</td>
       <td>Url</td>
       <td>Keywords</td>
-      <td width="60">Action</td>
+      <td class='td-last'>Action</td>
     </tr>
   </thead>
 
@@ -22,7 +22,8 @@
         <td><%= alert.url %></td>
         <td><%= truncate(alert.keywords.map(&:name).join(","), length: 120) %></td>
         <td>
-           <%= link_to "Delete", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert' } %>
+           <%= link_edit " ", edit_alert_path(alert) %>
+           <%= link_destroy " ", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert' } %>
         </td>
       </tr>
     <% end %>

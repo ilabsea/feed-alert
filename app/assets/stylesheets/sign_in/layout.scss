@@ -1,15 +1,11 @@
 .sign-in {
-  .form-box {
-    width: 500px;
-    top: 200px;
-    margin: 0 auto;
-    @include border-radius($radius);
+  width: 540px;
+  margin: 0 auto;
+  top: 300px;
+  @include border-radius($radius);
+  border: 1px solid #eee;
 
-    .form-center {
-      margin-top: 100px;
-      padding: 20px;
-      background: #ddd;
-      @include border-radius($radius);
-    }
+  .form-box {
+    padding: 20px;
   }
 }

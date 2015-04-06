@@ -90,10 +90,44 @@ module ApplicationHelper
     template_params_selector template_params, selector
   end
 
+  def boolean_text state
+    if state
+      text = "Yes"
+      klass = 'label-primary'
+    else
+      text = "No"
+      klass = "label-danger"
+    end
+    content_tag :span, text, class: "bool-text label #{klass}"
+  end
+
   def template_params_selector template_params, selector
     template_params.map do |anchor|
       link_to("{{#{anchor}}}", 'javascript:void(0)', data: {selector: selector}, class: 'param-link')
     end.join(", ").html_safe
+  end
+
+  def link_destroy value , url, options={}, &block
+    link_icon "glyphicon-trash", value, url, options, &block
+  end
+
+  def link_edit value , url, options={}, &block
+    link_icon "glyphicon-pencil", value, url, options, &block
+  end
+
+  def link_new value , url, options={}, &block
+    options ||= {}
+    options[:class] = "btn-icon btn #{options[:class]}"
+
+    link_icon "glyphicon-plus", value, url, options, &block
+  end
+
+  def link_icon icon, value, url, options={}, &block
+    options ||= {}
+    options[:class] = "btn-icon #{options[:class]}"
+    icon = content_tag :i, ' ',  class: "#{icon} glyphicon"
+    text = content_tag :span, " #{value}"
+    link_to icon+text, url, options, &block
   end
 
 end

@@ -1,9 +1,9 @@
 <%= paginate_for(@members) %>
 <%= page_header "List Member" do %>
-  <%= link_to 'New Member', new_member_path() %>
+  <%= link_new 'New Member', new_member_path() %>
 <% end %>
 
-<table class='table panel'>
+<table class='table'>
   <thead>
     <tr>
       <td>Full Name</td>
@@ -11,19 +11,20 @@
       <td>Number</td>
       <td>Email Alert</td>
       <td>SMS Alert</td>
-      <td width="60">Action</td>
+      <td class='td-last'>Action</td>
     </tr>
   </thead>
   <tbody>
     <% @members.each do |member| %>
       <tr>
         <td><%= link_to member.full_name, edit_member_path(member) %></td>
-        <td><%=member.email %></td>
-        <td><%=member.phone %></td>
-        <td><%=member.email_alert %></td>
-        <td><%=member.sms_alert %></td>
+        <td><%= member.email %></td>
+        <td><%= member.phone %></td>
+        <td><%= boolean_text member.email_alert %></td>
+        <td><%= boolean_text member.sms_alert %></td>
         <td>
-           <%= link_to "Delete", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this member' } %>
+          <%= link_edit " ", edit_member_path(member) %>
+          <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this member' } %>
         </td>
       </tr>
     <% end %>

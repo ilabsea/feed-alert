@@ -4,7 +4,7 @@
       <tr>
         <td>Name</td>
         <td>Description</td>
-        <td width="50"></td>
+        <td class='td-last'>Action</td>
       </tr>
     </thead>
 
@@ -13,7 +13,7 @@
         <tr id='alert-group-<%=alert_group.id%>'>
           <td><%= alert_group.group.name %></td>
           <td><%= truncate(alert_group.group.description) %></td>
-          <td><%= link_to 'Remove', alert_alert_group_path(alert, alert_group),
+          <td><%= link_destroy ' ', alert_alert_group_path(alert, alert_group),
                           class: 'remove-alert-group', data: {id: alert_group.id } %></td>
         </tr>
       <% end %>

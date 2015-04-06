@@ -29,5 +29,7 @@ module StreamAlert
     config.active_job.queue_adapter = :sidekiq
 
     config.action_mailer.default_url_options = { :host => ENV['HOST'] }
+
+    config.logger = Logger.new(STDOUT)
   end
 end

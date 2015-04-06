@@ -25,7 +25,7 @@ class AlertsController < ApplicationController
   end
 
   def index
-    @alerts = Alert.order('created_at DESC').page(params[:page])
+    @alerts = Alert.includes(:keywords).order('created_at DESC').page(params[:page])
   end
 
   def new

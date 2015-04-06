@@ -1,10 +1,7 @@
 <% content_for(:title) { "Login" } %>
 
-
-
-<div class='form-box'>
-  
-  <%= form_tag sessions_path, role: 'form', class: 'form-center radius' do %>
+<div class='sign-in panel'>
+  <%= form_tag sessions_path, role: 'form', class: 'form-box form-center' do %>
     <%= page_header "Please login" %>
     <div class='input-row'>
       <%= text_field_tag :user_name, params[:user_name], class: 'form-control radius', placeholder: 'User name' %>
@@ -15,7 +12,7 @@
     </div>
 
     <div class='input-row' style='text-align:right ;'>
-      <%= button_tag "Login", class: 'btn btn-info' %>
+      <%= button_tag "Login", class: 'btn btn-primary' %>
     </div>
 
   <% end %>

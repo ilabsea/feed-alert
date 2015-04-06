@@ -1,33 +1,32 @@
 <%= simple_form_for @alert, html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
-  <div class='input-row'>
+
     <%=f.input :name, input_html: {class: 'form-control'} %>
-  </div>
-  
-  <div class='input-row'>
+
     <%=f.input :url, input_html: {class: 'form-control'} %>
-  </div>
 
-  <div class='input-row'>
-    <%=f.input :interval, as: :string, input_html: {class: 'form-control inline-short'} %>
-    <%=f.input :interval_unit, label: false, collection: Alert::INTERVAL_UNITS, include_blank: false,
-               wrapper_html: { class: 'inline' }, input_html: {class: 'form-control'} %>
-  </div>
-
+    <div class='form-group'>
+      <%=f.label :interval, class: 'control-label' %>
+      <%=f.text_field :interval, class: 'form-control', style: 'margin-left: -3px; width: 8.5em;' %>
+      <%=f.select :interval_unit, options_for_select(Alert::INTERVAL_UNITS), {}, class: 'form-control', style: 'width: 9em; ' %>
+    </div>
+    
+    
   <div class='input-row'>
     <label style='display: table-cell;'> Places </label>
     <div class='row' style='display: table-cell;'>
 
       <% Place.order('name').all.each_with_index do |place,index| %>
-        <div class='col-lg-6'>
+        <div class='col-lg-6' style='padding: 5px;'>
           <% has_place = false %>
 
           <% @alert.alert_places.each do |alert_place| %>
             <% if place.id == alert_place.place_id %>
+
                 <%= hidden_field_tag "alert[alert_places_attributes][#{index}][id]", alert_place.id %>
                 <%= check_box_tag "alert[alert_places_attributes][#{index}][_destroy]", 1, false, class: 'hidden destroyable-alert-place' %>
                 <%= check_box_tag "alert[alert_places_attributes][#{index}][place_id]", place.id, true, 
                                   class: 'mark-place', id: "alert_place_place_#{index}", class: 'marked-place' %>
-                <label for='<%="alert_place_place_#{index}" %>'><%= place.name %></label>
+                <label for='<%="alert_place_place_#{index}" %>' class='inline'><%= place.name %></label>
                 <% has_place = true %>
             <% end %>
           <% end %>
@@ -35,7 +34,7 @@
           <% if !has_place %>
             <%= check_box_tag "alert[alert_places_attributes][#{index}][place_id]", place.id, false,
                                   class: 'mark-place', id: "alert_place_place_#{index}" %>
-            <label for='<%="alert_place_place_#{index}" %>'><%= place.name %></label>
+            <label for='<%="alert_place_place_#{index}" %>' class='inline'><%= place.name %></label>
           <% end %>
 
         </div>
@@ -63,9 +62,9 @@
     <%=sms_template_params_for(:alert_sms_template) %>
   </div>
 
-  <div class='input-row'>
+  <div class='form-group form-action-group'>
     <label></label>
-    <%=f.submit 'Save', class: 'btn btn-info', id: 'btn-alert-form' %>
+    <%=f.submit 'Save', class: 'btn btn-primary', id: 'btn-alert-form' %>
   </div>
 
 <% end %>

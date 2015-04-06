@@ -6,7 +6,7 @@
         <td>Full Name</td>
         <td>Email</td>
         <td>Phone</td>
-        <td></td>
+        <td class='td-last'> Action </td>
       </tr>
     </thead>
 
@@ -16,7 +16,7 @@
           <td><%= membership.member.full_name %></td>
           <td><%= membership.member.email %></td>
           <td><%= membership.member.phone %></td>
-          <td><%= link_to 'Remove', membership_path(membership.id), class: 'remove-member', data: {id: membership.id} %></td>
+          <td><%= link_destroy ' ', membership_path(membership.id), class: 'remove-member', data: {id: membership.id} %></td>
         </tr>
       <% end %>
     </tbody>

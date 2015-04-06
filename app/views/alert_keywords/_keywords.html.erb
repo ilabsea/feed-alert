@@ -3,7 +3,7 @@
    <thead>
       <tr>
         <td>Name</td>
-        <td width="50"></td>
+        <td class='td-last'>Action</td>
       </tr>
     </thead>
 
@@ -11,7 +11,7 @@
       <% alert.alert_keywords.each do |alert_keyword| %>
         <tr id='alert-keyword-<%=alert_keyword.id%>'>
           <td><%= alert_keyword.keyword.name %></td>
-          <td><%= link_to 'Remove', alert_alert_keyword_path(alert, alert_keyword),
+          <td><%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
                           class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
         </tr>
       <% end %>

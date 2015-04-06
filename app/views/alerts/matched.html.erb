@@ -8,6 +8,10 @@
       <span class='badge badge-danger'> <%= alert.feed_entries.length %> </span>
     </h3>
 
-    <p><%= alert.url%></p>
+    <p style='color:gray; font-size: 90%; font-style:italic;'>
+      <%= alert.keywords.pluck(:name).join(", ")%>
+    </p>
+    <%= alert.url%>
+
   </div>
 <% end %>
