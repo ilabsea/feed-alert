@@ -47,7 +47,7 @@ class FeedEntry < ActiveRecord::Base
     FeedEntry.__elasticsearch__.client.indices.create(options)
   end
 
-  def self.update_index
+  def self.recreate_index
     FeedEntry.__elasticsearch__.create_index! force: true
     FeedEntry.__elasticsearch__.refresh_index!
   end
@@ -64,29 +64,47 @@ class FeedEntry < ActiveRecord::Base
     hash
   end
 
-  def self.search(query)
+  def self.build_criterias queries
+    shoulds = []
+    queries.each do |query|
+      shoulds << build_query(:title, query)
+      shoulds << build_query(:summary, query)
+      shoulds << build_query(:content, query)
+    end
+
+
     criterias = {
         query: {
           bool: {
-            should: [
-               {terms: { title: query } },
-               {terms: { content: query } },
-               {terms: { summary: query } },
-            ]
+            should: shoulds
           }
         },
         highlight: {
-          pre_tags: ['<em class="label label-highlight">'],
-          post_tags: ['</em>'],
           fields: {
             title:   { fragment_size: 200 },
             summary:  { fragment_size: 200 },
             content: { fragment_size: 200 }
           }
         }
-      }
+    }
+    criterias
+  end
 
-    __elasticsearch__.search(criterias)
+  def self.build_query field, query
+    {
+      match: {
+        "#{field}": {
+          query: query,
+          operator: 'and',
+          # minimum_should_match: "75%",
+          type: "phrase"
+        }
+      }
+    }
+  end
+
+  def self.search(queries)
+    __elasticsearch__.search(build_criterias(queries))
   end
 
   def has_no_content?
