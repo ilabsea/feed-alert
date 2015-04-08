@@ -40,6 +40,9 @@ gem 'sidekiq'
 gem 'roadie-rails'
 gem 'nuntium_api'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -53,7 +56,7 @@ group :development, :test do
 
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'
-  gem 'pry-rails'
+  # gem 'pry-rails'
 
   gem 'faker'
   gem 'rspec-rails'

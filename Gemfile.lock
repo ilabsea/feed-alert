@@ -89,6 +89,19 @@ GEM
     docile (1.1.5)
     domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
+    elasticsearch (1.0.8)
+      elasticsearch-api (= 1.0.7)
+      elasticsearch-transport (= 1.0.7)
+    elasticsearch-api (1.0.7)
+      multi_json
+    elasticsearch-model (0.1.6)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.6)
+    elasticsearch-transport (1.0.7)
+      faraday
+      multi_json
     email_validator (1.5.0)
       activemodel
     erubis (2.7.0)
@@ -100,6 +113,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     feedjira (1.6.0)
       curb (~> 0.8)
       loofah (~> 2.0)
@@ -122,6 +137,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    hashie (3.4.1)
     hike (1.2.3)
     hitimes (1.2.2)
     http-cookie (1.0.2)
@@ -155,6 +171,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.5.1)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.17)
     nenv (0.2.0)
     net-scp (1.2.1)
@@ -173,8 +190,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rails (0.3.2)
-      pry (>= 0.9.10)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
@@ -337,6 +352,8 @@ DEPENDENCIES
   capistrano-rails
   coffee-rails (~> 4.1.0)
   database_cleaner
+  elasticsearch-model
+  elasticsearch-rails
   email_validator
   factory_girl_rails
   faker
@@ -348,7 +365,6 @@ DEPENDENCIES
   launchy
   mysql2
   nuntium_api
-  pry-rails
   rails (= 4.2.0)
   rails_12factor
   roadie-rails

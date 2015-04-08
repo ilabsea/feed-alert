@@ -4,8 +4,9 @@ class FetchPage
   end
 
   def run()
-    html ||= open(@feed_entry.url)
-    clean_content(html)
+    html ||= open(@feed_entry.url) { |io| io.read }
+    # clean_content(html)
+    html
   end
 
   def clean_content(html)
