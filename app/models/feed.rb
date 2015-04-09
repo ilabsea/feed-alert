@@ -18,8 +18,8 @@ class Feed < ActiveRecord::Base
         url: reader_entry.url,
         published_at: reader_entry.published,
         summary: reader_entry.summary,
-        alert: alert,
-        feed: feed
+        alert_id: alert.id,
+        feed_id: feed.id
       }
       FeedEntry.process_with(entry_attrs)
     end

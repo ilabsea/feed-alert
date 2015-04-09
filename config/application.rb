@@ -30,6 +30,6 @@ module StreamAlert
 
     config.action_mailer.default_url_options = { :host => ENV['HOST'] }
 
-    config.logger = Logger.new(STDOUT)
+    # config.logger = Logger.new(STDOUT)
   end
 end

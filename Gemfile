@@ -42,6 +42,7 @@ gem 'nuntium_api'
 
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,7 +57,7 @@ group :development, :test do
 
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'
-  # gem 'pry-rails'
+  gem 'pry-rails'
 
   gem 'faker'
   gem 'rspec-rails'

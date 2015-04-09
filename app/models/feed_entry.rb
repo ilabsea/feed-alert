@@ -4,7 +4,7 @@ class FeedEntry < ActiveRecord::Base
   include FeedEntrySearch
 
   belongs_to :alert
-  belongs_to :feed
+  belongs_to :feed, counter_cache: true
 
   validates :title, uniqueness: { scope: :feed_id }
 
@@ -31,10 +31,20 @@ class FeedEntry < ActiveRecord::Base
     end
   end
 
-  after_commit lambda { IndexerJob.perform_later('index',  self.class.to_s, self.id) }, on: :create
-  after_commit lambda { IndexerJob.perform_later('update', self.class.to_s, self.id) }, on: :update
-  after_commit lambda { IndexerJob.perform_later('delete', self.class.to_s, self.id) }, on: :destroy
-  after_touch  lambda { IndexerJob.perform_later('update', self.class.to_s, self.id) }
+  after_commit lambda { sync_index('index') }, on: :create
+  after_commit lambda { sync_index('update') }, on: :update
+  after_commit lambda { sync_index('delete') }, on: :destroy
+
+  def sync_index(action_type)
+    Rails.logger.debug { "Try to sync index" }
+    if action_type =='delete'
+      IndexerJob.perform_later(action_type, self.class.to_s, self.id)
+    elsif self.has_content?
+      IndexerJob.perform_later(action_type, self.class.to_s, self.id)
+    else
+      Rails.logger.debug { "Index not sync for #{self.id}" }
+    end
+  end
 
   # Util for creating index
   def self.create_index
@@ -64,51 +74,80 @@ class FeedEntry < ActiveRecord::Base
     hash
   end
 
-  def self.build_criterias queries
+  def self.build_criterias options
+    keywords = options[:keywords]
     shoulds = []
-    queries.each do |query|
-      shoulds << build_query(:title, query)
-      shoulds << build_query(:summary, query)
-      shoulds << build_query(:content, query)
+
+    keywords.each do |keyword|
+      match_phrase = { multi_match: {
+                            query: keyword,
+                            type: "phrase",
+                            fields: ['title', 'summary', 'content']
+                          }
+                     }
+      shoulds << match_phrase
     end
 
+    highlight = {
+                  fields: {
+                    title: { fragment_size: 200 },
+                    summary: { fragment_size: 200 },
+                    content: { fragment_size: 200 }
+                  }
+                }
 
-    criterias = {
+    dsl = {
         query: {
           bool: {
             should: shoulds
           }
-        },
-        highlight: {
-          fields: {
-            title:   { fragment_size: 200 },
-            summary:  { fragment_size: 200 },
-            content: { fragment_size: 200 }
-          }
         }
     }
-    criterias
-  end
 
-  def self.build_query field, query
-    {
-      match: {
-        "#{field}": {
-          query: query,
-          operator: 'and',
-          # minimum_should_match: "75%",
-          type: "phrase"
+    if options[:from].present? && options[:to].present?
+      filter = {
+                range: {
+                    created_at: {
+                      gte: options[:from],
+                      lte: options[:to]
+                    }
+                }
+              }
+
+      dsl[:filter] = filter
+
+      dsl = { query: {
+                       filtered: dsl
+                     }
+            }
+    end
+
+    dsl[:highlight] = highlight
+    facets = {
+      alert_id_counts: {
+        terms: {
+          field: :alert_id,
+          size:50,
+          all_terms: false
         }
       }
     }
+
+    dsl[:facets] = facets
+    dsl[:fields] = [:id, :alert_id, :title, :url, :keywords, :created_at]
+    dsl
   end
 
-  def self.search(queries)
-    __elasticsearch__.search(build_criterias(queries))
+  def self.search(options={})
+    criteria = build_criterias(options)
+    # __elasticsearch__.search(criteria)
+    # use raw version since elasticsearch-model does not support facet query
+    results = FeedEntry.__elasticsearch__.client.search(index: FeedEntry.index_name, body: criteria)
+    FeedEntrySearchResultPresenter.new(results)
   end
 
-  def has_no_content?
-    self.content.blank?
+  def has_content?
+    self.content.present?
   end
 
   def self.matched
@@ -124,9 +163,8 @@ class FeedEntry < ActiveRecord::Base
   end
 
   def self.process_with options
-    feed_entry = FeedEntry.where(options).first_or_initialize
-    feed_entry.update_attributes(options)
-    feed_entry
+    feed_entry = FeedEntry.where(options.slice(:title, :url, :alert_id)).first
+    FeedEntry.create!(options) unless feed_entry
   end
 
   def process_url

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324012607) do
+ActiveRecord::Schema.define(version: 20150409042230) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -77,12 +77,13 @@ ActiveRecord::Schema.define(version: 20150324012607) do
   add_index "feed_entries", ["feed_id"], name: "index_feed_entries_on_feed_id", using: :btree
 
   create_table "feeds", force: :cascade do |t|
-    t.string   "url",         limit: 255
-    t.string   "title",       limit: 255
-    t.text     "description", limit: 65535
-    t.integer  "alert_id",    limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "url",                limit: 255
+    t.string   "title",              limit: 255
+    t.text     "description",        limit: 65535
+    t.integer  "alert_id",           limit: 4
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.integer  "feed_entries_count", limit: 4,     default: 0
   end
 
   add_index "feeds", ["alert_id"], name: "index_feeds_on_alert_id", using: :btree
