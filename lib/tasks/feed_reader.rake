@@ -9,6 +9,7 @@ namespace :feed do
     from = Time.zone.now - 7.days
     to   = Time.zone.now
     date_range = DateRange.new(from, to)
-    Alert.evaluate(date_range)
+
+    Alert.apply_search(date_range)
   end
 end

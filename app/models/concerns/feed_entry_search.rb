@@ -31,17 +31,27 @@ module FeedEntrySearch
 
   def sync_index(action_type)
     Rails.logger.debug { "Try to sync index" }
+    p "Try to sync index"
     if action_type =='delete'
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
-    elsif self.has_content?
+    elsif self.content.present?
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
     else
       Rails.logger.debug { "Index not sync for #{self.id}" }
+      p "Index not sync for #{self.id}"
     end
   end
 
-  def apply_search
-    self.matched = StringSearch.new(self.content).match_keywords?(self.keywords)
+  def as_indexed_json(options={})
+      hash = self.as_json
+      hash["content"] = {
+        "_detect_language": false,
+        "_language": "en",
+        "_indexed_chars": -1 ,
+        # "_content_type": "text/html",
+        "_content": Base64.encode64(self.content)
+      }
+      hash
   end
 
   module ClassMethods
@@ -56,22 +66,12 @@ module FeedEntrySearch
       self.__elasticsearch__.client.indices.create(options)
     end
 
-    def self.recreate_index
+    def recreate_index
       self.__elasticsearch__.create_index! force: true
       self.__elasticsearch__.refresh_index!
     end
 
-    def as_indexed_json(options={})
-      hash = self.as_json
-      hash["content"] = {
-        "_detect_language": false,
-        "_language": "en",
-        "_indexed_chars": -1 ,
-        # "_content_type": "text/html",
-        "_content": Base64.encode64(self.content)
-      }
-      hash
-    end
+    
 
     def build_criterias options
       shoulds = []
@@ -126,11 +126,20 @@ module FeedEntrySearch
               }
       end
 
-      highlight = {
+      highlight_options = { 
+                            fragment_size: 180, 
+                            number_of_fragments: 2,
+                            # type: :experimental
+                            # fragmenter: :sentence 
+                          }
+
+      highlight = { 
+        pre_tags: ["<em class='highlight'>"],
+        post_tags: ["</em>"],
         fields: {
-          title: { fragment_size: 200 },
-          summary: { fragment_size: 200 },
-          content: { fragment_size: 200 }
+          title: highlight_options,
+          summary: highlight_options,
+          content: highlight_options
         }
       }
 
@@ -147,7 +156,7 @@ module FeedEntrySearch
       fields = [:id, :alert_id, :title, :url, :keywords, :created_at]
       dsl[:highlight] = highlight
       dsl[:facets] = facets
-      dsl[:fields] = fields
+      dsl[:_source] = {include: fields}
       dsl[:size] = 50
       dsl
     end

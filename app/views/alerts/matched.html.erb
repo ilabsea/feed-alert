@@ -4,8 +4,8 @@
 <% @alerts.each do |alert| %>
   <div style='padding-top: 15px; margin-bottom: 10px;'>
     <h3>
-      <%=link_to alert.name, alert_feed_entries_path(alert) %>
-      <span class='badge badge-danger'> <%= alert.feed_entries.length %> </span>
+      <%=link_to alert.name, matched_alert_feed_entries_path(alert.id, from: @date_range.from, to: @date_range.to) %>
+      <span class='badge badge-danger'> <%= alert.total_match %> </span>
     </h3>
 
     <p style='color:gray; font-size: 90%; font-style:italic;'>

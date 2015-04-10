@@ -11,10 +11,6 @@ class FeedEntry < ActiveRecord::Base
   before_save :invoke_fingerprint
   after_create :process_url
 
-  def has_content?
-    self.content.present?
-  end
-
   def self.matched
     where(matched: true)
   end

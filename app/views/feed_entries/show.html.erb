@@ -1,25 +1,21 @@
 <%= page_title "Feed matched detail" %>
 <h3> Feed entry for alert <%= @alert.name %> </h3>
 
-<div class='feed-summary' style="padding-bottom: 20px;">
+<div class='feed-summary'>
   <h4 class='feed-title'>
     <%= link_to @feed_entry.title, alert_feed_entry_path(@alert, @feed_entry) %>
   </h4>
 
   <p style='color:gray; font-size: 100%; font-style:italic;'>
-   <%= @feed_entry.keywords.join(", ")%> 
-   
+   <%= @feed_entry.keywords.join(", ")%> <%=link_to 'Original source', @feed_entry.url %> 
   </p>
-
-  <p> Visit <%=link_to 'Original source', @feed_entry.url %> </p>
-
-  <!-- 
-  <iframe src="<%=@feed_entry.url%>" style='width: 100%; min-height: 300px; border: none; margin-top: 20px; '></iframe>
- -->
-  <%
-     highlight = StringSearch.instance.set_source(@feed_entry.content).highlight_keywords(@feed_entry.keywords) do |keyword|
-      "<span class='keyword-highlight'><b>#{keyword}</b></span>"
-     end
-  %>
-  <%= highlight.html_safe %>
 </div>
+
+
+<hr class='page-viewer-border' />
+<%
+   highlight = StringSearch.instance.set_source(@feed_entry.content).highlight_keywords(@feed_entry.keywords) do |keyword|
+    "<em class='highlight'><b>#{keyword}</b></em>"
+   end
+%>
+<%= highlight.html_safe %>

@@ -10,7 +10,7 @@ class Alert < ActiveRecord::Base
   has_many :alert_places, dependent: :destroy
   has_many :places, through: :alert_places
 
-  has_many :feeds
+  has_many :feeds, dependent: :destroy
   has_many :feed_entries
 
   accepts_nested_attributes_for :alert_places, allow_destroy: true
@@ -26,40 +26,60 @@ class Alert < ActiveRecord::Base
   validates :email_template, presence: true
   validates :sms_template, presence: true
 
-  def matched_in_between(date_range)
-    self.feed_entries.matched.between(date_range)
+  attr_accessor :total_match
+
+  def self.search_options(date_range)
+    options = {q: [] }
+    Alert.includes(:keywords).all.each do |alert|
+      options[:q] << { id: alert.id, keywords: alert.keywords.map(&:name) }
+    end
+
+    options[:from] = date_range.from
+    options[:to] = date_range.to
+    options
   end
 
-  def self.evaluate date_range
-    alerts = Alert.matched(date_range)
+  def search_options(date_range)
+    options = {}
+    options[:q] = [ {id: self.id, keywords: self.keywords.map(&:name)} ]
+    options[:from] = date_range.from
+    options[:to] = date_range.to
+    options
+  end
+
+  def self.apply_search date_range
+    options = search_options(date_range)
+
+    search_result = FeedEntry.search(options)
+    alerts = search_result.alerts
+
     alerts.each do |alert|
       alert.groups.each do |group|
-      emails_to = []
-      smses_to  = []
+        emails_to = []
+        smses_to  = []
 
-      group.members.each do |member|
-        emails_to << member.email if member.email_alert
-        smses_to  << member.phone if member.sms_alert
-      end
+        group.members.each do |member|
+          emails_to << member.email if member.email_alert
+          smses_to  << member.phone if member.sms_alert
+        end
 
-      matched_entries = alert.feed_entries
 
-      if emails_to.length > 0 && matched_entries.length > 0
-        AlertMailer.notify_matched(alert, group, date_range).deliver_now
-      end
+        if emails_to.length > 0 && alert.total_match > 0
+          search_result_by_alert = search_result_by_alert(alert.id)
+          AlertMailer.notify_matched(search_result_by_alert, alert.id, group.name, emails_to, date_range).deliver_now
+        end
 
-      if smses_to.length > 0 && matched_entries.length > 0
-        smses_to.each do |sms|
-          to = "sms://#{sms}"
-          options = { from: ENV['APP_NAME'],
-                      to: 'sms://0975553553',
-                      body: "#{alert.name} has #{pluralize(matched_entries.length, 'feed entry')}" }
-          SmsAlertJob.set(wait: 10.seconds).perform_later(options)
+        if smses_to.length > 0 && alert.total_match > 0
+          smses_to.each do |sms|
+            to = "sms://#{sms}"
+            options = { from: ENV['APP_NAME'],
+                        to: 'sms://0975553553',
+                        body: "#{alert.name} has #{pluralize(alert.total_match, 'feed entry')}" }
+            SmsAlertJob.set(wait: 10.seconds).perform_later(options)
+          end
         end
       end
     end
 
-    end
   end
-
 end

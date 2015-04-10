@@ -12,23 +12,19 @@
   <p style='color:gray; font-size: 90%; font-style:italic;'>
     <b><%= @alert.feed_entries.length %></b> feed entries that matched the keywords criteria for from 
     <%= @date_range.from.to_date %>, to <%=@date_range.to.to_date %> for group :
-    <b><%= "#{@group.name}" %></b>
+    <b><%= "#{@group_name}" %></b>
   </p>
 <% end %>
 
-<% @alert.matched_in_between(@date_range).each do |feed_entry| %>
+<% @search_highlight.each do |search_highlight| %>
+  <% feed_entry_highlight = FeedEntryHighlight.new(search_highlight) %>
   <p>
-    <h4 class='feed-title'> <%= link_to feed_entry.title, feed_entry.url %> </h4>
+    <h4 class='feed-title'> <%= link_to feed_entry_highlight.title.html_safe, feed_entry_highlight.url %> </h4>
     <p style='color:gray; font-size: 90%; font-style:italic;'>
-      <%= feed_entry.keywords.join(", ")%>
-      <%= link_to 'Original Source', feed_entry.url %>
+      <%= feed_entry_highlight.keywords %>
+      <%= link_to 'Original Source', feed_entry_highlight.url %>
     </p>
-    <%
-       summary = StringSummary.instance.set_source(feed_entry.content).text(feed_entry.keywords)
-       highlight = StringSearch.instance.set_source(summary).highlight_keywords(feed_entry.keywords) do |keyword|
-        "<span class='keyword-highlight'><b>#{keyword}</b></span>"
-       end
-    %>
-    <%= highlight.html_safe %>
+    
+    <%= feed_entry_highlight.description.html_safe %>
   </p>
 <% end %>

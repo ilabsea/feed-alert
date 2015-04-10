@@ -20,8 +20,14 @@ class AlertsController < ApplicationController
   end
 
   def matched
-    @date_range = DateRange.new(Time.zone.now-30.days, Time.zone.now+30.days)
-    @alerts = Alert.matched(@date_range).page(params[:page])
+    from = params[:from] || Time.zone.now-7.days
+    to   = params[:to] || Time.zone.now
+    @date_range = DateRange.new(from, to)
+    
+    search_options = Alert.search_options(@date_range)
+    search_highlight = FeedEntry.search(search_options)
+    @alerts = search_highlight.alerts
+
   end
 
   def index

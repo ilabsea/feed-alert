@@ -1,16 +1,11 @@
 class FeedEntriesController < ApplicationController
-  def index
+  def matched
     @alert = Alert.find(params[:alert_id])
-    @feed_entries = @alert.feed_entries
+    @date_range = DateRange.new(params[:from].to_datetime, params[:to].to_datetime)
+    search_options = @alert.search_options(@date_range)
 
-    if params[:from].present?
-      from = params[:from]
-      to  = params[:to]
-      @date_range = DateRange.new(from, to)
-      @feed_entries = @feed_entries.matched.between(@date_range)
-    end
-    @feed_entries = @feed_entries.page(params[:page])
-
+    search_result = FeedEntry.search(search_options)
+    @search_highlight = search_result.results
   end
 
   def show

@@ -1,0 +1,18 @@
+<%= page_title "Feed matched" %>
+<h3> Feed entries for alert <%= @alert.name %> </h3>
+<p style='color:gray; font-size: 90%; font-style:italic;'>
+  <a href='<%= @alert.url %>'> <%= @alert.url %> </a>
+</p>
+
+<% @search_highlight.each do |search_highlight| %>
+  <% feed_entry_highlight = FeedEntryHighlight.new(search_highlight) %>
+  <p>
+    <h4 class='feed-title'> <%= link_to feed_entry_highlight.title.html_safe, alert_feed_entry_path(@alert, feed_entry_highlight.id) %> </h4>
+    <p style='color:gray; font-size: 90%; font-style:italic;'>
+      <%= feed_entry_highlight.keywords %>
+      <%= link_to 'Original Source', feed_entry_highlight.url %>
+    </p>
+
+    <p><%= feed_entry_highlight.description.html_safe %></p>
+  </p>
+<% end %>

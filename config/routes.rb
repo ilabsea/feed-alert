@@ -42,7 +42,11 @@ Rails.application.routes.draw do
     resources :alert_groups
     resources :alert_keywords
 
-    resources :feed_entries
+    resources :feed_entries do
+      collection do
+        get 'matched'
+      end
+    end
   end
 
 
