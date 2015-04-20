@@ -23,8 +23,8 @@ class Alert < ActiveRecord::Base
   validates :name, presence: true
   validates :url, presence: true
   validates :interval, presence: true, numericality: {greater_than: 0}
-  validates :email_template, presence: true
-  validates :sms_template, presence: true
+  # validates :email_template, presence: true
+  # validates :sms_template, presence: true
 
   attr_accessor :total_match
 
