@@ -23,8 +23,6 @@ class Alert < ActiveRecord::Base
   validates :name, presence: true
   validates :url, presence: true
   validates :interval, presence: true, numericality: {greater_than: 0}
-  # validates :email_template, presence: true
-  # validates :sms_template, presence: true
 
   attr_accessor :total_match
 
@@ -49,11 +47,9 @@ class Alert < ActiveRecord::Base
 
   def self.apply_search date_range
     options = search_options(date_range)
-
     search_result = FeedEntry.search(options)
-    alerts = search_result.alerts
 
-    alerts.each do |alert|
+    search_result.alerts.each do |alert|
       alert.groups.each do |group|
         emails_to = []
         smses_to  = []
@@ -63,10 +59,9 @@ class Alert < ActiveRecord::Base
           smses_to  << member.phone if member.sms_alert
         end
 
-
         if emails_to.length > 0 && alert.total_match > 0
-          search_result_by_alert = search_result_by_alert(alert.id)
-          AlertMailer.notify_matched(search_result_by_alert, alert.id, group.name, emails_to, date_range).deliver_now
+          search_results_by_alert = search_result.results_by_alert(alert.id)
+          AlertMailer.notify_matched(search_results_by_alert, alert.id, group.name, emails_to, date_range).deliver_now
         end
 
         if smses_to.length > 0 && alert.total_match > 0
@@ -74,7 +69,7 @@ class Alert < ActiveRecord::Base
             to = "sms://#{sms}"
             options = { from: ENV['APP_NAME'],
                         to: 'sms://0975553553',
-                        body: "#{alert.name} has #{pluralize(alert.total_match, 'feed entry')}" }
+                        body: "#{alert.name} has #{alert.total_match} feed #{'entry'.pluralize(alert.total_match)} matched your keywords" }
             SmsAlertJob.set(wait: 10.seconds).perform_later(options)
           end
         end

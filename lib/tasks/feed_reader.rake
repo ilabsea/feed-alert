@@ -1,4 +1,10 @@
 namespace :feed do
+  
+  desc 'Recreate Index'
+  task recreate_index: :environment do
+    FeedEntry.recreate_index!
+  end
+
   desc 'Read Feed From Alert source'
   task reader: :environment do
     FeedReader.from_alert
@@ -12,4 +18,5 @@ namespace :feed do
 
     Alert.apply_search(date_range)
   end
+
 end

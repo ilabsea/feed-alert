@@ -35,6 +35,8 @@ module FeedEntrySearch
     if action_type =='delete'
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
     elsif self.content.present?
+      Rails.logger.debug { "Index sync for #{self.id}" }
+      p "Index sync for #{self.id}"
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
     else
       Rails.logger.debug { "Index not sync for #{self.id}" }
@@ -66,12 +68,10 @@ module FeedEntrySearch
       self.__elasticsearch__.client.indices.create(options)
     end
 
-    def recreate_index
+    def recreate_index!
       self.__elasticsearch__.create_index! force: true
       self.__elasticsearch__.refresh_index!
     end
-
-    
 
     def build_criterias options
       shoulds = []
