@@ -24,8 +24,6 @@ class Alert < ActiveRecord::Base
   validates :url, presence: true
   #validates :interval, presence: true, numericality: {greater_than: 0}
 
-  PROCESS_TIME = 30.minutes #rake task and schedule
-
   attr_accessor :total_match
 
   def self.search_options(date_range)

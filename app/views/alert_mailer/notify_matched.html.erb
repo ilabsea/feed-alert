@@ -10,7 +10,7 @@
   </p>
 
   <p style='color:gray; font-size: 90%; font-style:italic;'>
-    <b><%= @alert.feed_entries.length %></b> feed entries that matched the keywords criteria for from 
+    <b><%= @search_highlight.size %></b> feed entries that matched the keywords criteria from 
     <%= @date_range.from.to_date %>, to <%=@date_range.to.to_date %> for group :
     <b><%= "#{@group_name}" %></b>
   </p>

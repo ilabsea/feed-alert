@@ -58,6 +58,8 @@ class AlertMailerPreview < ActionMailer::Preview
     "title"=>["Evaluation of <em class='highlight'>Patients</em> under Investigation for MERS-CoV Infection, United States, January 2013–October 2014"]}}]
 
     alert = FactoryGirl.create(:alert, name: 'High Response Disease Response/Alert')
+    alert.total_match = 4
+
     group_name = 'Department of Help'
 
     emails_to = ['channa.info@gmail.com', 'channa.info+1@gmail.com']

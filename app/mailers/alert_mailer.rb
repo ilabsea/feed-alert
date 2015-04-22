@@ -7,6 +7,6 @@ class AlertMailer < ApplicationMailer
     @search_highlight = search_highlight
 
 
-    mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
+    roadie_mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
   end
 end
