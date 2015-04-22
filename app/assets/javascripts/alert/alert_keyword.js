@@ -40,7 +40,7 @@ function addAlertKeyword(){
       },
 
       error: function(){
-        alert("Could not be able to add this keyword to alert")
+        alert("Could not add this keyword to alert")
         cleanAlertKeywordTypeAhead()
       }
     })

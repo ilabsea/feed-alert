@@ -49,7 +49,7 @@ function addGroup(){
       },
 
       error: function(){
-        alert("Could not be able to add this member to the group")
+        alert("Could not add this member to the group")
         //clean
         $("#group-typeahead").val("")
         $("#group-value").val("")

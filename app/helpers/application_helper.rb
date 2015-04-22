@@ -117,7 +117,7 @@ module ApplicationHelper
 
   def link_new value , url, options={}, &block
     options ||= {}
-    options[:class] = "btn-icon btn #{options[:class]}"
+    options[:class] = "btn-icon btn btn-default #{options[:class]}"
 
     link_icon "glyphicon-plus", value, url, options, &block
   end

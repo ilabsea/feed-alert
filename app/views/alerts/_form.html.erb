@@ -4,14 +4,14 @@
 
     <%=f.input :url, input_html: {class: 'form-control'} %>
 
-    <div class='form-group'>
+    <div class='form-group hidden'>
       <%=f.label :interval, class: 'control-label' %>
       <%=f.text_field :interval, class: 'form-control', style: 'margin-left: -3px; width: 8.5em;' %>
       <%=f.select :interval_unit, options_for_select(Alert::INTERVAL_UNITS), {}, class: 'form-control', style: 'width: 9em; ' %>
     </div>
-    
-    
-  <div class='input-row'>
+
+
+  <div class='input-row hidden' >
     <label style='display: table-cell;'> Places </label>
     <div class='row' style='display: table-cell;'>
 
@@ -43,6 +43,7 @@
 
     </div>
   </div>
+
 
   <div class='input-row'>
     <%=f.input :email_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>

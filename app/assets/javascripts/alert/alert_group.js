@@ -52,7 +52,7 @@ function addAlertGroup(){
       },
 
       error: function(){
-        alert("Could not be able to add this group to alert")
+        alert("Could not add this group to alert")
         cleanAlertGroupTypeAhead()
       }
     })

@@ -47,7 +47,7 @@ function addMember(){
         updateMemberList(res)
       },
       error: function(){
-        alert("Could not be able to add this member to the group")
+        alert("Could not add this member to the group")
         //clean
         $("#member-typeahead").val("")
         $("#member-value").val("")

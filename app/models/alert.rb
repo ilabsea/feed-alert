@@ -22,7 +22,7 @@ class Alert < ActiveRecord::Base
 
   validates :name, presence: true
   validates :url, presence: true
-  validates :interval, presence: true, numericality: {greater_than: 0}
+  #validates :interval, presence: true, numericality: {greater_than: 0}
 
   PROCESS_TIME = 30.minutes #rake task and schedule
 
