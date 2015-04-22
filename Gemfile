@@ -40,6 +40,10 @@ gem 'sidekiq'
 gem 'roadie-rails'
 gem 'nuntium_api'
 
+gem 'whenever', :require => false
+
+
+
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
@@ -53,7 +57,12 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger' #using gem passenger 4.0.58
 
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'

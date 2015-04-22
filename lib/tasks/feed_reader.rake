@@ -12,7 +12,7 @@ namespace :feed do
 
   desc 'Alert Match feed entries'
   task alert: :environment do
-    from = Time.zone.now - 7.days
+    from = Time.zone.now - Alert::PROCESS_TIME
     to   = Time.zone.now
     date_range = DateRange.new(from, to)
 
