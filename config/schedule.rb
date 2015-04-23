@@ -19,13 +19,17 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :environment, :production
+env :PATH, ENV['PATH']
+job_type :rbenv_rake, %q!eval "$(rbenv init -)"; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output!
+
 every 5.minutes do
-  rake "feed:reader"
+  rbenv_rake "feed:reader"
 end
 
 #Alert::PROCESS_TIME is not accessible
 every 30.minutes do
-  rake "feed:alert"
+  rbenv_rake "feed:alert"
 end
 
 

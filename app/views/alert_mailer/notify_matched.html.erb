@@ -2,7 +2,8 @@
 <%= content_for(:mailer_header) do %>
   <h3><%= "#{@alert.name}" %> </h3>
   <p>
-    <%= link_to 'View on website', alert_feed_entries_url(@alert.id) %>
+    <%= link_to 'View on website',
+                matched_alert_feed_entries_url(@alert.id, from: @date_range.from, to:@date_range.to) %>
   </p>
   
   <p style='color:gray; font-size: 90%; font-style:italic;'>

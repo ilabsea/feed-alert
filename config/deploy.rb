@@ -10,6 +10,8 @@
 # sudo chmod go-w -R /var/www warning “Insecure world writable dir /home/chance ” in PATH, mode 040777 http://stackoverflow.com/questions/5380671/getting-the-warning-insecure-world-writable-dir-home-chance-in-path-mode-04
 # ssh config for remote server and repo
 
+# env :PATH, ENV['PATH']
+
 lock '3.3.5'
 
 set :rbenv_ruby, File.read('.ruby-version').strip
