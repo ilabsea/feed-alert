@@ -56,6 +56,6 @@ class UsersController < ApplicationController
   private
 
   def filter_params
-    params.require(:user).permit(:user_name, :full_name, :email, :phone, :role)
+    params.require(:user).permit(:username, :full_name, :email, :phone, :role)
   end
 end

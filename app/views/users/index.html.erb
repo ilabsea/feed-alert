@@ -1,7 +1,16 @@
-<%= paginate_for(@users) %>
-<%= page_header "List user" do %>
-  <%= link_new 'New User', new_user_path() %>
-<% end %>
+<% content_for(:title) { "Users"} %>
+<%= page_header "List user" %>
+
+<div class='clearfix'>
+  <div class='left'>
+    <%= link_custom 'New User', new_user_path() %>
+  </div>
+
+  <div class='right'>
+    <%= render 'shared/search_form', url: users_path %>
+  </div>
+</div>
+
 
 <table class='table panel'>
   <thead>
@@ -23,8 +32,8 @@
         <td><%=user.phone %></td>
         <td><%=user.role%></td>
         <td>
-          <% if !user.is_admin? %>
            <%= link_edit " ", edit_user_path(user)  %>
+          <% if !user.is_admin? %>
            <%= link_destroy " ", user_path(user), method: :delete, data: { confirm: 'Are you sure to delete' } %>
           <% end %>
         </td>

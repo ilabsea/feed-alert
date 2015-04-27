@@ -1,5 +1,5 @@
 <div style='max-width: 500px;'>
-  <h3 class='header-title'> Alert Keywords </h3>
+  <h3 class='header-group'> Alert Keywords </h3>
 
   <div id='alert-keyword' >
     <div class="input-group">
@@ -9,7 +9,7 @@
             data-url="<%= new_keywords_alert_path(@alert) %>" >
 
       <span class="input-group-btn">
-        <%= link_to "Add Keyword", alert_alert_keywords_path(@alert), class: 'btn btn-default typeahead-add', id: 'add-alert-keyword' %>
+        <%= link_to "Add Keyword", alert_alert_keywords_path(@alert), class: 'btn btn-app typeahead-add', id: 'add-alert-keyword' %>
       </span>
     </div>
 

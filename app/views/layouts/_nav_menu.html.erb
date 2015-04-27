@@ -1,0 +1,23 @@
+<div id='toolbar'>
+  <div class='container'>
+    <div id="nav-menu">
+      <ul>
+        <% app_menu(controller_name).each do |item| %>
+          <li class='<%=item[:class]%>'><%= link_to item[:text], item[:url] %></li>
+        <% end %>
+      </ul>
+
+      <ul id='right-menu'>
+        <li> <i class='glyphicon glyphicon-user'> </i> <%= current_user.full_name %> </li>
+        <li>
+          <%= link_to sign_out_path(), method: :delete do %>
+            <i class='glyphicon glyphicon-log-out'> </i> Sign Out
+          <% end %>
+        </li>
+
+    </ul>
+
+    </div>
+
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <div style='max-width: 500px;'>
-  <h3 class='header-title'> Alert Groups </h3>
+  <h3 class='header-group'> Alert Groups </h3>
 
   <div id='alert-group' >
     <div class="input-group">
@@ -9,7 +9,7 @@
             data-url="<%= new_groups_alert_path(@alert) %>" >
 
       <span class="input-group-btn">
-        <%= link_to "Add Group", alert_alert_groups_path(@alert), class: 'btn btn-default typeahead-add', id: 'add-alert-group' %>
+        <%= link_to "Add Group", alert_alert_groups_path(@alert), class: 'btn btn-app typeahead-add', id: 'add-alert-group' %>
       </span>
     </div>
 

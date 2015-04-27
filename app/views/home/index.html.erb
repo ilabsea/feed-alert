@@ -1,0 +1,82 @@
+<div class='row'>
+  <div class='col-lg-6'>
+    <h1 class="tag-line">Keep people informed</h1>
+    <span class="tag-line-sub">of information you are interested in.</span>
+
+    <p class='app-desc'>
+      FeedAlert is a free and open-source tool for monitor your interest’s news sources via RSS feed. 
+      You can get email or SMS notification anytime that FeedAlert finds news result on the topic you are interested in.
+      In the world overwhelm information, FeedAlert shinks the gaps and gets you the topic you are interested in.
+    </p>
+
+    <p class="app-desc">
+      <span style='margin-right: 15px;'> Get started </span>
+      <%= link_to "Sign In", sign_in_path(), class: 'btn btn-primary btn-app' %>
+    </p>
+
+  </div>
+
+  <div class='col-lg-6'>
+    <%= image_tag 'feed-alert.png' %>
+  </div>
+</div>
+
+<div class='feature-wrapper'>
+  <div class="row panel feature">
+    <div class='col-lg-3'>
+      <div class="media">
+        <div class="media-left">
+          <%=link_to "#" do %>
+            <%=image_tag "features/free.png", class: "media-object" %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Free</h4>
+          <p> Free for anyone to use to help increase their social impact</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3'>
+      <div class="media">
+        <div class="media-left">
+          <%=link_to "#" do %>
+            <%=image_tag "features/open_source.png", class: "media-object" %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Open Source</h4>
+          <p>Base on data directly from your audience</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3'>
+      <div class="media">
+        <div class="media-left">
+          <%=link_to "#" do %>
+            <%=image_tag "features/monitor.png", class: "media-object" %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Monitor</h4>
+          <p>Your interest's topic in certain news sources</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3'>
+      <div class="media">
+        <div class="media-left">
+          <%=link_to "#" do %>
+            <%=image_tag "features/alert.png", class: "media-object" %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Alerts</h4>
+          <p>News topic you are interested in only</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

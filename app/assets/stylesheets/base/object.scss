@@ -1,18 +1,15 @@
 .alert-animate {
-  position: absolute;
-  left: 50%;
-  top: -80px;
   z-index: 9999;
   .alert-body{
     position: relative;
-    left: -50%;
     background: #eee;
     min-width: 300px;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     font-weight: 600;
     @include border-radius(5px);
     border: 1px solid #fff;
+    padding: 15px;
   }
 }
 
@@ -58,6 +55,7 @@ label.inline {
   margin-top: -15px;
   margin-bottom: 15px;
 }
+
 .keyword-highlight {
   background: none repeat scroll 0 0 activecaption;
   margin: 0 3px;
@@ -71,10 +69,20 @@ label.inline {
   font-style: italic;
   color: gray;
 }
+
 .header-title {
-  font-size: 120%;
-  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
+
+.header-group {
+  font-size: 18px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
 .color-danger {
   color: $color-danger;
 }
@@ -86,9 +94,13 @@ label.inline {
   &:hover{
     text-decoration: none;
   }
+  .glyphicon {
+    font-size: 18px;
+  }
 }
+
 .td-last {
-  width: 80px;
+  width: 100px;
 }
 
 em.highlight {
@@ -100,4 +112,9 @@ em.highlight {
 }
 .page-viewer-border {
   background: #fafafa;
+}
+.input-group{
+  .btn {
+    padding: 10px;
+  }
 }

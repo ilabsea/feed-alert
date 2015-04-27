@@ -31,6 +31,7 @@ gem 'unicorn'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'email_validator'
 gem 'kaminari'
+gem 'bootstrap-kaminari-views'
 gem 'simple_form'
 gem 'twitter-typeahead-rails'
 

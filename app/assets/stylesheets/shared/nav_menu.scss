@@ -1,0 +1,118 @@
+body {
+  // background: asset-url("backbody.png") repeat-x scroll center top white;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#toolbar{
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background: asset-url("backbody.png") repeat-x scroll center top white;
+  height: 35px;
+  position: relative;
+  a {
+    color: #000;
+  }
+}
+
+#nav-menu {
+  text-align: center;
+  background: asset-url("backbody.png") repeat-x scroll center top rgba(0, 0, 0, 0);
+  text-align: center;
+  width: 100%;
+
+  ul {
+    background: none repeat scroll 0 0 #ffffff;
+    border-bottom: 1px solid #ffffff;
+    display: inline-block;
+    height: 31px;
+    margin: 0;
+    padding: 0;
+    li {
+      background: asset-url("backbody.png") repeat-x scroll center top rgba(0, 0, 0, 0);
+      border-bottom: 1px solid #d0d0d0;
+      border-right: 1px solid #b6bac0;
+      cursor: pointer;
+      display: inline-block;
+      height: 32px;
+      line-height: 28px;
+      list-style: outside none none;
+      margin: 0 0 0 -3px;
+      padding: 0 10px;
+      vertical-align: middle;
+      a {
+        display: block;
+        height: 100%;
+        margin: 0 -10px;
+        padding: 0 10px;
+      }
+      &:last-child {
+        border-right: none;
+      }
+      &.before {
+        border-radius: 0 0 8px;
+        border-right: 1px solid #d0d0d0;
+      }
+      &.after {
+        border-left: 1px solid #d0d0d0;
+        border-radius: 0 0 0 8px;
+      }
+      &.active {
+        background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border-bottom: 1px solid #ffffff;
+        border-right: medium none;
+        margin: 0 -8px;
+        padding: 0 18px;
+        a { 
+          color: rgb(66, 139, 202) !important;
+        }
+      }
+    }
+  }
+}
+
+#right-menu {
+  margin: 0;
+  padding: 0;
+  right: 0;
+  z-index: 50;
+  float: right;
+
+  li {
+    display: inline-block;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 32px;
+    padding-left: 10px;
+    border-right: none;
+  }
+
+  li.bar {
+    color: #ccc;
+    opacity: 1;
+  }
+}
+
+.feature-wrapper {
+  background: #ccc;
+  padding: 10px;
+  @include border-radius(5px);
+}
+
+.feature {
+  background: asset-url("feature.png");
+  background-repeat: repeat-x;
+  @include border-radius(5px);
+  min-height: 80px;
+  padding: 5px 0;
+  margin: 0 auto;
+  p {
+    line-height: 1.1;
+    color: #666;
+  }
+  .media {
+
+  }
+}

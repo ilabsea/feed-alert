@@ -1,0 +1,6 @@
+<%= form_tag url, class: 'search-form', method: :get do %>
+  <div class='search-box'>
+    <i class='glyphicon glyphicon-search'> </i>
+    <%= text_field_tag :query, params[:query], placeholder: 'Search' %>
+  </div>
+<% end %>

@@ -1,7 +1,15 @@
-<%= paginate_for(@groups) %>
-<%= page_header "List Group" do %>
-  <%= link_new 'New Group', new_group_path() %>
-<% end %>
+<% content_for(:title) { "Groups"} %>
+<%= page_header "List Group"%>
+
+<div class='clearfix'>
+  <div class='left'>
+    <%= link_custom 'New Group', new_group_path() %>
+  </div>
+
+  <div class='right'>
+    <%= render 'shared/search_form', url: groups_path %>
+  </div>
+</div>
 
 <table class='table panel'>
   <thead>

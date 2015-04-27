@@ -1,19 +1,23 @@
-<% content_for(:title) { "Login" } %>
+<% content_for(:title) { "Sign In" } %>
 
-<div class='sign-in panel'>
-  <%= form_tag sessions_path, role: 'form', class: 'form-box form-center' do %>
-    <%= page_header "Please login" %>
-    <div class='input-row'>
-      <%= text_field_tag :user_name, params[:user_name], class: 'form-control radius', placeholder: 'User name' %>
+
+<%= form_tag sessions_path, role: 'form', class: 'form-box form-center' do %>
+  <div class='input-row'>
+    <%= text_field_tag :user_name, params[:user_name], class: 'form-control radius', placeholder: 'User name' %>
+  </div>
+
+  <div class='input-row'>
+    <%= password_field_tag :password, '', class: 'form-control radius', placeholder: 'Password' %>
+  </div>
+
+  <div class='input-row' style='text-align:right ;'>
+    <div class='left' style='padding-top: 10px;'>
+      <input type='checkbox' id='remember_me'>
+      <label for='remember_me' style='font-size: 110%; color: #666;'>Remember</label>
     </div>
-
-    <div class='input-row'>
-      <%= password_field_tag :password, '', class: 'form-control radius', placeholder: 'Password' %>
+    <div class='right'>
+      <%= button_tag "Sign In", class: 'btn btn-primary btn-app' %>
     </div>
+  </div>
 
-    <div class='input-row' style='text-align:right ;'>
-      <%= button_tag "Login", class: 'btn btn-primary' %>
-    </div>
-
-  <% end %>
-</div>
+<% end %>

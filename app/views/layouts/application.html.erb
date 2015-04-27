@@ -11,10 +11,14 @@
   </head>
 
   <body>
+    <%= render "layouts/nav_menu" %>
     <div class='container'>
-      <%= render "layouts/nav_bar" %>
+      
+      <%= render "layouts/logo" %>
       <%= flash_messages %>
       <%= yield %>
+
+      <%= render "layouts/footer" %>
     </div>
 
     <%= javascript_include_tag "application" %>

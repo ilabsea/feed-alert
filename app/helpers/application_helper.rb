@@ -10,7 +10,7 @@ module ApplicationHelper
   end
   
   def paginate_for(records)
-    content_tag :div, paginate(records), class: 'paginate-nav'
+    content_tag :div, paginate(records, theme: 'twitter-bootstrap-3'), class: 'paginate-nav'
   end
 
   def errors_for(record)
@@ -112,14 +112,18 @@ module ApplicationHelper
   end
 
   def link_edit value , url, options={}, &block
-    link_icon "glyphicon-pencil", value, url, options, &block
+    link_icon "glyphicon glyphicon-edit", value, url, options, &block
   end
 
   def link_new value , url, options={}, &block
-    options ||= {}
-    options[:class] = "btn-icon btn btn-default #{options[:class]}"
+    options[:class] = "btn-icon btn btn-primary btn-app #{options[:class]}"
 
     link_icon "glyphicon-plus", value, url, options, &block
+  end
+
+  def link_custom value, url, options={}, &block
+    options[:class] = "btn-icon btn btn-primary btn-app #{options[:class]}"
+    link_to value, url, options, &block
   end
 
   def link_icon icon, value, url, options={}, &block
@@ -128,6 +132,41 @@ module ApplicationHelper
     icon = content_tag :i, ' ',  class: "#{icon} glyphicon"
     text = content_tag :span, " #{value}"
     link_to icon+text, url, options, &block
+  end
+
+  def app_menu name
+    menu = [
+           { controller: :alerts, text: 'Alerts', url: alerts_path, class: '' },
+           { controller: :members, text: 'Members', url: members_path, class: '' },
+           { controller: :groups, text: 'Groups', url: groups_path, class: '' },
+           { controller: :users, text: 'Users' ,url: users_path, class: '' }
+    ]
+    index = 0
+    index_first = 0
+    index_last = menu.size - 1
+
+    menu.each_with_index do |item, i|
+      if name == item[:controller].to_s
+        index = i
+        break
+      end
+    end
+    
+    if index == index_first
+      menu[index][:class] = :active
+      menu[index+1][:class] = :after
+      menu.unshift({text: '', class: :before })
+
+    elsif index == index_last
+      menu[index-1][:class] = :before
+      menu[index][:class] = :active
+      menu.append({text: '', class: :after})
+    else
+      menu[index-1][:class] = :before
+      menu[index][:class] = :active
+      menu[index+1][:class] = :after
+    end
+    menu
   end
 
 end

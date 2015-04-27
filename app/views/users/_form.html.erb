@@ -13,14 +13,15 @@
 
   <div class='form-group form-action-group'>
     <label class='control-label'></label>
-    <%=f.submit 'Save', class: 'btn btn-primary' %>
 
     <% if !@user.new_record? && @user != current_user  %>
     <%= link_to "Reset password", reset_user_path(@user), 
                 :method => :put, 
                 :confirm => 'Are you sure to reset password for this user?' ,
-                :class => 'btn btn-danger' %>
+                :class => 'btn btn-primary btn-app' %>
     <%end %>
+
+    <%=f.submit 'Save', class: 'btn btn-primary btn-app' %>
   </div>
 
 <% end %>

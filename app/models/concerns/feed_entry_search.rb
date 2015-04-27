@@ -31,16 +31,13 @@ module FeedEntrySearch
 
   def sync_index(action_type)
     Rails.logger.debug { "Try to sync index" }
-    p "Try to sync index"
     if action_type =='delete'
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
     elsif self.content.present?
       Rails.logger.debug { "Index sync for #{self.id}" }
-      p "Index sync for #{self.id}"
       IndexerJob.perform_later(action_type, self.class.to_s, self.id)
     else
       Rails.logger.debug { "Index not sync for #{self.id}" }
-      p "Index not sync for #{self.id}"
     end
   end
 

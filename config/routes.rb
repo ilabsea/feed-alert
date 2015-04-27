@@ -3,11 +3,13 @@ Rails.application.routes.draw do
   require 'admin_constraint'
   mount Sidekiq::Web => '/sidekiq'
 
-  root 'alerts#index'
+  root 'home#index'
   
   resources :sessions, only: [:new, :create, :destroy]
   get 'sign_in' => 'sessions#new'
   delete 'sign_out' => 'sessions#destroy'
+
+
 
   resources :groups do
     member do

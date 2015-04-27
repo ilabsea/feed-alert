@@ -1,7 +1,16 @@
-<%= paginate_for(@members) %>
-<%= page_header "List Member" do %>
-  <%= link_new 'New Member', new_member_path() %>
-<% end %>
+<% content_for(:title) { "Members"} %>
+<%= page_header "List Member" %>
+
+<div class='clearfix'>
+  <div class='left'>
+    <%= link_custom 'New Member', new_member_path() %>
+  </div>
+
+  <div class='right'>
+    <%= render 'shared/search_form', url: members_path %>
+  </div>
+</div>
+
 
 <table class='table'>
   <thead>

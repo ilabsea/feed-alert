@@ -12,7 +12,17 @@
 
   <body>
     <div class='container'>
-      <%= yield %>
+      <div>
+        <div class='text-center logo'> <%= link_to ENV['APP_NAME'], root_url %> </div>
+        <div class='logo-bar'></div>
+      </div>
+
+      <div class='sign-in clearfix'>
+        <%= flash_messages %>
+        <%= yield %>
+      </div>
+
+      <%= render 'layouts/footer' %>
     </div>
     
     <%= javascript_include_tag "application" %>

@@ -10,7 +10,7 @@ function animateAlert(){
 
   $alert.animate({ opacity: 1 }, appearTime, function() {
     $alert.animate({opacity: 0 }, disappearTime, function() {
-      //$alert.css('z-index', -1); 
+      $alert.remove() 
     })
   })
 }
