@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   before_save :clean_user_name
   before_create { generate_token(:auth_token) }
+  attr_accessor :old_password
 
   def generate_token(column)
     begin
@@ -34,6 +35,18 @@ class User < ActiveRecord::Base
     user.authenticate(password)
   rescue ActiveRecord::RecordNotFound
     false
+  end
+
+  def change_password old_password, new_password, confirm
+    if self.authenticate(old_password)
+      self.password = new_password
+      self.password_confirmation = confirm
+
+      save
+    else
+      errors.add(:old_password, 'does not matched')
+      false
+    end
   end
 
   def self.visible_roles

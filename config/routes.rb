@@ -26,6 +26,11 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    collection do
+      get 'profile'
+      put 'change_profile'
+    end
+
     member do
       put 'reset'
     end
