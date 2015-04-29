@@ -82,7 +82,7 @@ function removeGroup(){
   $(document).on("click", ".remove-group", function(){
     var membershipId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this group"))
+    if(!confirm("Are you sure to remove this group ?"))
       return false
 
     $this = $(this)

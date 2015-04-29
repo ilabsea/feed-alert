@@ -1,5 +1,5 @@
 <% content_for(:title) { "Users"} %>
-<%= page_header "List user" %>
+<%= page_header "List of Users" %>
 
 <div class='clearfix'>
   <div class='left'>
@@ -34,7 +34,7 @@
         <td>
            <%= link_edit " ", edit_user_path(user)  %>
           <% if !user.is_admin? %>
-           <%= link_destroy " ", user_path(user), method: :delete, data: { confirm: 'Are you sure to delete' } %>
+           <%= link_destroy " ", user_path(user), method: :delete, data: { confirm: 'Are you sure to delete this user ?' } %>
           <% end %>
         </td>
       </tr>

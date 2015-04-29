@@ -1,5 +1,5 @@
 <% content_for(:title) { "Groups"} %>
-<%= page_header "List Group"%>
+<%= page_header "List of Groups"%>
 
 <div class='clearfix'>
   <div class='left'>
@@ -27,7 +27,7 @@
         <td><%= truncate(group.description) %></td>
         <td>
            <%= link_edit " ", edit_group_path(group) %>
-           <%= link_destroy " ", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group' } %>
+           <%= link_destroy " ", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group ?' } %>
         </td>
       </tr>
     <% end %>

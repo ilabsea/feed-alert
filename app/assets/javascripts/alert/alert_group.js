@@ -81,7 +81,7 @@ function removeAlertGroup(){
   $(document).on("click", ".remove-alert-group", function(){
     var alertGroupId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this group"))
+    if(!confirm("Are you sure to remove this group ?"))
       return false
 
     $this = $(this)

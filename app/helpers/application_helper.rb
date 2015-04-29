@@ -139,6 +139,16 @@ module ApplicationHelper
   end
 
   def app_menu name
+    if !user_signed_in?
+      menu = [
+           {controller: '', text: '', url: root_path, class: 'before'},
+           {controller: :home, text: 'Home', url: root_path, class: 'active'},
+           {controller: '', text: '', url: root_path, class: 'after'},
+
+         ]
+      return menu
+    end
+
     menu = [
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: :alerts, text: 'Alerts', url: alerts_path, class: '' },
@@ -146,6 +156,7 @@ module ApplicationHelper
            { controller: :groups, text: 'Groups', url: groups_path, class: '' },
            { controller: :users, text: 'Users' ,url: users_path, class: '' }
     ]
+
 
     index = 0
     index_first = 0

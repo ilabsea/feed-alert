@@ -68,7 +68,7 @@ function removeAlertKeyword(){
   $(document).on("click", ".remove-alert-keyword", function(){
     var alertKeywordId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this keyword"))
+    if(!confirm("Are you sure to remove this keyword ?"))
       return false
 
     $this = $(this)

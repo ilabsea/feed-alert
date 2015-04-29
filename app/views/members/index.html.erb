@@ -1,5 +1,5 @@
 <% content_for(:title) { "Members"} %>
-<%= page_header "List Member" %>
+<%= page_header "List of Members" %>
 
 <div class='clearfix'>
   <div class='left'>
@@ -33,7 +33,7 @@
         <td><%= boolean_text member.sms_alert %></td>
         <td>
           <%= link_edit " ", edit_member_path(member) %>
-          <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this member' } %>
+          <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this member ?' } %>
         </td>
       </tr>
     <% end %>

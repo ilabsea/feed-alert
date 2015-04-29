@@ -9,10 +9,12 @@
       In the world overwhelm information, FeedAlert shinks the gaps and gets you the topic you are interested in.
     </p>
 
-    <p class="app-desc">
-      <span style='margin-right: 15px;'> Get started </span>
-      <%= link_to "Sign In", sign_in_path(), class: 'btn btn-primary btn-app' %>
-    </p>
+    <% if !user_signed_in? %>
+      <p class="app-desc">
+        <span style='margin-right: 15px;'> Get started </span>
+        <%= link_to "Sign In", sign_in_path(), class: 'btn btn-primary btn-app' %>
+      </p>
+    <% end %>
 
   </div>
 

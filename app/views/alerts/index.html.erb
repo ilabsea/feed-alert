@@ -1,5 +1,5 @@
 <% content_for(:title) { "Alerts"} %>
-<%= page_header "List Alert" %>
+<%= page_header "List of Alerts" %>
 
 <div class='clearfix' >
 
@@ -33,7 +33,7 @@
         <td><%= truncate(alert.keywords.map(&:name).join(","), length: 120) %></td>
         <td>
            <%= link_edit " ", edit_alert_path(alert) %>
-           <%= link_destroy " ", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert' } %>
+           <%= link_destroy " ", alert_path(alert), method: :delete, data: { confirm: 'Are you sure to delete this alert ?' } %>
         </td>
       </tr>
     <% end %>
