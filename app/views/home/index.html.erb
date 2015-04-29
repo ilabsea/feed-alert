@@ -1,5 +1,5 @@
 <div class='row'>
-  <div class='col-lg-6'>
+  <div class='col-lg-6 col-md-6'>
     <h1 class="tag-line">Keep people informed</h1>
     <span class="tag-line-sub">of information you are interested in.</span>
 
@@ -16,14 +16,14 @@
 
   </div>
 
-  <div class='col-lg-6'>
-    <%= image_tag 'feed-alert.png' %>
+  <div class='col-lg-6 col-md-6'>
+    <%= image_tag 'feed-alert.png', class: 'flow' %>
   </div>
 </div>
 
 <div class='feature-wrapper'>
-  <div class="row panel feature">
-    <div class='col-lg-3'>
+  <div class="panel feature clearfix">
+    <div class='feature-item'>
       <div class="media">
         <div class="media-left">
           <%=link_to "#" do %>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class='col-lg-3'>
+    <div class='feature-item'>
       <div class="media">
         <div class="media-left">
           <%=link_to "#" do %>
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class='col-lg-3'>
+    <div class='feature-item'>
       <div class="media">
         <div class="media-left">
           <%=link_to "#" do %>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class='col-lg-3'>
+    <div class='feature-item'>
       <div class="media">
         <div class="media-left">
           <%=link_to "#" do %>
@@ -78,5 +78,20 @@
         </div>
       </div>
     </div>
+
+    <div class='feature-item'>
+      <div class="media">
+        <div class="media-left">
+          <%=link_to "#" do %>
+            <%=image_tag "features/save_time.png", class: "media-object" %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Save Time</h4>
+          <p>From manual news scanning</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -17,6 +17,13 @@ class User < ActiveRecord::Base
   ROLE_NORMAL = 'Normal'
 
   before_save :clean_user_name
+  before_create { generate_token(:auth_token) }
+
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
 
   def clean_user_name
     self.user_name.downcase!

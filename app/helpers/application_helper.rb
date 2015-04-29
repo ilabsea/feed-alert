@@ -108,10 +108,14 @@ module ApplicationHelper
   end
 
   def link_destroy value , url, options={}, &block
+    options ||= {}
+    options[:title] ||= "Delete"
     link_icon "glyphicon-trash", value, url, options, &block
   end
 
   def link_edit value , url, options={}, &block
+    options ||= {}
+    options[:title] ||= "Edit"
     link_icon "glyphicon glyphicon-edit", value, url, options, &block
   end
 
@@ -136,11 +140,13 @@ module ApplicationHelper
 
   def app_menu name
     menu = [
+           {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: :alerts, text: 'Alerts', url: alerts_path, class: '' },
            { controller: :members, text: 'Members', url: members_path, class: '' },
            { controller: :groups, text: 'Groups', url: groups_path, class: '' },
            { controller: :users, text: 'Users' ,url: users_path, class: '' }
     ]
+
     index = 0
     index_first = 0
     index_last = menu.size - 1

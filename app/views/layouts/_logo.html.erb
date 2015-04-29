@@ -1,4 +1,8 @@
 <div>
-  <div class='text-left logo'> <%= link_to ENV['APP_NAME'], root_url %> </div>
+  <div class='text-left logo'> 
+    <%= link_to root_url do %>
+      <%=image_tag 'feed-alert-logo.png', alt: ENV['APP_NAME'] %>
+    <% end %>
+   </div>
   <div class='logo-bar'></div>
 </div>

@@ -4,19 +4,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
-  helper_method :current_user
+  helper_method :current_user, :user_signed_in?
 
   protected
 
   def current_user
     if user_signed_in?
-      @current_user ||= User.find(session[:user_id])
+      @current_user ||= User.find_by(auth_token: cookies[:auth_token])
     end
   end
 
   def authenticate_user!
     unless user_signed_in?
-      redirect_to sign_in_path, alert: "You need to sign in first"
+      redirect_to sign_in_path, alert: "You can not access this page, Please sign in"
     end
   end
 
@@ -29,15 +29,19 @@ class ApplicationController < ActionController::Base
   end
 
   def user_signed_in?
-    session[:user_id].present?
+    cookies[:auth_token].present?
   end
 
   def sign_in(user)
-    session[:user_id] = user.id
+    if params[:remember_me]
+      cookies.permanent[:auth_token] = user.auth_token
+    else
+      cookies[:auth_token] = user.auth_token
+    end
   end
 
   def sign_out
-    session[:user_id] = nil
+    cookies.delete(:auth_token)
   end
 
   def sign_in_and_redirect_for(user)

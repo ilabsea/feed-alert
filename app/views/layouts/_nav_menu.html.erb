@@ -7,15 +7,17 @@
         <% end %>
       </ul>
 
-      <ul id='right-menu'>
-        <li> <i class='glyphicon glyphicon-user'> </i> <%= current_user.full_name %> </li>
-        <li>
-          <%= link_to sign_out_path(), method: :delete do %>
-            <i class='glyphicon glyphicon-log-out'> </i> Sign Out
-          <% end %>
-        </li>
+      <% if user_signed_in? %>
+        <ul id='right-menu'>
+          <li> <i class='glyphicon glyphicon-user'> </i> <%= current_user.full_name %> </li>
+          <li>
+            <%= link_to sign_out_path(), method: :delete do %>
+              <i class='glyphicon glyphicon-log-out'> </i> Sign Out
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
 
-    </ul>
 
     </div>
 

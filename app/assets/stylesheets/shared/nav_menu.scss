@@ -102,17 +102,42 @@ body {
 }
 
 .feature {
-  background: asset-url("feature.png");
   background-repeat: repeat-x;
   @include border-radius(5px);
   min-height: 80px;
-  padding: 5px 0;
+  padding: 8px 0;
   margin: 0 auto;
   p {
     line-height: 1.1;
     color: #666;
+    font-size: 12px;
   }
   .media {
 
+  }
+  .media-heading{
+    margin-bottom: 5px;
+  }
+}
+
+.feature-item {
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.flow {
+  width: 100%;
+  max-width: 380px;
+}
+
+@media (min-width: $screen-md-min){
+  .feature {
+    background: asset-url("feature.png");
+  }
+
+  .feature-item {
+    width: 20%;
+    float: left;
+    padding: 5px;
   }
 }
