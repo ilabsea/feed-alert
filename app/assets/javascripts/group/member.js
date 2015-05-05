@@ -37,6 +37,10 @@ function addMember(){
     var memberId = $("#member-value").val()
     var groupId = $("#member-value").attr("data-group-id")
     var url = $("#member-value").attr("data-url")
+    if(!memberId) {
+      setNotification("alert", "Please enter a valid member")
+      return false;
+    }
 
     var data = {member_id: memberId, group_id: groupId, is_member: true }
     $.ajax({
@@ -44,10 +48,11 @@ function addMember(){
       url: url,
       data: data,
       success: function(res){
+        setNotification("notice", "Member added")
         updateMemberList(res)
       },
       error: function(){
-        alert("Could not add this member to the group")
+        setNotification("alert", "Please enter a valid member")
         //clean
         $("#member-typeahead").val("")
         $("#member-value").val("")

@@ -29,6 +29,10 @@ function addAlertKeyword(){
   $("#add-alert-keyword").on('click', function(){
     var url = $(this).attr("href")
     var keyword = $("#alert-keyword-typeahead").val()
+    if(!keyword) {
+      setNotification("alert", "Please enter valid keyword")
+      return false
+    }
     var data = {keyword: keyword }
 
     $.ajax({
@@ -36,11 +40,12 @@ function addAlertKeyword(){
       url: url,
       data: data,
       success: function(res){
+        setNotification("notice", "Keyword added")
         updateAlertKeywordList(res)
       },
 
       error: function(){
-        alert("Could not add this keyword to alert")
+        setNotification('error', "Could not add this keyword to alert")
         cleanAlertKeywordTypeAhead()
       }
     })

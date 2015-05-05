@@ -21,6 +21,7 @@
 
 //= require shared/alert-animate
 //= require shared/hidden-content
+//= require shared/notification
 
 //= require group/member
 //= require member/group

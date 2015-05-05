@@ -40,6 +40,10 @@ function addAlertGroup(){
     var $alertGroupValue = $("#alert-group-value")
     var groupId = $alertGroupValue.val()
     var url = $(this).attr("href")
+    if(!groupId){
+      setNotification("alert", "Please enter a valid group")
+      return false;
+    }
 
     var data = {group_id: groupId }
 
@@ -48,11 +52,12 @@ function addAlertGroup(){
       url: url,
       data: data,
       success: function(res){
+        setNotification("notice", "Group added")
         updateAlertGroupList(res)
       },
 
       error: function(){
-        alert("Could not add this group to alert")
+        setNotification("alert", "Could not add this group to alert")
         cleanAlertGroupTypeAhead()
       }
     })
