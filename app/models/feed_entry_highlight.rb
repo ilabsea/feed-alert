@@ -18,8 +18,10 @@ class FeedEntryHighlight
   def title
    if @search_highlight["highlight"]["title"]
      @search_highlight["highlight"]["title"].first
+   elsif @search_highlight["_source"]["title"]
+     @search_highlight["_source"]["title"]
    else
-    @search_highlight["_source"]["title"]
+     ''
    end
   end
 
