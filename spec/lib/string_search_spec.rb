@@ -37,4 +37,20 @@ describe StringSearch do
     end
   end
 
+  describe '.translate' do
+    it 'translate from key to string value' do
+      string_search = StringSearch.instance.set_source("keywords: {{keywords}} count: {{count}}")
+      translate_options = {keywords: 'malaria, tb, ebola', count: '20'}
+      result = string_search.translate(translate_options)
+      expect(result).to eq "keywords: malaria, tb, ebola count: 20"
+    end
+
+    it 'leave pattern if no matched' do
+      string_search = StringSearch.instance.set_source("keywords: {keywords} count: {{count}}")
+      translate_options = {keywords: 'malaria, tb, ebola', coun: '20'}
+      result = string_search.translate(translate_options)
+      expect(result).to eq "keywords: {keywords} count: {{count}}"
+    end
+  end
+
 end

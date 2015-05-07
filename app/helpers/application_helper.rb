@@ -84,13 +84,9 @@ module ApplicationHelper
      end
   end
 
-  def email_template_params_for selector
-    template_params = %w(url keyword member_name date)
-    template_params_selector template_params, selector
-  end
 
   def sms_template_params_for selector
-    template_params = %w(url keyword member_name date)
+    template_params = %w(alert_name total_match keywords)
     template_params_selector template_params, selector
   end
 

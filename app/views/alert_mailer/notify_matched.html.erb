@@ -20,7 +20,9 @@
 <% @search_highlight.each do |search_highlight| %>
   <% feed_entry_highlight = FeedEntryHighlight.new(search_highlight) %>
   <p>
-    <h4 class='feed-title'> <%= link_to feed_entry_highlight.title.html_safe, feed_entry_highlight.url %> </h4>
+    <h4 class='feed-title'> 
+      <%= link_to feed_entry_highlight.title.html_safe, alert_feed_entry_url(@alert, feed_entry_highlight.id) %>
+    </h4>
     <p style='color:gray; font-size: 90%; font-style:italic;'>
       <%= feed_entry_highlight.keywords %>
       <%= link_to 'Original Source', feed_entry_highlight.url %>

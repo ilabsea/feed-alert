@@ -13,7 +13,7 @@ class Alert < ActiveRecord::Base
   has_many :feeds, dependent: :destroy
   has_many :feed_entries
 
-  accepts_nested_attributes_for :alert_places, allow_destroy: true
+  # accepts_nested_attributes_for :alert_places, allow_destroy: true
 
   INTERVAL_UNIT_HOUR = "Hour"
   INTERVAL_UNIT_DAY  = "Day"
@@ -61,20 +61,29 @@ class Alert < ActiveRecord::Base
 
         if emails_to.length > 0 && alert.total_match > 0
           search_results_by_alert = search_result.results_by_alert(alert.id)
-          AlertMailer.notify_matched(search_results_by_alert, alert.id, group.name, emails_to, date_range).deliver_now
+
+          # delay, delay_for, delay_unitl
+          AlertMailer.delay_for(10.seconds).notify_matched(search_results_by_alert, alert.id, group.name, emails_to, date_range)
         end
 
         if smses_to.length > 0 && alert.total_match > 0
           smses_to.each do |sms|
-            to = "sms://#{sms}"
-            options = { from: ENV['APP_NAME'],
-                        to: 'sms://0975553553',
-                        body: "#{alert.name} has #{alert.total_match} feed #{'entry'.pluralize(alert.total_match)} matched your keywords" }
+            options = { from: ENV['APP_NAME'], to: "sms://#{sms}", body: alert.translate_message }
+            # wait_until, wait
             SmsAlertJob.set(wait: 10.seconds).perform_later(options)
           end
         end
       end
     end
+  end
 
+  def translate_message
+    translate_options = {
+      alert_name: self.name,
+      total_match: self.total_match,
+      keywords: self.keywords.map(&:name).join(", ")
+    }
+
+    StringSearch.instance.set_source(self.sms_template).translate(translate_options)
   end
 end

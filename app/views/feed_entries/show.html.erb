@@ -13,6 +13,7 @@
 
 
 <hr class='page-viewer-border' />
+
 <%
    highlight = StringSearch.instance.set_source(@feed_entry.content).highlight_keywords(@feed_entry.keywords) do |keyword|
     "<em class='highlight'><b>#{keyword}</b></em>"

@@ -15,6 +15,13 @@ class StringSearch
     @source.gsub(reg_for_keywords(keywords_use), &block)
   end
 
+  def translate values
+    @source.gsub /\{[^\}\}]*\}\}/ do |matched|
+      key = matched[2..-3]
+      values[key.to_sym] || matched
+    end
+  end
+
   def highlight_keywords keywords, &block
     keywords_use = [*keywords]
     @source.gsub(reg_for_keywords(keywords_use), &block)
