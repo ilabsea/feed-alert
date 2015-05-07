@@ -1,0 +1,19 @@
+language: ruby
+cache: bundler
+
+addons:
+  code_climate:
+    repo_token: '85edc625930f1de285c86060f710932603b6c92f9d8538f5440d6728dc62baf9'
+rvm:
+  - "2.2.1"
+
+# uncomment this line if your project needs to run something other than `rake`:
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec
+
+before_script:
+# - rm Gemfile.lock
+  - cp config/application.travis.yml config/application.yml
+  - mysql -e 'create database stream_alert_test'

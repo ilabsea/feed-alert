@@ -1,19 +1,7 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Elasticsearch Plugin used
-
-* Search Highlighter https://github.com/wikimedia/search-highlighter
-
-* Mapper attachment https://github.com/elastic/elasticsearch-mapper-attachments
-
-* Elasticsearch Head plugin
-
-* Elasticsearch Hq plugin
+FeedAlert is a free and open-source tool for monitor your interest’s news sources via RSS feed. You can get email or SMS notification anytime that FeedAlert finds news result on the topic you are interested in. In the world overwhelm information, FeedAlert shinks the gaps and gets you the topic you are interested in.
 
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+{<img src="https://travis-ci.org/channainfo/content-alert.svg" alt="Build Status" />}[https://travis-ci.org/channainfo/content-alert]
+{<img src="https://codeclimate.com/github/channainfo/content-alert/badges/gpa.svg" />}[https://codeclimate.com/github/channainfo/content-alert]

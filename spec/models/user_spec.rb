@@ -4,7 +4,7 @@ RSpec.describe User, :type => :model do
   describe 'validations' do
 
     it { should validate_confirmation_of(:password)}
-    it { should ensure_length_of(:password).is_at_least(6).is_at_most(72) }
+    it { should validate_length_of(:password).is_at_least(6).is_at_most(72) }
     it { should validate_uniqueness_of(:user_name)}
   end
 

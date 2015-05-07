@@ -48,27 +48,22 @@ module ApplicationHelper
 
   def breadcrumb_str options
     items = []
-    char_sep = "&raquo;".html_safe
-    if( !options.nil?  && options.size != 0)
-      items <<  content_tag(:li , :class => "active") do
-        link_to_home("Home", root_path) + content_tag(:span, char_sep, :class => "divider")
-      end
+    if(!options.blank?)
+      items <<  content_tag(:li, link_home("Home", root_path) , :class => "active")
       options.each do |option|
-        option.each do |key, value|
-          if value
-          items << content_tag(:li) do
-            link_to(key, value) + content_tag(:span, char_sep, :class => "divider")
-          end 
-          else
-            items << content_tag(:li, key, :class =>"active") 
-          end
-        end
-      end 
+        items << breadcrumb_node(option.first)
+      end
     else
       icon = content_tag "i", " ", :class => "icon-user  icon-home"
-      items << content_tag(:li, icon + "Home", :class => "active")  
+      items << content_tag(:li, icon + "Home", :class => "active")
     end
     items.join("").html_safe
+  end
+
+  def breadcrumb_node option
+    key = option[0]
+    value = option[1]
+    value ? content_tag(:li){ link_to(key, value)} : content_tag(:li, key, :class =>"active")
   end
 
   def page_header title, options={},  &block
