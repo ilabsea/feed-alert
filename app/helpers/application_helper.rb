@@ -151,7 +151,7 @@ module ApplicationHelper
 
     menu = [
            {controller: :home, text: 'Home', url: root_path, class: ''},
-           { controller: :alerts, text: 'Alerts', url: alerts_path, class: '' },
+           { controller: [:alerts, :feed_entries], text: 'Alerts', url: alerts_path, class: '' },
            { controller: :members, text: 'Members', url: members_path, class: '' },
            { controller: :groups, text: 'Groups', url: groups_path, class: '' },
            { controller: :users, text: 'Users' ,url: users_path, class: '' }
@@ -163,7 +163,8 @@ module ApplicationHelper
     index_last = menu.size - 1
 
     menu.each_with_index do |item, i|
-      if name == item[:controller].to_s
+      menu_controller = (item[:controller].class == Array ) ? item[:controller] : [item[:controller]]
+      if menu_controller.include?(name.to_sym)
         index = i
         break
       end
@@ -184,6 +185,14 @@ module ApplicationHelper
       menu[index+1][:class] = :after
     end
     menu
+  end
+
+  def data_as_url datas
+    "data:text/html;charset=utf-8," + u(datas)
+  end
+
+  def highlight_search result
+    "<em class='highlight' style='background:yellow;'><b>#{result}</b></em>"
   end
 
 end

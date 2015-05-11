@@ -16,7 +16,9 @@
 
 <%
    highlight = StringSearch.instance.set_source(@feed_entry.content).highlight_keywords(@feed_entry.keywords) do |keyword|
-    "<em class='highlight'><b>#{keyword}</b></em>"
+     highlight_search(keyword)
    end
 %>
-<%= highlight.html_safe %>
+
+<%#= content_tag :iframe, nil, src: data_as_url(highlight), style: 'border: none; width: 100%; min-height: 500px;' %>
+<%= content_tag :iframe, nil, style: 'border: none; width: 100%; min-height: 500px;', srcdoc: highlight  %>

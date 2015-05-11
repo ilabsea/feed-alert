@@ -15,6 +15,12 @@ class FeedEntriesController < ApplicationController
     @alert = Alert.find(params[:alert_id])
     @feed_entry = FeedEntry.find(params[:id])
   end
+
+  def embed
+    @alert = Alert.find(params[:alert_id])
+    @feed_entry = FeedEntry.find(params[:id])
+    render layout: false
+  end
 end
 
 #['standalone server',  'ILI/ARI sentinel system', 'rhinovirus/enterovirus–positive', 'parameter to the url', 'Learning Erlang']
