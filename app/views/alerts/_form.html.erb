@@ -10,6 +10,15 @@
   </div>
 
   <div class='input-row'>
+    <%=f.input :from_time, as: :string, label: 'From (HH:MM)', input_html: {class: 'form-control hour-picker', autocomplete: :off} %>
+  </div>
+
+  <div class='input-row'>
+    <%=f.input :to_time, as: :string, label: 'To (HH:MM)', 
+                         input_html: {class: 'form-control hour-picker', autocomplete: :off} %>
+  </div>
+
+  <div class='input-row'>
     <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>
   </div>
 

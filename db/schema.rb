@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429025717) do
+ActiveRecord::Schema.define(version: 20150511081621) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 20150429025717) do
     t.integer  "alert_places_count",   limit: 4,     default: 0
     t.integer  "alert_groups_count",   limit: 4,     default: 0
     t.integer  "alert_keywords_count", limit: 4,     default: 0
+    t.string   "from_time",            limit: 255
+    t.string   "to_time",              limit: 255
   end
 
   create_table "feed_entries", force: :cascade do |t|

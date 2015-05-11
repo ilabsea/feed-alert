@@ -22,7 +22,9 @@ class Alert < ActiveRecord::Base
 
   validates :name, presence: true
   validates :url, presence: true
-  #validates :interval, presence: true, numericality: {greater_than: 0}
+  validates :from_time, :to_time, presence: true
+  validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
+  validates :to_time, numericality: {message: "must be greater than From field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
 
   attr_accessor :total_match
 
@@ -66,7 +68,9 @@ class Alert < ActiveRecord::Base
           AlertMailer.delay_for(10.seconds).notify_matched(search_results_by_alert, alert.id, group.name, emails_to, date_range)
         end
 
-        if smses_to.length > 0 && alert.total_match > 0
+        sms_time = Time.zone.now
+
+        if smses_to.length > 0 && alert.total_match > 0 && is_time_appropiate?(sms_time)
           smses_to.each do |sms|
             options = { from: ENV['APP_NAME'], to: "sms://#{sms}", body: alert.translate_message }
             # wait_until, wait
@@ -75,6 +79,15 @@ class Alert < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def is_time_appropiate? sms_time
+    working_minutes = sms_time.hour * 60 + sms_time.min
+    self.in_minutes(self.from_time) <= working_minutes && working_minutes  <= self.in_minutes(self.to_time)
+  end
+
+  def in_minutes field
+    field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
   end
 
   def translate_message

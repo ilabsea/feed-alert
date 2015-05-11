@@ -9,18 +9,20 @@ class FetchPage
     open(url) { |io| io.read }
   end
 
-  def run(url)
-    content = content_from(url)
+  def complete_url_form(content)
     doc = Nokogiri::HTML(content)
     domain = domain(url)
+
     doc.search('link,a,img').each do |node|
       attr_name = (node.name == 'img' ? 'src' : 'href')
-      if valid_relative_url(node[attr_name])
-        node[attr_name] = domain + node[attr_name]
-      end
+      node[attr_name] = (domain + node[attr_name]) if valid_relative_url(node[attr_name])
     end
-
     doc.to_html
+  end
+
+  def run(url)
+    content = content_from(url)
+    complete_url_form(content)
   end
 
   def valid_relative_url(url)

@@ -11,7 +11,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.from_query(query)
-    like = "%#{query}%"
+    like = "#{query}%"
     where([ "full_name LIKE ? OR email LIKE ? OR phone LIKE ? ", like, like, like ])
   end
 end

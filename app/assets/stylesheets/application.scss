@@ -8,7 +8,11 @@
 @import "base/reset";
 @import "base/object";
 
+@import "bootstrap-timepicker";
+@import "bootstrap-timepicker-responsive";
+
 @import "shared/nav_menu";
+@import "shared/time_picker";
 
 @import "sign_in/layout";
 @import "application/layout";

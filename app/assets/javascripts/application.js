@@ -16,12 +16,14 @@
 //= require jquery.fieldSelection
 //= require tmpl
 
+//= require bootstrap-timepicker
 //= require bootstrap-sprockets
 //= require twitter/typeahead
 
 //= require shared/alert-animate
 //= require shared/hidden-content
 //= require shared/notification
+//= require shared/hour-picker
 
 //= require group/member
 //= require member/group
@@ -29,6 +31,7 @@
 //= require alert/form
 //= require alert/alert_group
 //= require alert/alert_keyword
+
 
 
 

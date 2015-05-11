@@ -195,4 +195,11 @@ module ApplicationHelper
     "<em class='highlight' style='background:yellow;'><b>#{result}</b></em>"
   end
 
+  def alert_time alert
+    results = []
+    results << "from #{alert.from_time}" unless alert.from_time.blank?
+    results << "to #{alert.to_time}" unless alert.to_time.blank?
+    results.join(", ")
+  end
+
 end

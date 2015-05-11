@@ -13,7 +13,7 @@ class Group < ActiveRecord::Base
   end
 
   def self.from_query(query)
-    like = "%#{query}%"
+    like = "#{query}%"
     where([ "name LIKE ? OR description LIKE ? ", like, like ])
   end
 end

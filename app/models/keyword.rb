@@ -10,7 +10,7 @@ class Keyword < ActiveRecord::Base
   end
 
   def self.from_query(query)
-    like = "%#{query}%"
+    like = "#{query}%"
     where([ "name LIKE ? ", like])
   end
 end

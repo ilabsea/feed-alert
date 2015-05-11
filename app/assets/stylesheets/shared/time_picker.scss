@@ -1,0 +1,31 @@
+
+.bootstrap-timepicker-widget {
+  table {
+    margin: 0 !important;
+    border: 0 !important;
+    td {
+      padding: 0px !important;
+      margin: 0px !important;
+      text-align: left;
+
+      &.separator{
+        width: 15px;
+      }
+      &:not(.separator) {
+        min-width: 80px;
+      }
+      a {
+        padding-bottom: 0 !important;
+        padding-left: 15px;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        text-align: left;
+        display: unset;
+        &:hover {
+          border: none;
+          background: none;
+        }
+      }
+    }
+  }
+}

@@ -28,7 +28,12 @@
   <tbody>
     <% @alerts.each do |alert| %>
       <tr>
-        <td><%= link_to alert.name, edit_alert_path(alert) %></td>
+        <td>
+          <%= link_to alert.name, edit_alert_path(alert) %>
+          <p class="sub-text">
+            <span>Sms alert </span> (<%= alert_time(alert) %>)
+          </p>
+        </td>
         <td><%= alert.url %></td>
         <td><%= truncate(alert.keywords.map(&:name).join(","), length: 120) %></td>
         <td>
