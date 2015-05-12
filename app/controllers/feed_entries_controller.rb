@@ -22,5 +22,3 @@ class FeedEntriesController < ApplicationController
     render layout: false
   end
 end
-
-#['standalone server',  'ILI/ARI sentinel system', 'rhinovirus/enterovirus–positive', 'parameter to the url', 'Learning Erlang']

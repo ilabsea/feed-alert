@@ -10,6 +10,7 @@ class HtmlSearch
     @doc.to_html
   end
 
+  private
   def highlight_node(node, &block)
     node.children.each do |child|
       if child.name == 'text'
