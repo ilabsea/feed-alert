@@ -23,7 +23,7 @@
         <table bgcolor="#999999">
           <tr>
             <td>
-              <h3> <%=image_tag 'feed-alert-logo.png', alt: 'Feed Alert' %> </h3>
+              <h1> <%= link_to(root_url, alt: 'Feed Alert') { mailer_image_tag("feed-alert-logo.png", alt: ENV['APP_NAME']) } %> </h1>
             </td>
           </tr>
         </table>

@@ -3,4 +3,6 @@ class ApplicationMailer < ActionMailer::Base
   layout 'mailer'
   self.asset_host = nil
   include Roadie::Rails::Mailer
+
+  add_template_helper(MailerHelper)
 end

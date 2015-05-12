@@ -201,5 +201,4 @@ module ApplicationHelper
     results << "to #{alert.to_time}" unless alert.to_time.blank?
     results.join(", ")
   end
-
 end

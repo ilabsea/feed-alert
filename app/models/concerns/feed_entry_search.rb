@@ -162,6 +162,7 @@ module FeedEntrySearch
       criteria = build_criterias(options)
       # __elasticsearch__.search(criteria)
       # use raw version since elasticsearch-model does not support facet query
+      Rails.logger.info "Elasticsearch query: #{criteria}"
       results = self.__elasticsearch__.client.search(index: self.index_name, body: criteria)
       FeedEntrySearchResultPresenter.new(results)
     end

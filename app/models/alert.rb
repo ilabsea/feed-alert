@@ -28,66 +28,23 @@ class Alert < ActiveRecord::Base
 
   attr_accessor :total_match
 
-  def self.search_options(date_range)
-    options = {q: [] }
-    Alert.includes(:keywords).all.each do |alert|
-      options[:q] << { id: alert.id, keywords: alert.keywords.map(&:name) }
-    end
-
-    options[:from] = date_range.from
-    options[:to] = date_range.to
-    options
-  end
-
-  def search_options(date_range)
-    options = {}
-    options[:q] = [ {id: self.id, keywords: self.keywords.map(&:name)} ]
-    options[:from] = date_range.from
-    options[:to] = date_range.to
-    options
-  end
-
   def self.apply_search date_range
-    options = search_options(date_range)
-    search_result = FeedEntry.search(options)
-
-    search_result.alerts.each do |alert|
-      alert.groups.each do |group|
-        emails_to = []
-        smses_to  = []
-
-        group.members.each do |member|
-          emails_to << member.email if member.email_alert
-          smses_to  << member.phone if member.sms_alert
-        end
-
-        if emails_to.length > 0 && alert.total_match > 0
-          search_results_by_alert = search_result.results_by_alert(alert.id)
-
-          # delay, delay_for, delay_unitl
-          AlertMailer.delay_for(10.seconds).notify_matched(search_results_by_alert, alert.id, group.name, emails_to, date_range)
-        end
-
-        sms_time = Time.zone.now
-
-        if smses_to.length > 0 && alert.total_match > 0 && is_time_appropiate?(sms_time)
-          smses_to.each do |sms|
-            options = { from: ENV['APP_NAME'], to: "sms://#{sms}", body: alert.translate_message }
-            # wait_until, wait
-            SmsAlertJob.set(wait: 10.seconds).perform_later(options)
-          end
-        end
-      end
+    Alert.includes(:keywords).find_in_batches(batch_size: 5) do |alerts|
+      AlertResult.new(alerts, date_range).run
     end
   end
 
-  def is_time_appropiate? sms_time
-    working_minutes = sms_time.hour * 60 + sms_time.min
-    self.in_minutes(self.from_time) <= working_minutes && working_minutes  <= self.in_minutes(self.to_time)
+  def apply_search date_range
+    AlertResult.new([self], date_range).run
   end
 
   def in_minutes field
     field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
+  end
+
+  def is_time_appropiate? sms_time
+    working_minutes = sms_time.hour * 60 + sms_time.min
+    in_minutes(self.from_time) <= working_minutes && working_minutes <= in_minutes(self.to_time)
   end
 
   def translate_message
@@ -98,5 +55,13 @@ class Alert < ActiveRecord::Base
     }
 
     StringSearch.instance.set_source(self.sms_template).translate(translate_options)
+  end
+
+  def self.search_options alerts, date_range
+    options = {}
+    options[:q] = alerts.map {|alert| { id: alert.id, keywords: alert.keywords.map(&:name) } }
+    options[:from] = date_range.from
+    options[:to] = date_range.to
+    options
   end
 end

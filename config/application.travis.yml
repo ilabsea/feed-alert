@@ -8,6 +8,7 @@ default: &default
   MANDRILL_PASSWORD: 'f3dQZgGqJGiojkNQfcpiBg'
 
   HOST: "http://localhost:3000"
+  ASSET_HOST_URL: "http://localhost:3000"
 
   CODECLIMATE_REPO_TOKEN: '85edc625930f1de285c86060f710932603b6c92f9d8538f5440d6728dc62baf9'
 
@@ -22,7 +23,8 @@ default: &default
   ELASTICSEARCH_URL: 'http://localhost:9200'
   STREAM_ALERT_DATABASE_PASSWORD: ''
 
-  PROCESS_TIME: '30'
+  PROCESS_TIME_IN_MINUTES: '30'
+  DELAY_DELIVER_IN_MINUTES: '10'
 
 development:
   <<: *default

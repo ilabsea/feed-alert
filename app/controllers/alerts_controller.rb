@@ -23,11 +23,12 @@ class AlertsController < ApplicationController
     from = params[:from] || Time.zone.now-7.days
     to   = params[:to] || Time.zone.now
     @date_range = DateRange.new(from, to)
-    
-    search_options = Alert.search_options(@date_range)
+
+    alerts_for_options = Alert.includes(:keywords).all
+
+    search_options = Alert.search_options(alerts_for_options, @date_range)
     search_highlight = FeedEntry.search(search_options)
     @alerts = search_highlight.alerts
-
   end
 
   def index

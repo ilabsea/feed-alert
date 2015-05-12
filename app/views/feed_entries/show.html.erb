@@ -1,9 +1,14 @@
 <%= page_title "Feed matched detail" %>
-<h3> Feed entry for alert <%= @alert.name %> </h3>
+<h2> Alert "<i><%= @alert.name %></i>" </h2>
 
 <div class='feed-summary'>
   <h4 class='feed-title'>
-    <%= link_to @feed_entry.title, alert_feed_entry_path(@alert, @feed_entry) %>
+    <%= link_to alert_feed_entry_path(@alert, @feed_entry) do %>
+      <%= StringSearch.instance.set_source(@feed_entry.title).highlight_keywords(@feed_entry.keywords) do |keyword| 
+        highlight_search(keyword) 
+      end.html_safe
+      %>
+    <% end %>
   </h4>
 
   <p style='color:gray; font-size: 100%; font-style:italic;'>
