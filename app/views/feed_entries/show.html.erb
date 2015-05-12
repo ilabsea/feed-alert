@@ -1,5 +1,5 @@
 <%= page_title "Feed matched detail" %>
-<h2> Alert "<i><%= @alert.name %></i>" </h2>
+<h3> Alert <i>"<%= @alert.name %>"</i> </h3>
 
 <div class='feed-summary'>
   <h4 class='feed-title'>
@@ -20,7 +20,7 @@
 <hr class='page-viewer-border' />
 
 <%
-   highlight = StringSearch.instance.set_source(@feed_entry.content).highlight_keywords(@feed_entry.keywords) do |keyword|
+   highlight = HtmlSearch.new(@feed_entry.content).highlight(@feed_entry.keywords) do |keyword|
      highlight_search(keyword)
    end
 %>

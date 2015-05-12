@@ -1,7 +1,7 @@
 class StringSearch
 
   def self.instance
-    @@instance ||= StringSearch.new
+    @@instance ||= self.new
     @@instance
   end
 
