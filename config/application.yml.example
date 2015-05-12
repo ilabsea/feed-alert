@@ -2,6 +2,8 @@ default: &default
   APP_NAME: "FeedAlert"
   APP_VERSION: "Development"
 
+  TIME_ZONE: 'Bangkok'
+
   FEED_ALERT_MAIL: "channa.ly@gmail.com"
 
   MANDRILL_USERNAME: ''
