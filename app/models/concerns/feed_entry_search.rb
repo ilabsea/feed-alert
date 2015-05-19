@@ -70,31 +70,36 @@ module FeedEntrySearch
       self.__elasticsearch__.refresh_index!
     end
 
+    def alert_criterias alert_options
+      keywords = alert_options[:keywords]
+      alert_id = alert_options[:id]
+      criterias = []
+      keywords.each do |keyword|
+        match_phrase = {
+                        query: {
+                            multi_match: {
+                              query: keyword,
+                              type: "phrase",
+                              fields: ['title', 'summary', 'content']
+                            }
+                        },
+                        filter: {
+                          term: {
+                            alert_id: alert_id
+                          }
+                        }
+                     }
+
+        criterias << { filtered: match_phrase}
+      end
+      criterias
+    end
+
     def build_criterias options
       shoulds = []
 
-      options[:q].each do |alert|
-        keywords = alert[:keywords]
-        alert_id = alert[:id]
-        keywords.each do |keyword|
-          match_phrase = {
-                          query: {
-                              multi_match: {
-                                query: keyword,
-                                type: "phrase",
-                                fields: ['title', 'summary', 'content']
-                              }
-                          },
-                          filter: {
-                            term: {
-                              alert_id: alert_id
-                            }
-                          }
-                       }
-
-          shoulds << { filtered: match_phrase}
-        end
-        
+      options[:q].each do |alert_options|
+        shoulds += alert_criterias(alert_options) unless alert_options[:keywords].blank?
       end
 
       dsl = {
@@ -106,7 +111,7 @@ module FeedEntrySearch
       }
 
       if options[:from].present? && options[:to].present?
-        filter = {
+        dsl[:filter] = {
                   range: {
                       created_at: {
                         gte: options[:from],
@@ -114,8 +119,6 @@ module FeedEntrySearch
                       }
                   }
                 }
-
-        dsl[:filter] = filter
 
         dsl = { query: {
                          filtered: dsl

@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= favicon_link_tag 'favicon.ico' %>
 
+    <link href="/favicon.ico?version=20150504102347" type="image/x-icon" rel="icon">
     <title><%= content_for?(:title) ? yield(:title) : ENV['APP_NAME'] %></title>
 
     <%= stylesheet_link_tag    "application" %>
@@ -19,7 +21,7 @@
     <div class='container'>
       
       <%= render "layouts/logo" %>
-      <%= flash_messages %>
+      <%#= flash_messages %>
       <%= yield %>
 
       <%= render "layouts/footer" %>

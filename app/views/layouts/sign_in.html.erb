@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= favicon_link_tag 'favicon.ico' %>
 
     <title><%= content_for?(:title) ? yield(:title) : "Alert system" %></title>
-
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
