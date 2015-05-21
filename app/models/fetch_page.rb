@@ -11,11 +11,10 @@ class FetchPage
 
   def complete_url_in_content(url, content)
     doc = Nokogiri::HTML(content)
-    domain = domain(url)
 
     doc.search('link,a,img').each do |node|
       attr_name = (node.name == 'img' ? 'src' : 'href')
-      node[attr_name] = (domain + node[attr_name]) if valid_relative_url(node[attr_name])
+      node[attr_name] = ( domain(url) + node[attr_name]) if valid_relative_url(node[attr_name])
     end
     doc.to_html
   end
