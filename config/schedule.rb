@@ -24,7 +24,7 @@ env :PATH, ENV['PATH']
 job_type :rbenv_rake, %q!eval "$(rbenv init -)"; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output!
 
 every 5.minutes do
-  rbenv_rake "feed:reader"
+  rbenv_rake "feed:read_data"
 end
 
 #Alert::PROCESS_TIME is not accessible
