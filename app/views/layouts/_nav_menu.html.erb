@@ -2,7 +2,7 @@
   <div class='container'>
     <div id="nav-menu">
       <ul>
-        <% app_menu(controller_name).each do |item| %>
+        <% app_menu.each do |item| %>
           <li class='<%=item[:class]%>'><%= link_to item[:text], item[:url] %></li>
         <% end %>
       </ul>

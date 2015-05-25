@@ -108,13 +108,11 @@ module ApplicationHelper
   end
 
   def link_destroy value , url, options={}, &block
-    options ||= {}
     options[:title] ||= "Delete"
     link_icon "glyphicon-trash", value, url, options, &block
   end
 
   def link_edit value , url, options={}, &block
-    options ||= {}
     options[:title] ||= "Edit"
     link_icon "glyphicon glyphicon-edit", value, url, options, &block
   end
@@ -138,17 +136,19 @@ module ApplicationHelper
     link_to icon+text, url, options, &block
   end
 
-  def app_menu name
-    if !user_signed_in?
-      menu = [
-           {controller: '', text: '', url: root_path, class: 'before'},
-           {controller: :home, text: 'Home', url: root_path, class: 'active'},
-           {controller: '', text: '', url: root_path, class: 'after'},
+  def app_menu
+    user_signed_in? ? app_menu_signed_in(controller_name) : app_menu_default
+  end
 
-         ]
-      return menu
-    end
+  # not user_signed_in?
+  def app_menu_default
+    [ {controller: '', text: '', url: root_path, class: 'before'},
+      {controller: :home, text: 'Home', url: root_path, class: 'active'},
+      {controller: '', text: '', url: root_path, class: 'after'}]
+  end
 
+  # user_signed_in?
+  def app_menu_signed_in name
     menu = [
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: [:alerts, :feed_entries], text: 'Alerts', url: alerts_path, class: '' },
@@ -157,19 +157,11 @@ module ApplicationHelper
            { controller: :users, text: 'Users' ,url: users_path, class: '' }
     ]
 
-
-    index = 0
     index_first = 0
     index_last = menu.size - 1
 
-    menu.each_with_index do |item, i|
-      menu_controller = (item[:controller].class == Array ) ? item[:controller] : [item[:controller]]
-      if menu_controller.include?(name.to_sym)
-        index = i
-        break
-      end
-    end
-    
+    index = app_menu_index(menu, name)
+
     if index == index_first
       menu[index][:class] = :active
       menu[index+1][:class] = :after
@@ -185,6 +177,14 @@ module ApplicationHelper
       menu[index+1][:class] = :after
     end
     menu
+  end
+
+  def app_menu_index menu, name
+    menu.each_with_index do |item, index|
+      menu_controller = (item[:controller].class == Array ) ? item[:controller] : [item[:controller]]
+      return index  if menu_controller.include?(name.to_sym)
+    end
+    0
   end
 
   def data_as_url datas

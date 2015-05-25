@@ -7,7 +7,23 @@ Rails.application.routes.draw do
   
   resources :sessions, only: [:new, :create, :destroy]
   get 'sign_in' => 'sessions#new'
+  
+  get 'sign_up' => 'registrations#new'
+
+  post 'sign_up' => 'registrations#create'
+  get 'confirm' => 'registrations#confirm'
+  get 'welcome' => 'registrations#welcome'
+
+  resources :passwords, only: [:new, :update] do
+    collection do
+      put 'request_change'
+      put 'reset'
+      get 'change'
+    end
+  end
+
   delete 'sign_out' => 'sessions#destroy'
+
 
 
 

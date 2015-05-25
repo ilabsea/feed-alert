@@ -7,31 +7,41 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true
 
   # email must be in a valid format and has unique value if it is being provided
-  validates :email, email: true, if: ->(u) { u.email.present? }
-  validates :email, uniqueness: true, if: ->(u) { u.email.present? }
+  validates :email, email: true
+  validates :email, uniqueness: true
+  validates :email, email: {message: 'invalid format'}
 
-  validates :user_name, presence: true
-  validates :user_name, uniqueness: true
+  validates :phone, uniqueness: true, if: ->(u) { u.phone.present? }
+
+  validates :full_name, presence: true
 
   ROLE_ADMIN  = 'Admin'
   ROLE_NORMAL = 'Normal'
 
-  before_save :clean_user_name
-  before_create { generate_token(:auth_token) }
+  before_save :normalize_attrs
+  before_create :generate_attrs
+
   attr_accessor :old_password
 
-  def generate_token(column)
+  def generate_attrs
+    self.role = User::ROLE_NORMAL unless self.role.present?
+    generate_token_for(:auth_token)
+    generate_token_for(:confirmed_token)
+  end
+
+  def generate_token_for(column)
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while User.exists?(column => self[column])
   end
 
-  def clean_user_name
-    self.user_name.downcase!
+  def normalize_attrs
+    self.email.downcase!
   end
 
-  def self.authenticate(user_name, password)
-    user = User.find_by!(user_name: user_name.downcase)
+  def self.authenticate(email, password)
+    login_email = email.blank? ? '' : email.downcase
+    user = User.find_by!(email: login_email)
     user.authenticate(password)
   rescue ActiveRecord::RecordNotFound
     false

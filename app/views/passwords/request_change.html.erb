@@ -1,0 +1,19 @@
+<% content_for(:title) { "Change password instruction" } %>
+<h3 class="header-title"> Change password instruction sent</h3>
+
+<p>
+  Hi, <b> <%= @user.full_name %> </b>
+</p>
+
+<p>
+  <b> <%=ENV['APP_NAME']%> </b> has sent you an instruction email. Please follow the instruction in your email to change your password. </p>
+</p>
+
+<p>
+  If you leave this email, then your password will remain unchanged.
+</p>
+
+<hr />
+
+<%= render 'shared/email_delivery' %>
+

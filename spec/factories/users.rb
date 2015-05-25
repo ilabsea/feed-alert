@@ -1,18 +1,16 @@
 FactoryGirl.define do
-  factory :user do
+  factory :admin_user, class: User do
     full_name "Admin"
-    phone "0975553553"
-    sequence(:email){ |n| "admin-#{n}@ilabsea.org"}
-    sequence(:user_name){ |n| "admin-#{n}"}
+    sequence(:phone) {|n| "0102222-#{n}"}
+    sequence(:email) { |n| "admin-#{n}@ilabsea.org"}
     password "password"
     role User::ROLE_ADMIN
   end
 
-  factory :normal_user, class: User do
+  factory :user, class: User do
     full_name "member"
-    phone "0975553553"
+    sequence(:phone) {|n| "0115555-#{n}"}
     sequence(:email) {|n| "normal-#{n}@ilabsea.org"}
-    sequence(:user_name){|n| "normal-#{n}"}
     password 'password'
     role User::ROLE_NORMAL
   end

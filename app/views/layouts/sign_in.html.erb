@@ -22,7 +22,7 @@
       </div>
 
       <div class='sign-in clearfix'>
-        <%= flash_messages %>
+        <%#= flash_messages %>
         <%= yield %>
       </div>
 
@@ -30,5 +30,8 @@
     </div>
     
     <%= javascript_include_tag "application" %>
+    <%= render 'layouts/shared/notification' %>
+    <%= render 'layouts/shared/config' %>
+
   </body>
 </html>

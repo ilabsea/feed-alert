@@ -10,10 +10,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate(params[:user_name], params[:password])
+    if user = User.authenticate(params[:email], params[:password])
       redirect_to sign_in_and_redirect_for(user), notice: "Signed in successfully"
     else
-      flash.now[:alert] = "Invalid user name/password"
+      flash.now[:alert] = "Invalid email/password"
       render :new
     end
   end

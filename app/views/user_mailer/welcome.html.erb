@@ -1,0 +1,10 @@
+
+<p>
+  Hi, <b><%=@user.full_name %></b>
+</p>
+
+<p> 
+  Your <b><%=ENV['APP_NAME'] %></b>'s account has been activated. To start using <b><%=ENV['APP_NAME'] %></b> please click on the button below:
+</p>
+
+<%= link_to "Access #{ENV['APP_NAME']}", sign_in_url(email: @user.email), class: 'btn btn-primary btn-app' %>

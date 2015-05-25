@@ -1,0 +1,9 @@
+<p>
+  Hi, <b><%=@user.full_name %></b>
+</p>
+  
+<p>
+  Please Confirm your email address to activate your <b><%=ENV['APP_NAME'] %></b> account by just click on the button below.
+</p>
+
+<%= link_to "Confirm now", confirm_url(t: @user.confirmed_token), class: 'btn btn-primary btn-app' %>

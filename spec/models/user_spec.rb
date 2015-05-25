@@ -3,23 +3,24 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
   describe 'validations' do
 
+    it { should validate_presence_of(:full_name)}
     it { should validate_confirmation_of(:password)}
     it { should validate_length_of(:password).is_at_least(6).is_at_most(72) }
-    it { should validate_uniqueness_of(:user_name)}
+    it { should validate_uniqueness_of(:email)}
   end
 
   describe User, '.authenticate' do
     context 'allow admin user login' do
       it "with correct username/password system authenticates user" do
-        user = create(:user, user_name: 'vicheka', password: 'password')
+        user = create(:user, email: 'vicheka@feedalert.com', password: 'password')
 
-        result = User.authenticate('vicheka', 'password')
+        result = User.authenticate('vicheka@feedalert.com', 'password')
 
         expect(result).to eq(user)
       end
 
-      it 'reject user if user_name/password incorrect' do
-        create(:user, user_name: 'user@example.com', password: 'incorrect')
+      it 'reject user if email/password incorrect' do
+        create(:user, email: 'user@example.com', password: 'incorrect')
 
         result = User.authenticate('user@example.com', 'password')
 
@@ -30,7 +31,7 @@ RSpec.describe User, :type => :model do
   end
 
   describe User, '#change_password' do
-    let(:user) { create(:user, user_name: 'vicheka', password: 'password')}
+    let(:user) { create(:user, email: 'vicheka@feedalert.com', password: 'password')}
     context 'with valid passsword' do
       it "return true" do
         result = user.change_password('password', 'new_password', 'new_password')
@@ -54,4 +55,27 @@ RSpec.describe User, :type => :model do
 
   end
 
+  describe User, 'on create' do
+    it "generate auth_token for permanent login" do
+      user = create(:user)
+      expect(user.auth_token).to be_present
+    end
+
+    it "generate confirmed_token for email confirmation" do
+      user = create(:user)
+      expect(user.confirmed_token).to be_present
+    end
+
+    it 'set default role to Normal if not present' do
+      user = create(:user, role: nil)
+      expect(user.role).to eq User::ROLE_NORMAL
+    end
+  end
+
+  describe User, 'on before save' do
+    it "downcase the email for case insensitive login" do
+      user = create(:user, email: 'Channa.Info@gmail.com')
+      expect(user.email).to eq 'channa.info@gmail.com'
+    end
+  end
 end

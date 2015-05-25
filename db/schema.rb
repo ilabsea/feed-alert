@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511081621) do
+ActiveRecord::Schema.define(version: 20150525071012) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -132,17 +132,20 @@ ActiveRecord::Schema.define(version: 20150511081621) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",           limit: 255
-    t.string   "phone",           limit: 255
-    t.string   "password_digest", limit: 255
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.string   "user_name",       limit: 255
-    t.string   "role",            limit: 255
-    t.boolean  "email_alert",     limit: 1,   default: false
-    t.boolean  "sms_alert",       limit: 1,   default: false
-    t.string   "full_name",       limit: 255
-    t.string   "auth_token",      limit: 255
+    t.string   "email",                limit: 255
+    t.string   "phone",                limit: 255
+    t.string   "password_digest",      limit: 255
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "role",                 limit: 255
+    t.boolean  "email_alert",          limit: 1,   default: false
+    t.boolean  "sms_alert",            limit: 1,   default: false
+    t.string   "full_name",            limit: 255
+    t.string   "auth_token",           limit: 255
+    t.string   "confirmed_token",      limit: 255
+    t.datetime "confirmed_at"
+    t.string   "reset_password_token", limit: 255
+    t.datetime "reset_password_at"
   end
 
   add_foreign_key "alert_groups", "alerts"
