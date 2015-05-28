@@ -1,0 +1,5 @@
+<% content_for(:title) { "Edit Project"} %>
+
+<% content_for(:alert_tab) { render('shared/project_alerts', project: @project) } %>
+
+<%= render 'shared/project_overview', project: @project, project_in_tab: 1 %>

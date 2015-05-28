@@ -1,0 +1,46 @@
+<%
+  if project_in_tab == 1
+    project_in_tab1_state = 'active'
+    project_in_tab2_state = ''
+  else
+    project_in_tab1_state = ''
+    project_in_tab2_state = 'active'
+  end
+%>
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<%=project_in_tab1_state %>">
+      <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a>
+    </li>
+    <li role="presentation" class="<%=project_in_tab2_state %>">
+      <% if project.persisted? %>
+       <a href="#alerts" aria-controls="alerts" role="tab" data-toggle="tab">Alerts</a>
+      <% else %>
+        <a href="javascript:void(0)" style='cursor: auto;'>Alerts</a>
+      <% end %>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane <%=project_in_tab1_state%>" id="overview">
+      <%= render 'shared/project_form', project: project %>
+      <% if project.persisted? %>
+      <p style="margin-top: 60px;">
+        <%= link_to project_path(project), method: :delete, style: 'margin-left: 13em;' do %>
+          <i class='glyphicon glyphicon-trash'> </i> Delete this project
+        <% end %>
+      </p>
+      <% end %>
+    </div>
+
+    <% if project.persisted? %>
+      <div role="tabpanel" class="tab-pane <%=project_in_tab2_state%>" id="alerts">
+        <%= yield(:alert_tab) %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

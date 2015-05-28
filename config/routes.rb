@@ -25,7 +25,40 @@ Rails.application.routes.draw do
   delete 'sign_out' => 'sessions#destroy'
 
 
+  resources :projects do
+    resources :alerts do
 
+      collection do
+        get 'matched'
+      end
+
+      member do
+        get 'new_groups'
+        get 'new_keywords'
+      end
+      
+    end
+  end
+
+  resources :alerts, only: [] do
+    collection do
+      get 'matched'
+    end
+
+    member do
+      get 'new_groups'
+      get 'new_keywords'
+    end
+
+    resources :alert_groups
+    resources :alert_keywords
+
+    resources :feed_entries do
+      collection do
+        get 'matched'
+      end
+    end
+  end
 
   resources :groups do
     member do
@@ -52,25 +85,25 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :alerts do
-    collection do
-      get 'matched'
-    end
+  # resources :alerts do
+  #   collection do
+  #     get 'matched'
+  #   end
 
-    member do
-      get 'new_groups'
-      get 'new_keywords'
-    end
+  #   member do
+  #     get 'new_groups'
+  #     get 'new_keywords'
+  #   end
 
-    resources :alert_groups
-    resources :alert_keywords
+  #   resources :alert_groups
+  #   resources :alert_keywords
 
-    resources :feed_entries do
-      collection do
-        get 'matched'
-      end
-    end
-  end
+  #   resources :feed_entries do
+  #     collection do
+  #       get 'matched'
+  #     end
+  #   end
+  # end
 
 
   # The priority is based upon order of creation: first created -> highest priority.

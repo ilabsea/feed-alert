@@ -38,7 +38,7 @@ function addMember(){
     var groupId = $("#member-value").attr("data-group-id")
     var url = $("#member-value").attr("data-url")
     if(!memberId) {
-      setNotification("alert", "Please enter a valid member")
+      setNotification("alert", "Please enter a valid recipient")
       return false;
     }
 
@@ -48,11 +48,11 @@ function addMember(){
       url: url,
       data: data,
       success: function(res){
-        setNotification("notice", "Member added")
+        setNotification("notice", "Recipient added")
         updateMemberList(res)
       },
       error: function(){
-        setNotification("alert", "Please enter a valid member")
+        setNotification("alert", "Please enter a valid recipient")
         //clean
         $("#member-typeahead").val("")
         $("#member-value").val("")
@@ -84,7 +84,7 @@ function removeMember(){
   $(document).on("click", ".remove-member", function(){
     var membershipId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this member ?"))
+    if(!confirm("Are you sure to remove this recipient ?"))
       return false
 
     $this = $(this)

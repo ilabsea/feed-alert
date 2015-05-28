@@ -22,9 +22,9 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(filter_params)
     if @member.save
-      redirect_to edit_member_path(@member), notice: 'Member has been created'
+      redirect_to edit_member_path(@member), notice: 'Recipient has been created'
     else
-      flash.now[:alert] = 'Failed to create member'
+      flash.now[:alert] = 'Failed to create recipient'
       render :new
     end
   end
@@ -36,7 +36,7 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
     if(@member.update_attributes(filter_params))
-      redirect_to members_path, notice: 'Member has been updated'
+      redirect_to members_path, notice: 'Recipient has been updated'
     else
       flash.now[:alert] = 'Failed to update'
       render :edit
@@ -46,9 +46,9 @@ class MembersController < ApplicationController
   def destroy
     @member = Member.find(params[:id])
     if(@member.destroy)
-      redirect_to members_path, notice: 'Member has been deleted'
+      redirect_to members_path, notice: 'Recipient has been deleted'
     else
-      redirect_to members_path, alert: "Failed to delete the member"
+      redirect_to members_path, alert: "Failed to delete the recipient"
     end
   end
 

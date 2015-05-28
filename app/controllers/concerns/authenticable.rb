@@ -23,7 +23,7 @@ module Authenticable
   end
 
   def after_signed_out_path_for(user)
-    sign_in_path
+    root_path
   end
 
   def user_signed_in?

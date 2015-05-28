@@ -165,3 +165,21 @@ em.highlight {
   text-align: center;
   display: block;
 }
+.hoz-item {
+  border-bottom: 1px solid #eee;
+  background: #eee;
+  margin-bottom: 5px;
+  a {
+    padding: 10px 5px;
+    &:hover {
+    }
+    &::last-child {
+      border-bottom: none;
+    }
+  }
+}
+.text-gray{
+  color: #ccc;
+  font-style: italic;
+  font-size: 90%;
+}

@@ -15,7 +15,6 @@
 <table class='table panel'>
   <thead>
     <tr>
-      <td>Login</td>
       <td>Name</td>
       <td>Email</td>
       <td>Number</td>
@@ -26,8 +25,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to user.user_name, edit_user_path(user) %></td>
-        <td><%=user.full_name %></td>
+        <td><%= link_to user.full_name, edit_user_path(user) %></td>
         <td><%=user.email%></td>
         <td><%=user.phone %></td>
         <td><%=user.role%></td>

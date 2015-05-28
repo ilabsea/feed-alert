@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150525071012) do
+ActiveRecord::Schema.define(version: 20150528024340) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -57,7 +57,10 @@ ActiveRecord::Schema.define(version: 20150525071012) do
     t.integer  "alert_keywords_count", limit: 4,     default: 0
     t.string   "from_time",            limit: 255
     t.string   "to_time",              limit: 255
+    t.integer  "project_id",           limit: 4
   end
+
+  add_index "alerts", ["project_id"], name: "index_alerts_on_project_id", using: :btree
 
   create_table "feed_entries", force: :cascade do |t|
     t.string   "title",        limit: 255
@@ -131,6 +134,27 @@ ActiveRecord::Schema.define(version: 20150525071012) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.integer  "user_id",     limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
+
+  create_table "user_projects", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "project_id", limit: 4
+    t.boolean  "owner",      limit: 1, default: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "user_projects", ["project_id"], name: "index_user_projects_on_project_id", using: :btree
+  add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                limit: 255
     t.string   "phone",                limit: 255
@@ -154,7 +178,11 @@ ActiveRecord::Schema.define(version: 20150525071012) do
   add_foreign_key "alert_keywords", "keywords"
   add_foreign_key "alert_places", "alerts"
   add_foreign_key "alert_places", "places"
+  add_foreign_key "alerts", "projects"
   add_foreign_key "feed_entries", "alerts"
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "alerts"
+  add_foreign_key "projects", "users"
+  add_foreign_key "user_projects", "projects"
+  add_foreign_key "user_projects", "users"
 end

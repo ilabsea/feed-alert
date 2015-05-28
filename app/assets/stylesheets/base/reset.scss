@@ -23,9 +23,13 @@ tbody {
     padding: 14px 10px !important;
   }
 }
-a:hover {
+
+
+a:hover, a:focus {
+  color: #23527c;
   text-decoration: none;
 }
+
 .pagination {
   margin: 0;
 }

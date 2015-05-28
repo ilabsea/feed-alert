@@ -1,4 +1,6 @@
-<% content_for(:title) { "New User"} %>
-<%= page_header "Create Member" %>
+<% content_for(:title) { "New Recipient"} %>
 
+<%= render "shared/group_recipient_tab", group_recipient_tab_index: 2 %>
+<br />
+<h4> Create Recipient </h4>
 <%= render 'form' %>

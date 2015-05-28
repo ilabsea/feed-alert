@@ -1,10 +1,13 @@
-<% content_for(:title) { "Edit User"} %>
-<%= page_header "Edit Group" %>
+<% content_for(:title) { "Edit Group"} %>
+
+<%= render "shared/group_recipient_tab", group_recipient_tab_index: 1 %>
+<br />
+<h4> Edit Group</h4>
 
 <div class='row'>
   <div class='col-lg-6'> <%= render 'form' %> </div>
   <div class='col-lg-6'>
-    <h4 class='sub-title'> Registering member </h4>
+    <h4 class='sub-title'> Registering Recipient </h4>
     <%= render 'search_member' %>
 
     <div id='member-list'>

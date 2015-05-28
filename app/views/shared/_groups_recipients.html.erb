@@ -1,0 +1,36 @@
+<%
+  if group_recipient_tab == 2
+    group_recipient_tab1_state = ''
+    group_recipient_tab2_state = 'active'
+  else
+    group_recipient_tab1_state = 'active'
+    group_recipient_tab2_state = ''
+  end
+%>
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<%=group_recipient_tab1_state%>">
+      <a href="#groups" aria-controls="overview" role="tab" data-toggle="tab">Groups</a>
+    </li>
+
+    <li role="presentation" class="<%=group_recipient_tab2_state%>">
+       <a href="#recipients" aria-controls="alerts" role="tab" data-toggle="tab">Recipients</a>
+    </li>
+
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane <%=group_recipient_tab1_state%>" id="groups">
+      <br />
+      <%= render 'shared/groups', groups: groups %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane <%=group_recipient_tab2_state%>" id="recipients">
+      <br />
+      <%= render 'shared/members', members: members %>
+    </div>
+  </div>
+</div>

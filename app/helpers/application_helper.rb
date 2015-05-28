@@ -151,9 +151,8 @@ module ApplicationHelper
   def app_menu_signed_in name
     menu = [
            {controller: :home, text: 'Home', url: root_path, class: ''},
-           { controller: [:alerts, :feed_entries], text: 'Alerts', url: alerts_path, class: '' },
-           { controller: :members, text: 'Members', url: members_path, class: '' },
-           { controller: :groups, text: 'Groups', url: groups_path, class: '' },
+           { controller: [:projects, :alerts], text: 'Projects', url: projects_path, class: '' },
+           { controller: [:groups, :members], text: 'Groups/Recipient', url: groups_path, class: '' },
            { controller: :users, text: 'Users' ,url: users_path, class: '' }
     ]
 
@@ -200,5 +199,9 @@ module ApplicationHelper
     results << "from #{alert.from_time}" unless alert.from_time.blank?
     results << "to #{alert.to_time}" unless alert.to_time.blank?
     results.join(", ")
+  end
+
+  def active_tab_for_index(tab_index, tab)
+    tab_index == tab ? 'active' : ''
   end
 end

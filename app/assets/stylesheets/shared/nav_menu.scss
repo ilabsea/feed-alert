@@ -20,52 +20,52 @@ body {
   background: asset-url("backbody.png") repeat-x scroll center top rgba(0, 0, 0, 0);
   text-align: center;
   width: 100%;
+}
 
-  ul {
-    background: none repeat scroll 0 0 #ffffff;
-    border-bottom: 1px solid #ffffff;
+ul.main-menu {
+  background: none repeat scroll 0 0 #ffffff;
+  border-bottom: 1px solid #ffffff;
+  display: inline-block;
+  height: 31px;
+  margin: 0;
+  padding: 0;
+  li {
+    background: asset-url("backbody.png") repeat-x scroll center top rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #d0d0d0;
+    border-right: 1px solid #b6bac0;
+    cursor: pointer;
     display: inline-block;
-    height: 31px;
-    margin: 0;
-    padding: 0;
-    li {
-      background: asset-url("backbody.png") repeat-x scroll center top rgba(0, 0, 0, 0);
-      border-bottom: 1px solid #d0d0d0;
-      border-right: 1px solid #b6bac0;
-      cursor: pointer;
-      display: inline-block;
-      height: 32px;
-      line-height: 28px;
-      list-style: outside none none;
-      margin: 0 0 0 -3px;
+    height: 32px;
+    line-height: 28px;
+    list-style: outside none none;
+    margin: 0 0 0 -3px;
+    padding: 0 10px;
+    vertical-align: middle;
+    a {
+      display: block;
+      height: 100%;
+      margin: 0 -10px;
       padding: 0 10px;
-      vertical-align: middle;
-      a {
-        display: block;
-        height: 100%;
-        margin: 0 -10px;
-        padding: 0 10px;
-      }
-      &:last-child {
-        border-right: none;
-      }
-      &.before {
-        border-radius: 0 0 8px;
-        border-right: 1px solid #d0d0d0;
-      }
-      &.after {
-        border-left: 1px solid #d0d0d0;
-        border-radius: 0 0 0 8px;
-      }
-      &.active {
-        background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-        border-bottom: 1px solid #ffffff;
-        border-right: medium none;
-        margin: 0 -8px;
-        padding: 0 18px;
-        a { 
-          color: rgb(66, 139, 202) !important;
-        }
+    }
+    &:last-child {
+      border-right: none;
+    }
+    &.before {
+      border-radius: 0 0 8px;
+      border-right: 1px solid #d0d0d0;
+    }
+    &.after {
+      border-left: 1px solid #d0d0d0;
+      border-radius: 0 0 0 8px;
+    }
+    &.active {
+      background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+      border-bottom: 1px solid #ffffff;
+      border-right: medium none;
+      margin: 0 -8px;
+      padding: 0 18px;
+      a { 
+        color: rgb(66, 139, 202) !important;
       }
     }
   }
@@ -78,7 +78,7 @@ body {
   z-index: 50;
   float: right;
 
-  li {
+  > li {
     display: inline-block;
     list-style: outside none none;
     margin: 0;

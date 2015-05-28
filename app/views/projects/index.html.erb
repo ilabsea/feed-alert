@@ -1,0 +1,27 @@
+<% content_for(:title) { "Projects"} %>
+
+<h3 class='header-title'> My Projects </h3>
+<div class='clearfix' style="margin-bottom: 10px;">
+  <div class='left'>
+    <%= link_custom 'New Project', new_project_path() %>
+  </div>
+
+  <div class='right'>
+    <%= render 'shared/search_form', url: projects_path %>
+  </div>
+</div>
+
+<% @my_projects.each do |project| %>
+
+  <div class='hoz-item panel'>
+    <%=link_to edit_project_path(project), style: "display:block; width: 100%;", class:"clearfix" do %>
+      <div class='pull-left'> <%=project.name%> </div>
+      <div class="pull-right"> <i class='glyphicon glyphicon-chevron-right'> </i> </div>
+    <%end %>
+  </div>
+<% end %>
+
+<%= paginate_for(@my_projects) %>
+<br />
+<br />
+<h3 class='header-title'> Shared Projects </h3>

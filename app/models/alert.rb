@@ -13,6 +13,8 @@ class Alert < ActiveRecord::Base
   has_many :feeds, dependent: :destroy
   has_many :feed_entries
 
+  belongs_to :project
+
   # accepts_nested_attributes_for :alert_places, allow_destroy: true
 
   INTERVAL_UNIT_HOUR = "Hour"

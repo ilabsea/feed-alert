@@ -1,5 +1,7 @@
 <% content_for(:title) { "Groups"} %>
-<%= page_header "List of Groups"%>
+
+<%= render "shared/group_recipient_tab", group_recipient_tab_index: 1 %>
+<br />
 
 <div class='clearfix'>
   <div class='left'>
@@ -16,6 +18,7 @@
     <tr>
       <td>Name</td>
       <td>Description</td>
+      <td>Recipients</td>
       <td class='td-last'>Action</td>
     </tr>
   </thead>
@@ -24,7 +27,8 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.name, edit_group_path(group) %></td>
-        <td><%= truncate(group.description) %></td>
+        <td><%= truncate(group.description, length: 45) %></td>
+        <td><%= truncate(group.members.map(&:full_name).join(", "), length: 45) %></td>
         <td>
            <%= link_edit " ", edit_group_path(group) %>
            <%= link_destroy " ", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group ?' } %>

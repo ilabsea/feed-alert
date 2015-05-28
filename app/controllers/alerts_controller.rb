@@ -32,18 +32,18 @@ class AlertsController < ApplicationController
   end
 
   def index
-    @alerts = Alert.includes(:keywords).order('created_at DESC').page(params[:page])
+    @alerts = project.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
   end
 
   def new
-    @alert = Alert.new
+    @alert = project.alerts.build
   end
 
   def create
-    @alert = Alert.new(filter_params)
+    @alert = project.alerts.build(filter_params)
 
     if(@alert.save)
-      redirect_to edit_alert_path(@alert), notice: 'Alert has been created'
+      redirect_to edit_project_alert_path(@project, @alert), notice: 'Alert has been created'
     else
       flash.now[:alert] = 'Failed to create alert'
       render :new
@@ -51,13 +51,13 @@ class AlertsController < ApplicationController
   end
 
   def edit
-    @alert = Alert.find(params[:id])
+    @alert = project.alerts.find(params[:id])
   end
 
   def update
-    @alert = Alert.find(params[:id])
+    @alert = project.alerts.find(params[:id])
     if(@alert.update_attributes(filter_params))
-      redirect_to alerts_path, notice: 'Alert has been updated'
+      redirect_to project_alerts_path(@project), notice: 'Alert has been updated'
     else
       flash.now[:alert] = 'Could not save the alert'
       render :edit
@@ -65,11 +65,11 @@ class AlertsController < ApplicationController
   end
 
   def destroy
-    @alert = Alert.find(params[:id])
+    @alert = project.alerts.find(params[:id])
     if @alert.destroy
-      redirect_to alerts_path, notice: 'Alert has been deleted'
+      redirect_to project_alerts_path(@project), notice: 'Alert has been deleted'
     else
-      redirect_to alerts_path, notice: 'Could not delete the alert'
+      redirect_to project_alerts_path(@project), notice: 'Could not delete the alert'
     end
   end
 
@@ -77,6 +77,10 @@ class AlertsController < ApplicationController
   def filter_params
     params.require(:alert).permit(:name, :url, :interval, :from_time, :to_time, :sms_template, 
                                   alert_places_attributes: [:id, :place_id, :_destroy],)
+  end
+
+  def project
+    @project ||= current_user.accessible_project(params[:project_id])
   end
 
 end

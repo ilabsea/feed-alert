@@ -1,6 +1,11 @@
 class User < ActiveRecord::Base
   has_secure_password(validations: false)
 
+  has_many :my_projects, class_name: "Project"
+
+  has_many :user_projects
+  has_many :shared_projects, class_name: "Project", through: :user_projects, source: :project
+
   # password must be present within 6..72
   validates :password, presence: true, on: :create
   validates :password, length: { in: 6..72}, on: :create
@@ -65,6 +70,10 @@ class User < ActiveRecord::Base
 
   def is_admin?
     role == User::ROLE_ADMIN
+  end
+
+  def accessible_project(project_id)
+    self.my_projects.find(project_id) || self.shared_projects.find(project_id)
   end
 
 end

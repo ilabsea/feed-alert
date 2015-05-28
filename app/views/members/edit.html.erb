@@ -1,6 +1,9 @@
-<% content_for(:title) { "Edit Member"} %>
-<%= page_header "Edit Member" %>
+<% content_for(:title) { "Edit Recipient"} %>
 
+<%= render "shared/group_recipient_tab", group_recipient_tab_index: 2 %>
+<br />
+
+<h4>Edit Recipient</h4>
 <div class='row'>
   <div class='col-lg-6'> <%= render 'form' %> </div>
 
