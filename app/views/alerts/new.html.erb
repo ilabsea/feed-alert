@@ -1,7 +1,6 @@
 <% content_for(:title) { "Create Alert"} %>
+<%= render 'shared/project_alert', project: @project, project_tab: 2 %>
 
-<% content_for(:alert_tab) do %>
-  <h4> Create new Alert </h4>
-  <%= render('form', project: @project, alert: @alert)  %>
-<% end %>
-<%= render 'shared/project_overview', project: @project, project_in_tab: 2 %>
+
+<h4> Create new Alert </h4>
+<%= render'form' %>

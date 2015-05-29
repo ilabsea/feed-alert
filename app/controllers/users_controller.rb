@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def list
+    @users = User.from_query(params[:q])
+    render json: @users
+  end
+
   def create
     @user = User.new(filter_params)
     @user.password = params[:user][:password]

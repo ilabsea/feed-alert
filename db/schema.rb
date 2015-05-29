@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528024340) do
+ActiveRecord::Schema.define(version: 20150529022356) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -98,7 +98,10 @@ ActiveRecord::Schema.define(version: 20150528024340) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "user_id",     limit: 4
   end
+
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "keywords", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -182,6 +185,7 @@ ActiveRecord::Schema.define(version: 20150528024340) do
   add_foreign_key "feed_entries", "alerts"
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "alerts"
+  add_foreign_key "groups", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"

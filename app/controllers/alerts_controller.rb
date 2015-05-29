@@ -24,6 +24,8 @@ class AlertsController < ApplicationController
     to   = params[:to] || Time.zone.now
     @date_range = DateRange.new(from, to)
 
+    @project = Project.find(params[:project_id])
+
     alerts_for_options = Alert.includes(:keywords).all
 
     search_options = Alert.search_options(alerts_for_options, @date_range)

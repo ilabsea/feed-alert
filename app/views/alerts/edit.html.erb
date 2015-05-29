@@ -1,19 +1,15 @@
 <% content_for(:title) { "Edit Alert"} %>
+<%= render 'shared/project_alert', project: @project, project_tab: 2 %>
 
-<% content_for(:alert_tab) do %>
-
-  <div class='row'>
-    <div class='col-lg-6'>
-      <h4> Edit Alert </h4>
-      <%= render('form', project: @project, alert: @alert)  %>
-    </div>
-    
-    <div class='col-lg-6'>
-      <%= render 'alert_groups' %>
-      <%= render 'alert_keywords' %>
-    </div>
+<div class='row'>
+  <div class='col-lg-6'>
+    <h4> Edit Alert </h4>
+    <%= render 'form' %>
   </div>
+  
+  <div class='col-lg-6'>
+    <%= render 'alert_groups' %>
+    <%= render 'alert_keywords' %>
+  </div>
+</div>
 
-<% end %>
-
-<%= render 'shared/project_overview', project: @project, project_in_tab: 2 %>

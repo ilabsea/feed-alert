@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   delete 'sign_out' => 'sessions#destroy'
 
+  resources :permissions
 
   resources :projects do
     resources :alerts do
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     collection do
       get 'profile'
       put 'change_profile'
+      get 'list'
     end
 
     member do

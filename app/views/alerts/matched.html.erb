@@ -1,4 +1,6 @@
 <%= page_title "Alert matched" %>
+<%= render 'shared/project_alert', project: @project, project_tab: 2 %>
+
 <h3> Alerts that matched criteria for </h3>
 <p class="color:gray; font-size: 90%;"><%= @date_range.from %>, <%= @date_range.to %></p>
 <% @alerts.each do |alert| %>

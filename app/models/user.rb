@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :shared_projects, class_name: "Project", through: :user_projects, source: :project
 
+  has_many :groups
+
   # password must be present within 6..72
   validates :password, presence: true, on: :create
   validates :password, length: { in: 6..72}, on: :create
@@ -27,6 +29,16 @@ class User < ActiveRecord::Base
   before_create :generate_attrs
 
   attr_accessor :old_password
+
+  def self.confirmed
+    where("confirmed_at IS NOT NULL")
+  end
+
+  def self.from_query(query)
+    like = "#{query}%"
+    where([ "email LIKE ?", like ])
+  end
+
 
   def generate_attrs
     self.role = User::ROLE_NORMAL unless self.role.present?

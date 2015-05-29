@@ -1,11 +1,12 @@
 class GroupsController < ApplicationController
+
+  before_action :load_group, only: [:edit, :update, :destroy, :new_members]
   def index
-    @groups = Group.order('name').page(params[:page])
+    @groups = current_user.groups.order('groups.name').page(params[:page])
   end
 
   def new_members
-    group = Group.find(params[:id])
-    existing_members = group.members.ids
+    existing_members = @group.members.ids
 
     members = Member.all
     members = members.excludes(existing_members) if existing_members.count > 0
@@ -14,11 +15,11 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @group = Group.new
+    @group = current_user.groups.build
   end
 
   def create
-    @group = Group.new(filter_params)
+    @group = current_user.groups.build(filter_params)
     if @group.save
       redirect_to edit_group_path(@group), notice: 'Group has been created'
     else
@@ -28,11 +29,9 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.includes(:memberships, :members).find(params[:id])
   end
 
   def update
-    @group = Group.find(params[:id])
     if(@group.update_attributes(filter_params))
       redirect_to groups_path, notice: 'Group has been updated'
     else
@@ -42,7 +41,6 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group = Group.find(params[:id])
     if(@group.destroy)
       redirect_to groups_path, notice: 'Group has been deleted'
     else
@@ -51,6 +49,10 @@ class GroupsController < ApplicationController
   end
 
   private
+  def load_group
+    @group ||= current_user.groups.find(params[:id])
+  end
+
   def filter_params
     params.require(:group).permit(:name, :description)
   end
