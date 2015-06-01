@@ -9,6 +9,12 @@ class UsersController < ApplicationController
 
   def list
     @users = User.from_query(params[:q])
+
+    shared_user_ids = current_user.my_projects.shared_users.ids
+    p "shared_users: #{shared_user_ids}"
+
+    @users  = @users.where("id not in (?)", shared_user_ids) if shared_user_ids.size > 0
+
     render json: @users
   end
 

@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def json_for(target, options = {})
+    options[:scope] ||= self
+    options[:url_options] ||= url_options
+    target.active_model_serializer.new(target, options).to_json
+  end
+
   def index_in_paginate(index)
     page = params[:page].to_i
     offset_page = page > 1 ? page - 1 : 0

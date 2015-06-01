@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529022356) do
+ActiveRecord::Schema.define(version: 20150529051916) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -137,6 +137,17 @@ ActiveRecord::Schema.define(version: 20150529022356) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "project_permissions", force: :cascade do |t|
+    t.string   "role",       limit: 255
+    t.integer  "project_id", limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "project_permissions", ["project_id"], name: "index_project_permissions_on_project_id", using: :btree
+  add_index "project_permissions", ["user_id"], name: "index_project_permissions_on_user_id", using: :btree
+
   create_table "projects", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
@@ -186,6 +197,8 @@ ActiveRecord::Schema.define(version: 20150529022356) do
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "alerts"
   add_foreign_key "groups", "users"
+  add_foreign_key "project_permissions", "projects"
+  add_foreign_key "project_permissions", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"

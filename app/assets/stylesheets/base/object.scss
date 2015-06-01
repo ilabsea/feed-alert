@@ -183,3 +183,29 @@ em.highlight {
   font-style: italic;
   font-size: 90%;
 }
+
+.table-permission {
+
+  .permission-first {
+    display: inline-block;
+    max-width: 600px;
+    width: 600px;
+  }
+  
+  .role-type {
+    max-width: 120px;
+    width: 120px;
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .permission-item {
+    border-bottom: 1px dotted #eee;
+    margin-left: 25px;
+    padding: 5px 0px;
+    &:last-child {
+      border-bottom: none;
+    }
+
+  }
+}

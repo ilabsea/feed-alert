@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
 
   has_many :my_projects, class_name: "Project"
 
-  has_many :user_projects
-  has_many :shared_projects, class_name: "Project", through: :user_projects, source: :project
+  has_many :project_permissions
+  has_many :shared_projects, class_name: "Project", through: :project_permissions, source: :project
 
   has_many :groups
 
@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
 
   ROLE_ADMIN  = 'Admin'
   ROLE_NORMAL = 'Normal'
+
+  PERMISSION_ROLE_ADMIN   = 'Admin'
+  PERMISSION_ROLE_NORMAL  = 'Normal'
+  PERMISSION_ROLE_NONE    = 'None'
 
   before_save :normalize_attrs
   before_create :generate_attrs
@@ -87,5 +91,4 @@ class User < ActiveRecord::Base
   def accessible_project(project_id)
     self.my_projects.find(project_id) || self.shared_projects.find(project_id)
   end
-
 end

@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   delete 'sign_out' => 'sessions#destroy'
 
   resources :permissions
+  resources :project_permissions
+
 
   resources :projects do
     resources :alerts do

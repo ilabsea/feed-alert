@@ -2,8 +2,103 @@
   <%= text_field_tag :permission_user, params[:q], class: "form-control typeahead", placeholder: "User email", data: {url: list_users_path} %>
   <%= hidden_field_tag :permission_user_id, '' %>
   <span class="input-group-btn">
-    <button class="btn btn-primary btn-app" type="button" style="min-width: 60px;">
+    <button class="btn btn-primary btn-app" type="button" style="min-width: 60px;" id='add-permission'>
       <i class=' glyphicon glyphicon-plus'> </i>
     </button>
   </span>
 </div>
+
+<table class="table table-strip table-permission">
+  <thead>
+    <tr>
+      <td class="permission-first"> User > Projects > Channels</td>
+      <td class="role-type"> None </td>
+      <td class="role-type"> Normal </td>
+      <td class="role-type"> Admin </td>
+      <td> </td>
+    </tr>
+  </thead>
+
+  <tbody id='permission-items'>
+  </tbody>
+
+</table>
+
+<script type="text/javascript">
+  var myProjects = <%= ActiveModel::ArraySerializer.new(@projects).to_json.html_safe %>
+  var permissionUsers = <%= ActiveModel::ArraySerializer.new(@shared_users).to_json.html_safe %>
+  var userTables = []
+</script>
+
+<script type="text/x-tmpl" id="permission-tmpl">
+  <tr class='user-project-collapsable' >
+    <td colspan='5' style='background: #eee; cursor: pointer;'>
+      <i class='glyphicon glyphicon-triangle-right'> </i>
+      <i class='glyphicon glyphicon-triangle-bottom' style='display:none;'> </i>
+      <span>{%= o.user.email %}</span>
+
+    </td>
+  </tr>
+
+  <tr style='display:none;' >
+    <td colspan='5' style='cursor: pointer;' >
+      <div class='project-collapsable' data-user-id='{%=o.user.id%}'>
+        <span style='padding-left: 10px; font-weight:bold;'>
+          <i class='glyphicon glyphicon-triangle-right'> </i>
+          <i class='glyphicon glyphicon-triangle-bottom' style='display: none'> </i>
+          Projects
+        </span>
+      </div>
+
+      {% for(var i=0; i< o.projects.length; i++ ) { %}
+
+        <div class='permission-item permission-{%=o.user.id%}' style='display:none;' >
+
+          <div class='permission-first'>
+            <span id='project-permission' data-url='<%=project_permissions_url()%>' >
+              {%= o.projects[i].name %}
+            </span>
+          </div>
+          
+          <div class="role-type">
+            <input type='radio'
+                   class='project-permission-role'
+                   name='role-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_NONE%>'
+
+                   {%= permissionRoleMatch(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_NONE%>') %}
+                   />
+
+          </div>
+
+          <div class="role-type">
+            <input type='radio'
+                   class='project-permission-role'
+                   name='role-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_NORMAL%>'
+
+                   {%= permissionRoleMatch(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_NORMAL%>') %}
+                   />
+          </div>
+
+          <div class="role-type">
+            <input type='radio'
+                   class='project-permission-role'
+                   name='role-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_ADMIN %>'
+
+                   {%= permissionRoleMatch(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_ADMIN%>') %}
+                   />
+          </div>
+
+        </div>
+        {% } %}
+    </td>
+  </tr>
+</script>
