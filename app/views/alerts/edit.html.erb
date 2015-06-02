@@ -1,10 +1,13 @@
 <% content_for(:title) { "Edit Alert"} %>
-<%= render 'shared/project_alert', project: @project, project_tab: 2 %>
+<%= render 'shared/project_alert',
+            url_tab1: edit_project_path(@project_with_role.project),
+            url_tab2: project_alerts_path(@project_with_role.project),
+            project_tab: 2 %>
 
 <div class='row'>
   <div class='col-lg-6'>
     <h4> Edit Alert </h4>
-    <%= render 'form' %>
+    <%= render 'form', project: @project_with_role.project, alert: @alert %>
   </div>
   
   <div class='col-lg-6'>

@@ -1,4 +1,4 @@
-<%= simple_form_for [@project, @alert], html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
+<%= simple_form_for [project, alert], html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
 
   <%=f.input :name, input_html: {class: 'form-control'} %>
   <%=f.input :url, input_html: {class: 'form-control'} %>

@@ -1,4 +1,8 @@
 <% content_for(:title) { "New User"} %>
 
-<%= render 'shared/project_alert', project: @project, project_tab: 1 %>
-<%=render 'form' %>
+<%= render 'shared/project_alert',
+           project_tab: 1,
+           url_tab1: new_project_path,
+           url_tab2: 'javascript:void(0)'
+            %>
+<%=render 'form', project_with_role: ProjectWithRole.new(@project) %>

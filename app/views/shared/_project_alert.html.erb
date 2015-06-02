@@ -1,11 +1,10 @@
-
 <ul class="nav nav-tabs">
 
   <li role="presentation" class="<%= active_tab_for_index(1, project_tab) %>">
-    <%= link_to "Overview", (project.persisted? ? edit_project_path(project) : new_project_path()) %>
+    <%= link_to "Overview", url_tab1 %>
   </li>
 
   <li role="presentation" class="<%= active_tab_for_index(2, project_tab) %>">
-    <%= link_to "Alerts", (project.persisted? ? project_alerts_path(project) : 'javascript:void(0)' )%>
+    <%= link_to "Alerts", url_tab2 %>
   </li>
 </ul>

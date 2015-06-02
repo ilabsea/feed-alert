@@ -18,6 +18,11 @@
       <p class="app-desc" style="margin-top: 45px;">
         <%= render 'shared/account' %>
       </p>
+    <% else %>
+      <p class="app-desc">
+        <span style='margin-right: 15px;'> Access your projects  </span>
+        <%= link_to "Projects", projects_path(), class: 'btn btn-primary btn-app' %>
+      </p>
     <% end %>
 
   </div>

@@ -9,8 +9,18 @@ class Project < ActiveRecord::Base
 
   has_many :alerts
 
+
   def self.shared_users
     user_sql = ProjectPermission.select('user_id').where(project_id: ids).uniq
     User.includes(:project_permissions).where(id: user_sql).uniq
+  end
+
+  def access_role=(role)
+    @access_role = role
+    self
+  end
+
+  def admin_access_role?
+    @access_role != User::PERMISSION_ROLE_NORMAL
   end
 end

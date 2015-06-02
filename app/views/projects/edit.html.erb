@@ -1,4 +1,8 @@
 <% content_for(:title) { "Edit Project"} %>
 
-<%= render 'shared/project_alert', project: @project, project_tab: 1 %>
-<%=render 'form' %>
+<%= render 'shared/project_alert',
+           project_tab: 1,
+           url_tab1: edit_project_url(@project_with_role.project),
+           url_tab2: project_alerts_path(@project_with_role.project)
+            %>
+<%= render 'form', project_with_role: @project_with_role %>

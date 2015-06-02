@@ -7,21 +7,20 @@
   </div>
 
   <div class='right'>
-    <%= render 'shared/search_form', url: projects_path %>
+    <%= render 'shared/search_form', url: projects_path, admin: true %>
   </div>
 </div>
 
 <% @my_projects.each do |project| %>
-
-  <div class='hoz-item panel'>
-    <%=link_to edit_project_path(project), style: "display:block; width: 100%;", class:"clearfix" do %>
-      <div class='pull-left'> <%=project.name%> </div>
-      <div class="pull-right"> <i class='glyphicon glyphicon-chevron-right'> </i> </div>
-    <%end %>
-  </div>
+  <%= render 'project', project: project, admin: true %>
 <% end %>
 
-<%= paginate_for(@my_projects) %>
-<br />
+
 <br />
 <h3 class='header-title'> Shared Projects </h3>
+<% current_user.project_permissions.each do |permission| %>
+  <%= render 'project', project: permission.project,
+                        admin: permission.admin_role?,
+                        role: permission.role %>
+<% end %>
+

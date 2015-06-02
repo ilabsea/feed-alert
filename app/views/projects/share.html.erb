@@ -1,0 +1,17 @@
+<% content_for(:title) { "Shared Project"} %>
+
+<%= render 'shared/project_alert', 
+           project_tab: 1,
+           url_tab1: share_project_path(@project),
+           url_tab2: share_project_alerts_path(@project)
+            %>
+
+<%=simple_form_for(@project, html: { class: 'form-inline form'}) do |f| %>
+
+  <div class='input-row'>
+    <%=f.input :name, input_html: {class: 'form-control', disabled: 'disabled'} %>
+  </div>
+
+  <%=f.input :description, as: :text, input_html: {class: 'form-control', disabled: 'disabled'}, wrapper_html: { class: 'inline'} %>
+
+<% end %>

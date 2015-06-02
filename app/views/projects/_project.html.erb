@@ -1,0 +1,13 @@
+<div class='hoz-item panel'>
+  <%=link_to edit_project_path(project), style: "display:block; width: 100%;", class:"clearfix" do %>
+    <div class='pull-left'> <%=project.name%> </div>
+    <div class="pull-right">
+      
+      <% if defined? role %>
+        <span style='color: gray; font-style: italic' > <%= role %></span>
+      <% end %>
+
+      <i class='glyphicon glyphicon-chevron-right'> </i>
+    </div>
+  <%end %>
+</div>

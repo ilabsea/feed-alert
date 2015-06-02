@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     where([ "email LIKE ?", like ])
   end
 
+  def self.excludes(ids)
+    where("id not in (?)", ids)
+  end
+
 
   def generate_attrs
     self.role = User::ROLE_NORMAL unless self.role.present?
@@ -89,6 +93,9 @@ class User < ActiveRecord::Base
   end
 
   def accessible_project(project_id)
-    self.my_projects.find(project_id) || self.shared_projects.find(project_id)
+    project = self.my_projects.where(id: project_id).first
+    return ProjectWithRole.new(project, User::PERMISSION_ROLE_ADMIN) if project
+    permission = self.project_permissions.find_by(project_id: project_id)
+    ProjectWithRole.new(permission.project, permission.role)
   end
 end

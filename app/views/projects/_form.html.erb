@@ -1,21 +1,29 @@
-<%=simple_form_for(@project, html: { class: 'form-inline form'}) do |f| %>
+<%=simple_form_for(project_with_role.project, html: { class: 'form-inline form'}) do |f| %>
 
-  <div class='input-row'>
-    <%=f.input :name, input_html: {class: 'form-control'} %>
-  </div>
+  <% input_attrs = project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
 
-  <%=f.input :description, as: :text, input_html: {class: 'form-control'}, wrapper_html: { class: 'inline'} %>
+  <%=f.input :name, input_html: {class: 'form-control'}.merge(input_attrs) %>
+  <%=f.input :description, as: :text, input_html: {class: 'form-control'}.merge(input_attrs), wrapper_html: { class: 'inline'} %>
   
-  <div class='form-group form-action-group'>
-    <label></label>
-    <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
-  </div>
+  <% if project_with_role.has_admin_role? %>
+    <div class='form-group form-action-group'>
+      <label></label>
+      <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+    </div>
+  <% end %>
+
 <% end %>
 
-<% if @project.persisted? %>
-  <p style="margin-top: 60px;">
-    <%= link_to project_path(@project), method: :delete, style: 'margin-left: 13em;' do %>
-      <i class='glyphicon glyphicon-trash'> </i> Delete this project
-    <% end %>
-  </p>
+
+<% if project_with_role.project.persisted? && project_with_role.has_admin_role? %>
+      <p style="margin-top: 60px;">
+        <%= link_to project_path(project_with_role.project),
+                    method: :delete,
+                    data: {confirm: 'Are you sure to delete this project'},
+                    style: 'margin-left: 13em;' do %>
+          <i class='glyphicon glyphicon-trash'> </i> Delete this project
+        <% end %>
+      </p>
 <% end %>
+
+

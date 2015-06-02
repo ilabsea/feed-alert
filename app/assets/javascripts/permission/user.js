@@ -39,7 +39,7 @@ function permissionRoleMatch(user, projectId, role) {
 }
 
 function updateSharedUsersTable(){
-  if(permissionUsers) {
+  if(typeof permissionUsers != 'undefined') {
     for(var i=0; i< permissionUsers.length; i++) {
       console.log("user", permissionUsers[i])
       addPermissionToTable(permissionUsers[i])
@@ -53,7 +53,6 @@ function inputPermissionRoleChange() {
     var data = $this.data()
     var params = {user_id: data.userId, project_id: data.projectId, role: data.role}
     var url = $("#project-permission").attr('data-url')
-    console.log(params)
 
     $.ajax({
       data: params,
@@ -71,7 +70,6 @@ function inputPermissionRoleChange() {
   })
 
   $('body').delegate(".project-permission-role", 'click', function(event){
-    console.log('stop')
     event.stopPropagation()
   })
 }

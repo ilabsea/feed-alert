@@ -29,10 +29,15 @@ Rails.application.routes.draw do
 
 
   resources :projects do
+    member do
+      get 'share'
+    end
+
     resources :alerts do
 
       collection do
         get 'matched'
+        get 'share'
       end
 
       member do

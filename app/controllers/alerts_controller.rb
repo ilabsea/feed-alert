@@ -1,4 +1,6 @@
 class AlertsController < ApplicationController
+  before_action :require_project_admin_role!, only: [:new, :create, :edit, :update, :destroy]
+
   def new_groups
     alert = Alert.find(params[:id])
     existing_groups = alert.groups.ids
@@ -20,13 +22,13 @@ class AlertsController < ApplicationController
   end
 
   def matched
+
     from = params[:from] || Time.zone.now-7.days
     to   = params[:to] || Time.zone.now
     @date_range = DateRange.new(from, to)
-
-    @project = Project.find(params[:project_id])
-
     alerts_for_options = Alert.includes(:keywords).all
+
+    project_with_role
 
     search_options = Alert.search_options(alerts_for_options, @date_range)
     search_highlight = FeedEntry.search(search_options)
@@ -34,18 +36,18 @@ class AlertsController < ApplicationController
   end
 
   def index
-    @alerts = project.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
+    @alerts = project_with_role.project.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
   end
 
   def new
-    @alert = project.alerts.build
+    @alert = project_with_role.project.alerts.build
   end
 
   def create
-    @alert = project.alerts.build(filter_params)
+    @alert = project_with_role.project.alerts.build(filter_params)
 
     if(@alert.save)
-      redirect_to edit_project_alert_path(@project, @alert), notice: 'Alert has been created'
+      redirect_to edit_project_alert_path(project_with_role.project, @alert), notice: 'Alert has been created'
     else
       flash.now[:alert] = 'Failed to create alert'
       render :new
@@ -53,13 +55,13 @@ class AlertsController < ApplicationController
   end
 
   def edit
-    @alert = project.alerts.find(params[:id])
+    @alert = project_with_role.project.alerts.find(params[:id])
   end
 
   def update
-    @alert = project.alerts.find(params[:id])
+    @alert = project_with_role.project.alerts.find(params[:id])
     if(@alert.update_attributes(filter_params))
-      redirect_to project_alerts_path(@project), notice: 'Alert has been updated'
+      redirect_to project_alerts_path(project_with_role.project), notice: 'Alert has been updated'
     else
       flash.now[:alert] = 'Could not save the alert'
       render :edit
@@ -67,22 +69,26 @@ class AlertsController < ApplicationController
   end
 
   def destroy
-    @alert = project.alerts.find(params[:id])
+    @alert = project_with_role.project.alerts.find(params[:id])
     if @alert.destroy
-      redirect_to project_alerts_path(@project), notice: 'Alert has been deleted'
+      redirect_to project_alerts_path(project_with_role.project), notice: 'Alert has been deleted'
     else
-      redirect_to project_alerts_path(@project), notice: 'Could not delete the alert'
+      redirect_to project_alerts_path(project_with_role.project), notice: 'Could not delete the alert'
     end
   end
 
   private
+  def require_project_admin_role!
+    project_with_role.has_admin_role!
+  end
+
   def filter_params
     params.require(:alert).permit(:name, :url, :interval, :from_time, :to_time, :sms_template, 
                                   alert_places_attributes: [:id, :place_id, :_destroy],)
   end
 
-  def project
-    @project ||= current_user.accessible_project(params[:project_id])
+  def project_with_role
+    @project_with_role ||= current_user.accessible_project(params[:project_id])
   end
 
 end

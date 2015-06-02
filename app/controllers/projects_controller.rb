@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   def index
     @my_projects = current_user.my_projects.page(params[:page])
-    @shared_projects = current_user.shared_projects.page(params[:page])
+    @shared_projects = current_user.shared_projects.includes(:project_permissions).page(params[:page])
   end
 
   def new
@@ -19,12 +19,17 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = current_user.my_projects.find(params[:id])
+    @project_with_role = current_user.accessible_project(params[:id])
+  end
+
+  def share
+    @project_with_role = current_user.shared_projects.find(params[:id])
   end
 
   def update
-    @project = current_user.my_projects.find(params[:id])
-    if @project.update_attributes(filter_params)
+    @project_with_role = current_user.accessible_project(params[:id])
+
+    if @project_with_role.update_attributes(filter_params)
       redirect_to projects_path, notice: 'Project updated'
     else
       flash.now[:alert] = "Failed to update project"
@@ -33,8 +38,9 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = current_user.my_projects.find(params[:id])
-    if @project.destroy
+    @project_with_role = current_user.accessible_project(params[:id])
+    # ActiveRecord::StatementInvalid
+    if @project_with_role.destroy
       redirect_to projects_path, notice: 'Project has been deleted'
     else
       flash.now[:alert] = "Failed to delete Project"
