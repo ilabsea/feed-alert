@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
   def new_members
     existing_members = @group.members.ids
 
-    members = Member.all
+    members = current_user.members
     members = members.excludes(existing_members) if existing_members.count > 0
     members = members.from_query(params[:q]) if params[:q].present?
     render json: members

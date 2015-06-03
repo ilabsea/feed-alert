@@ -2,6 +2,8 @@ class Member < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  belongs_to :user
+
   validates :full_name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :phone, presence: true, uniqueness: true

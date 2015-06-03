@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529051916) do
+ActiveRecord::Schema.define(version: 20150603044812) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -117,7 +117,10 @@ ActiveRecord::Schema.define(version: 20150529051916) do
     t.boolean  "sms_alert",   limit: 1
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "user_id",     limit: 4
   end
+
+  add_index "members", ["user_id"], name: "index_members_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "member_id",  limit: 4
@@ -197,6 +200,7 @@ ActiveRecord::Schema.define(version: 20150529051916) do
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "alerts"
   add_foreign_key "groups", "users"
+  add_foreign_key "members", "users"
   add_foreign_key "project_permissions", "projects"
   add_foreign_key "project_permissions", "users"
   add_foreign_key "projects", "users"

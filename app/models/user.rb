@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :shared_projects, class_name: "Project", through: :project_permissions, source: :project
 
   has_many :groups
+  has_many :members
 
   # password must be present within 6..72
   validates :password, presence: true, on: :create
