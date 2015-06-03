@@ -20,9 +20,9 @@
       <td>Full Name</td>
       <td>Email</td>
       <td>Number</td>
-      <td>Email Alert</td>
-      <td>SMS Alert</td>
+      <td align="center">Alert by</td>
       <td>Groups</td>
+      <td align="center"> Projects & Alerts</td>
       <td class='td-last'>Action</td>
     </tr>
   </thead>
@@ -32,9 +32,17 @@
         <td><%= link_to member.full_name, edit_member_path(member) %></td>
         <td><%= member.email %></td>
         <td><%= member.phone %></td>
-        <td><%= boolean_text member.email_alert %></td>
-        <td><%= boolean_text member.sms_alert %></td>
+        <td align="center">
+          <% if member.email_alert %>
+            <i class='glyphicon glyphicon-envelope'> </i>
+          <% end %>
+          <% if member.sms_alert %>
+            <i class='glyphicon glyphicon-phone'> </i>
+          <% end %>
+
+        </td>
         <td><%= truncate(member.groups.map(&:name).join(", "), length: 45) %></td>
+        <td align="center"> <%= link_to 'View', alerts_member_path(member) %> </td>
         <td>
           <%= link_edit " ", edit_member_path(member) %>
           <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this recipient ?' } %>

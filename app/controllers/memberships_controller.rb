@@ -10,8 +10,9 @@ class MembershipsController < ApplicationController
 
   def destroy
     @membership = Membership.find(params[:id])
+    group_with_role = current_user.accessible_group(@membership.group_id)
+    group_with_role.has_admin_role!
     @membership.destroy
-    render :create, layout: false
     head :ok
   end
 

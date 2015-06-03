@@ -9,6 +9,11 @@ class MembersController < ApplicationController
     @member = current_user.members.new
   end
 
+  def alerts
+    @member = Member.find(params[:id])
+    @alerts = Alert.from_member(params[:id])
+  end
+
   def new_groups
     member = current_user.members.find(params[:id])
     existing_groups = member.groups.ids

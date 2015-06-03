@@ -1,0 +1,6 @@
+<h3> Member: <%= @member.full_name %> </h3>
+<p style='font-style: italic; color: gray; margin-left: 15px;'>
+  <%= @member.email %>
+</p>
+
+<%= render 'shared/alerts_with_projects', alerts: @alerts %>

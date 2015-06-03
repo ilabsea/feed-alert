@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603044812) do
+ActiveRecord::Schema.define(version: 20150603085327) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -92,6 +92,22 @@ ActiveRecord::Schema.define(version: 20150603044812) do
   end
 
   add_index "feeds", ["alert_id"], name: "index_feeds_on_alert_id", using: :btree
+
+  create_table "group_permissions", force: :cascade do |t|
+    t.integer  "user_id",      limit: 4
+    t.integer  "group_id",     limit: 4
+    t.integer  "alert_id",     limit: 4
+    t.integer  "project_id",   limit: 4
+    t.string   "role",         limit: 255
+    t.integer  "order_number", limit: 4,   default: 0
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "group_permissions", ["alert_id"], name: "index_group_permissions_on_alert_id", using: :btree
+  add_index "group_permissions", ["group_id"], name: "index_group_permissions_on_group_id", using: :btree
+  add_index "group_permissions", ["project_id"], name: "index_group_permissions_on_project_id", using: :btree
+  add_index "group_permissions", ["user_id"], name: "index_group_permissions_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -199,6 +215,10 @@ ActiveRecord::Schema.define(version: 20150603044812) do
   add_foreign_key "feed_entries", "alerts"
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "alerts"
+  add_foreign_key "group_permissions", "alerts"
+  add_foreign_key "group_permissions", "groups"
+  add_foreign_key "group_permissions", "projects"
+  add_foreign_key "group_permissions", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "members", "users"
   add_foreign_key "project_permissions", "projects"

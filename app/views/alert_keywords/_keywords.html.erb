@@ -3,7 +3,9 @@
    <thead>
       <tr>
         <td>Name</td>
+        <% if admin %>
         <td class='td-last'>Action</td>
+        <% end %>
       </tr>
     </thead>
 
@@ -11,8 +13,11 @@
       <% alert.alert_keywords.each do |alert_keyword| %>
         <tr id='alert-keyword-<%=alert_keyword.id%>'>
           <td><%= alert_keyword.keyword.name %></td>
-          <td><%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
-                          class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+          <% if admin %>
+            <td>
+              <%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
+                            class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

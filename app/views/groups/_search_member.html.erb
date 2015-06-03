@@ -2,7 +2,7 @@
   <div class="input-group">
     <input id='member-typeahead' type="text" 
           class="form-control typeahead" placeholder="Add Recipient"
-          data-url="<%= new_members_group_path(@group) %>"
+          data-url="<%= new_members_group_path(group_with_role.object) %>"
 
           >
     <span class="input-group-btn">
@@ -14,7 +14,7 @@
          type='hidden'
          value=''
          data-url='<%=memberships_path() %>'
-         data-group-id='<%=@group.id %>'
+         data-group-id='<%=group_with_role.object.id %>'
          >
 </div>
 

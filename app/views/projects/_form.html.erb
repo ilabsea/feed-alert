@@ -1,4 +1,4 @@
-<%=simple_form_for(project_with_role.project, html: { class: 'form-inline form'}) do |f| %>
+<%=simple_form_for(project_with_role.object, html: { class: 'form-inline form'}) do |f| %>
 
   <% input_attrs = project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
 
@@ -15,9 +15,9 @@
 <% end %>
 
 
-<% if project_with_role.project.persisted? && project_with_role.has_admin_role? %>
+<% if project_with_role.object.persisted? && project_with_role.has_admin_role? %>
       <p style="margin-top: 60px;">
-        <%= link_to project_path(project_with_role.project),
+        <%= link_to project_path(project_with_role.object),
                     method: :delete,
                     data: {confirm: 'Are you sure to delete this project'},
                     style: 'margin-left: 13em;' do %>

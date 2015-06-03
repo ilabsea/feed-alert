@@ -9,7 +9,7 @@ function buildMemberTypeahead(){
   var sources = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('full_name', 'email', 'phone'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: urlSearch + '?q=%QUERY'
+    remote: { url: urlSearch + '?q=%QUERY', cache: false }
   });
 
   // initialize the bloodhound suggestion engine

@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :groups
   has_many :members
 
+  has_many :group_permissions
+  has_many :shared_groups, class_name: "Group", through: :group_permissions, source: :group
+
   # password must be present within 6..72
   validates :password, presence: true, on: :create
   validates :password, length: { in: 6..72}, on: :create
@@ -95,8 +98,25 @@ class User < ActiveRecord::Base
 
   def accessible_project(project_id)
     project = self.my_projects.where(id: project_id).first
-    return ProjectWithRole.new(project, User::PERMISSION_ROLE_ADMIN) if project
+    return ObjectWithRole.new(project) if project
+
     permission = self.project_permissions.find_by(project_id: project_id)
-    ProjectWithRole.new(permission.project, permission.role)
+    return ObjectWithRole.new(permission.project, permission.role) if permission
+    raise ActiveRecord::RecordNotFound
   end
+
+  def accessible_group(group_id)
+    group = self.groups.where(id: group_id).first
+    return ObjectWithRole.new(group) if group
+
+    permission = self.group_permissions.includes(group: [alerts: :project]).where(group_id: group_id).order('order_number DESC').first
+    return ObjectWithRole.new(permission.group, permission.role) if permission
+    raise ActiveRecord::RecordNotFound
+  end
+
+  def high_level_group_permissions
+    group_permission_sub = self.group_permissions.select('group_id, max(order_number) as max_order_number').group('group_id')
+    self.group_permissions.select("DISTINCT group_permissions.group_id, group_permissions.*").where("(group_id, order_number) in (#{group_permission_sub.to_sql}) ")
+  end
+
 end

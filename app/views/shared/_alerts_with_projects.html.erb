@@ -1,0 +1,18 @@
+<table class="table table-strip">
+  <thead>
+    <tr>
+      <td> Project </td>
+      <td> Alert </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% alerts.each do |alert| %>
+      <tr>
+        <td><%= alert.name %></td>
+        <td><%= alert.project.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>

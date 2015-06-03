@@ -16,8 +16,9 @@
 <table class='table panel'>
   <thead>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
+      <td width="200">Name</td>
+      <td width="250">Description</td>
+      <td width="150" align="center" >Projects & Alerts</td>
       <td>Recipients</td>
       <td class='td-last'>Action</td>
     </tr>
@@ -25,16 +26,31 @@
 
   <tbody>
     <% @groups.each do |group| %>
-      <tr>
-        <td><%= link_to group.name, edit_group_path(group) %></td>
-        <td><%= truncate(group.description, length: 45) %></td>
-        <td><%= truncate(group.members.map(&:full_name).join(", "), length: 45) %></td>
-        <td>
-           <%= link_edit " ", edit_group_path(group) %>
-           <%= link_destroy " ", group_path(group), method: :delete, data: { confirm: 'Are you sure to delete this group ?' } %>
-        </td>
-      </tr>
+      <%= render 'group', group_with_role: ObjectWithRole.new(group) %>
     <% end %>
   </tbody>
 </table>
 <%= paginate_for(@groups) %>
+
+<br />
+<h3 class='header-title'> Shared Projects </h3>
+
+<table class='table panel'>
+  <thead>
+    <tr>
+      <td width="200">Name</td>
+      <td width="250">Description</td>
+      <td  width="150" align="center">Projects & Alerts</td>
+      <td>Recipients</td>
+      <td class='td-last'>Action</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @group_permissions.each do |group_permission| %>
+      <%= render 'group', group_with_role: ObjectWithRole.new(group_permission.group, group_permission.role) %>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate_for(@group_permissions) %>
+

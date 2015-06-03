@@ -1,18 +1,18 @@
 <% content_for(:title) { "Edit Alert"} %>
 <%= render 'shared/project_alert',
-            url_tab1: edit_project_path(@project_with_role.project),
-            url_tab2: project_alerts_path(@project_with_role.project),
+            url_tab1: edit_project_path(@project_with_role.object),
+            url_tab2: project_alerts_path(@project_with_role.object),
             project_tab: 2 %>
 
 <div class='row'>
   <div class='col-lg-6'>
     <h4> Edit Alert </h4>
-    <%= render 'form', project: @project_with_role.project, alert: @alert %>
+    <%= render 'form', project_with_role: @project_with_role, alert: @alert %>
   </div>
   
   <div class='col-lg-6'>
-    <%= render 'alert_groups' %>
-    <%= render 'alert_keywords' %>
+    <%= render 'alert_groups', project_with_role: @project_with_role, alert: @alert  %>
+    <%= render 'alert_keywords', project_with_role: @project_with_role, alert: @alert  %>
   </div>
 </div>
 

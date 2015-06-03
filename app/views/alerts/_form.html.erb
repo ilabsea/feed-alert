@@ -1,25 +1,21 @@
-<%= simple_form_for [project, alert], html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
+<%= simple_form_for [project_with_role.object, alert], html: {class: 'form form-inline', id: 'form-alert'} do |f| %>
+  <% disabled = project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
+  <%=f.input :name, input_html: {class: 'form-control'}.merge(disabled) %>
+  <%=f.input :url, input_html: {class: 'form-control'}.merge(disabled) %>
 
-  <%=f.input :name, input_html: {class: 'form-control'} %>
-  <%=f.input :url, input_html: {class: 'form-control'} %>
-
-  <div class='form-group hidden'>
-    <%=f.label :interval, class: 'control-label' %>
-    <%=f.text_field :interval, class: 'form-control', style: 'margin-left: -3px; width: 8.5em;' %>
-    <%=f.select :interval_unit, options_for_select(Alert::INTERVAL_UNITS), {}, class: 'form-control', style: 'width: 9em; ' %>
-  </div>
 
   <div class='input-row'>
-    <%=f.input :from_time, as: :string, label: 'From (HH:MM)', input_html: {class: 'form-control hour-picker', autocomplete: :off} %>
+    <%=f.input :from_time, as: :string, label: 'From (HH:MM)',
+               input_html: {class: 'form-control hour-picker', autocomplete: :off}.merge(disabled) %>
   </div>
 
   <div class='input-row'>
     <%=f.input :to_time, as: :string, label: 'To (HH:MM)', 
-                         input_html: {class: 'form-control hour-picker', autocomplete: :off} %>
+                         input_html: {class: 'form-control hour-picker', autocomplete: :off}.merge(disabled) %>
   </div>
 
   <div class='input-row'>
-    <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40} %>
+    <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40}.merge(disabled) %>
   </div>
 
   <div class='input-row-close'>
@@ -27,9 +23,11 @@
     <%=sms_template_params_for(:alert_sms_template) %>
   </div>
 
-  <div class='form-group form-action-group'>
-    <label></label>
-    <%=f.submit 'Save', class: 'btn btn-primary btn-app', id: 'btn-alert-form' %>
-  </div>
+  <% if project_with_role.has_admin_role? %>
+    <div class='form-group form-action-group'>
+      <label></label>
+      <%=f.submit 'Save', class: 'btn btn-primary btn-app', id: 'btn-alert-form' %>
+    </div>
+  <% end %>
 
 <% end %>

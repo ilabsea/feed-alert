@@ -1,23 +1,24 @@
 <div style='max-width: 500px;'>
   <h3 class='header-group'> Alert Keywords </h3>
+  <% if project_with_role.has_admin_role? %>
+    <div id='alert-keyword' >
+      <div class="input-group">
+        <input type="text" 
+              class="form-control typeahead" placeholder="Keyword"
+              id="alert-keyword-typeahead"
+              data-url="<%= new_keywords_alert_path(alert) %>" >
 
-  <div id='alert-keyword' >
-    <div class="input-group">
-      <input type="text" 
-            class="form-control typeahead" placeholder="Keyword"
-            id="alert-keyword-typeahead"
-            data-url="<%= new_keywords_alert_path(@alert) %>" >
+        <span class="input-group-btn">
+          <%= link_to "Add Keyword", alert_alert_keywords_path(alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-keyword' %>
+        </span>
+      </div>
 
-      <span class="input-group-btn">
-        <%= link_to "Add Keyword", alert_alert_keywords_path(@alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-keyword' %>
-      </span>
+      <input type='hidden' id='alert-keyword-value' >
     </div>
-
-    <input type='hidden' id='alert-keyword-value' >
-  </div>
+  <% end %>
 
   <div id='alert-keyword-list'>
-    <%= render 'alert_keywords/keywords', alert: @alert %>
+    <%= render 'alert_keywords/keywords', alert: alert, admin: project_with_role.has_admin_role? %>
   </div>
 </div>
 <br />

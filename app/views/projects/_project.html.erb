@@ -1,10 +1,10 @@
 <div class='hoz-item panel'>
-  <%=link_to edit_project_path(project), style: "display:block; width: 100%;", class:"clearfix" do %>
-    <div class='pull-left'> <%=project.name%> </div>
+  <%=link_to edit_project_path(project_with_role.object), style: "display:block; width: 100%;", class:"clearfix" do %>
+    <div class='pull-left'> <%=project_with_role.object.name%> </div>
     <div class="pull-right">
       
-      <% if defined? role %>
-        <span style='color: gray; font-style: italic' > <%= role %></span>
+      <% if show_role %>
+        <span style='color: gray; font-style: italic' > <%= project_with_role.role %></span>
       <% end %>
 
       <i class='glyphicon glyphicon-chevron-right'> </i>

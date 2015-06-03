@@ -7,6 +7,9 @@ class Group < ActiveRecord::Base
   has_many :alert_groups, dependent: :destroy
   has_many :alerts, through: :alert_groups
 
+  has_many :group_permissions
+  has_many :users, through: :group_permissions
+
   validates :name, presence: true
   validates :name, uniqueness: true
 

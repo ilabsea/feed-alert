@@ -1,23 +1,26 @@
 <div style='max-width: 500px;'>
   <h3 class='header-group'> Alert Groups </h3>
 
-  <div id='alert-group' >
-    <div class="input-group">
-      <input type="text" 
-            class="form-control typeahead" placeholder="Group"
-            id="alert-group-typeahead"
-            data-url="<%= new_groups_alert_path(@alert) %>" >
+  <% if project_with_role.has_admin_role? %>
+    <div id='alert-group' >
+      <div class="input-group">
+        <input type="text" 
+              class="form-control typeahead" placeholder="Group"
+              id="alert-group-typeahead"
+              data-url="<%= new_groups_alert_path(alert) %>" >
 
-      <span class="input-group-btn">
-        <%= link_to "Add Group", alert_alert_groups_path(@alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-group' %>
-      </span>
+        <span class="input-group-btn">
+          <%= link_to "Add Group", alert_alert_groups_path(alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-group' %>
+        </span>
+      </div>
+
+      <input type='hidden' id='alert-group-value' >
     </div>
+  <% end %>
 
-    <input type='hidden' id='alert-group-value' >
-  </div>
 
   <div id='alert-group-list'>
-    <%= render 'alert_groups/groups', alert: @alert %>
+    <%= render 'alert_groups/groups', alert: alert, admin: project_with_role.has_admin_role? %>
   </div>
 
 </div>

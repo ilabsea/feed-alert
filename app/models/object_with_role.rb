@@ -1,8 +1,8 @@
-class ProjectWithRole
-  attr_accessor :project, :role
-  def initialize(project, role=User::PERMISSION_ROLE_ADMIN )
-    @project = project
-    @role  = role
+class ObjectWithRole
+  attr_accessor :object, :role
+  def initialize(object, role=User::PERMISSION_ROLE_ADMIN )
+    @object = object
+    @role   = role
   end
 
   def has_admin_role?
@@ -17,7 +17,15 @@ class ProjectWithRole
 
   def update_attributes attributes
     if has_admin_role?
-      @project.update_attributes(attributes)
+      @object.update_attributes(attributes)
+    else
+      false
+    end
+  end
+
+  def save
+    if has_admin_role?
+      @object.save
     else
       false
     end
@@ -25,7 +33,7 @@ class ProjectWithRole
 
   def destroy
     if has_admin_role?
-      @project.destroy
+      @object.destroy
     else
       false
     end

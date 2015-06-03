@@ -66,4 +66,13 @@ class Alert < ActiveRecord::Base
     options[:to] = date_range.to
     options
   end
+
+  def self.from_member(member_id)
+    group_sql = Group.select('groups.id').joins('INNER JOIN memberships ON memberships.group_id = groups.id ')
+                     .where([ 'memberships.member_id=?', member_id]).to_sql
+
+    self.includes(:project).select('distinct alerts.id, alerts.*')
+                           .joins('INNER JOIN alert_groups ON alert_groups.alert_id = alerts.id')
+                           .where("alert_groups.group_id in (#{group_sql})")
+  end
 end

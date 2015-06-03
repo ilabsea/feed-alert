@@ -1,0 +1,16 @@
+
+<tr>
+  <td><%= link_to group_with_role.object.name, edit_group_path(group_with_role.object) %></td>
+  <td><%= truncate(group_with_role.object.description, length: 45) %></td>
+  <td align="center">
+    <%= link_to "View", alerts_group_path(group_with_role.object.id), class:'', data: {id: group_with_role.object.id} %>
+  </td>
+  <td><%= truncate(group_with_role.object.members.map(&:full_name).join(", "), length: 45) %></td>
+  <td>
+     <% if group_with_role.has_admin_role? %>
+       <%= link_edit " ", edit_group_path(group_with_role.object) %>
+       <%= link_destroy " ", group_path(group_with_role.object), method: :delete, data: { confirm: 'Are you sure to delete this group ?' } %>
+     <% end %>
+  </td>
+</tr>
+

@@ -5,12 +5,12 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = current_user.my_projects.build
+    @project_with_role = ObjectWithRole.new(current_user.my_projects.build)
   end
 
   def create
-    @project = current_user.my_projects.build(filter_params)
-    if @project.save
+    @project_with_role = ObjectWithRole.new(current_user.my_projects.build(filter_params))
+    if @project_with_role.save
       redirect_to projects_path, notice: 'Project has been created'
     else
       flash.now[:alert] = "Failed to create project"
@@ -39,6 +39,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project_with_role = current_user.accessible_project(params[:id])
+    
     # ActiveRecord::StatementInvalid
     if @project_with_role.destroy
       redirect_to projects_path, notice: 'Project has been deleted'

@@ -1,5 +1,5 @@
 class AlertsController < ApplicationController
-  before_action :require_project_admin_role!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :require_project_admin_role!, only: [:new, :create, :update, :destroy]
 
   def new_groups
     alert = Alert.find(params[:id])
@@ -36,18 +36,18 @@ class AlertsController < ApplicationController
   end
 
   def index
-    @alerts = project_with_role.project.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
+    @alerts = project_with_role.object.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
   end
 
   def new
-    @alert = project_with_role.project.alerts.build
+    @alert = project_with_role.object.alerts.build
   end
 
   def create
-    @alert = project_with_role.project.alerts.build(filter_params)
+    @alert = project_with_role.object.alerts.build(filter_params)
 
     if(@alert.save)
-      redirect_to edit_project_alert_path(project_with_role.project, @alert), notice: 'Alert has been created'
+      redirect_to edit_project_alert_path(project_with_role.object, @alert), notice: 'Alert has been created'
     else
       flash.now[:alert] = 'Failed to create alert'
       render :new
@@ -55,13 +55,13 @@ class AlertsController < ApplicationController
   end
 
   def edit
-    @alert = project_with_role.project.alerts.find(params[:id])
+    @alert = project_with_role.object.alerts.find(params[:id])
   end
 
   def update
-    @alert = project_with_role.project.alerts.find(params[:id])
+    @alert = project_with_role.object.alerts.find(params[:id])
     if(@alert.update_attributes(filter_params))
-      redirect_to project_alerts_path(project_with_role.project), notice: 'Alert has been updated'
+      redirect_to project_alerts_path(project_with_role.object), notice: 'Alert has been updated'
     else
       flash.now[:alert] = 'Could not save the alert'
       render :edit
@@ -69,11 +69,11 @@ class AlertsController < ApplicationController
   end
 
   def destroy
-    @alert = project_with_role.project.alerts.find(params[:id])
+    @alert = project_with_role.object.alerts.find(params[:id])
     if @alert.destroy
-      redirect_to project_alerts_path(project_with_role.project), notice: 'Alert has been deleted'
+      redirect_to project_alerts_path(project_with_role.object), notice: 'Alert has been deleted'
     else
-      redirect_to project_alerts_path(project_with_role.project), notice: 'Could not delete the alert'
+      redirect_to project_alerts_path(project_with_role.object), notice: 'Could not delete the alert'
     end
   end
 

@@ -16,4 +16,5 @@ class Member < ActiveRecord::Base
     like = "#{query}%"
     where([ "full_name LIKE ? OR email LIKE ? OR phone LIKE ? ", like, like, like ])
   end
+
 end

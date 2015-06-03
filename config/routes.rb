@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   resources :groups do
     member do
       get 'new_members'
+      get 'alerts'
     end
   end
 
@@ -79,6 +80,7 @@ Rails.application.routes.draw do
   resources :members do
     member do
       get 'new_groups'
+      get 'alerts'
     end
   end
 

@@ -10,7 +10,7 @@ function buildAlertKeywordTypeahead(){
   var sources = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: urlSearch + '?q=%QUERY'
+    remote: { url: urlSearch + '?q=%QUERY', cache: false }
   });
 
   // initialize the bloodhound suggestion engine

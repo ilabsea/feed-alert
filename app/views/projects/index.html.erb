@@ -7,20 +7,18 @@
   </div>
 
   <div class='right'>
-    <%= render 'shared/search_form', url: projects_path, admin: true %>
+    <%= render 'shared/search_form', url: projects_path %>
   </div>
 </div>
 
 <% @my_projects.each do |project| %>
-  <%= render 'project', project: project, admin: true %>
+  <%= render 'project', project_with_role: ObjectWithRole.new(project), show_role: false %>
 <% end %>
 
 
 <br />
 <h3 class='header-title'> Shared Projects </h3>
 <% current_user.project_permissions.each do |permission| %>
-  <%= render 'project', project: permission.project,
-                        admin: permission.admin_role?,
-                        role: permission.role %>
+  <%= render 'project', project_with_role: ObjectWithRole.new(permission.project, permission.role), show_role: true %>
 <% end %>
 

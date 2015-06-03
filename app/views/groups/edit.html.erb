@@ -5,13 +5,13 @@
 <h4> Edit Group</h4>
 
 <div class='row'>
-  <div class='col-lg-6'> <%= render 'form' %> </div>
+  <div class='col-lg-6'> <%= render 'form', group_with_role: @group_with_role %> </div>
   <div class='col-lg-6'>
     <h4 class='sub-title'> Registering Recipient </h4>
-    <%= render 'search_member' %>
+    <%= render('search_member', group_with_role: @group_with_role) if @group_with_role.has_admin_role? %>
 
     <div id='member-list'>
-      <%= render 'memberships/members', group: @group %>
+      <%= render 'memberships/members', group_with_role: @group_with_role %>
     </div>
   </div>
 </div>

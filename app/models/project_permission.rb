@@ -5,4 +5,6 @@ class ProjectPermission < ActiveRecord::Base
   def admin_role?
     self.role == User::PERMISSION_ROLE_ADMIN
   end
+
+
 end

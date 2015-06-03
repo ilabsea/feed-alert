@@ -41,7 +41,6 @@ function permissionRoleMatch(user, projectId, role) {
 function updateSharedUsersTable(){
   if(typeof permissionUsers != 'undefined') {
     for(var i=0; i< permissionUsers.length; i++) {
-      console.log("user", permissionUsers[i])
       addPermissionToTable(permissionUsers[i])
     }
   }
@@ -59,11 +58,11 @@ function inputPermissionRoleChange() {
       url: url,
       method: 'POST',
       success: function(response){
-        console.log('success', response)
+
       },
 
       error: function(response){
-        console.log('error', response)
+
       }
 
     })
