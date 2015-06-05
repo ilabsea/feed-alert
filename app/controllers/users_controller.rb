@@ -64,30 +64,43 @@ class UsersController < ApplicationController
   end
 
   def profile
-
+    @user = current_user
   end
 
-  def change_profile
-    @old_password = params[:user][:old_password]
-    @password = params[:user][:password]
-    @password_confirmation = params[:user][:password_confirmation]
+  def update_profile
+    update_params = params.require(:user).permit(:full_name, :email, :phone)
+    @user = User.find(current_user.id)
 
-    if current_user.change_password(@old_password, @password, @password_confirmation)
-      flash.now.notice = 'Your password has been changed successfully'
-
-      @old_password = ''
-      @password = ''
-      @password_confirmation = ''
+    if @user.update_attributes(update_params)
+      redirect_to profile_users_path, notice: 'Profile has been updated'
     else
-      flash.now.alert =  current_user.errors.full_messages.first
+      flash.now.alert = 'Failed to update your profile'
+      render :profile
     end
-    render :profile
+  end
+
+  def password
+    @user = current_user
+  end
+
+  def update_password
+    old_password = params[:user][:old_password]
+    password = params[:user][:password]
+    password_confirmation = params[:user][:password_confirmation]
+    @user = User.find(current_user.id)
+
+    if @user.change_password(old_password, password, password_confirmation)
+      redirect_to password_users_path, notice: 'Your password has been changed successfully'
+    else
+      flash.now.alert = 'Failed to update your password'
+      render :password
+    end
   end
 
   private
 
   def filter_params
-    params.require(:user).permit(:user_name, :full_name, :email, :phone, :role)
+    params.require(:user).permit(:full_name, :email, :phone, :role)
   end
 
 
