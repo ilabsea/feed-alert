@@ -2,8 +2,20 @@ module Authenticable
   extend ActiveSupport::Concern
 
   included do
+    before_action :remember_location
     before_action :authenticate_user!
     helper_method :current_user, :user_signed_in?
+    
+  end
+
+  def remember_location
+    if request.get? && !request.xhr? && !no_auth_path.include?(request.path)
+      session[:remember_location] = request.fullpath
+    end
+  end
+
+  def no_auth_path
+    ['/sign_in', '/sign_up', "/"]
   end
 
   def current_user
@@ -19,7 +31,7 @@ module Authenticable
   end
 
   def after_signed_in_path_for(user)
-    root_path
+    session[:remember_location] || root_path
   end
 
   def after_signed_out_path_for(user)
