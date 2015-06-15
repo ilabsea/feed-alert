@@ -12,6 +12,7 @@ class MembersController < ApplicationController
   def alerts
     @member = Member.find(params[:id])
     @alerts = Alert.from_member(params[:id])
+    render layout: false
   end
 
   def new_groups

@@ -42,7 +42,7 @@
 
         </td>
         <td><%= truncate(member.groups.map(&:name).join(", "), length: 45) %></td>
-        <td align="center"> <%= link_to 'View', alerts_member_path(member) %> </td>
+        <td align="center"> <%= link_to 'View', alerts_member_path(member), class: 'content-url' %> </td>
         <td>
           <%= link_edit " ", edit_member_path(member) %>
           <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this recipient ?' } %>
@@ -53,3 +53,4 @@
 </table>
 
 <%= paginate_for(@members) %>
+<%= render 'shared/content_url_modal' %>

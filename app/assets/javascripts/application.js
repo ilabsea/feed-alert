@@ -24,8 +24,10 @@
 //= require shared/hidden-content
 //= require shared/notification
 //= require shared/hour-picker
+//= require shared/content-url-modal
 
 //= require group/member
+
 //= require member/group
 //= require permission/user
 

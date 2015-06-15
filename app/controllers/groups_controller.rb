@@ -57,6 +57,7 @@ class GroupsController < ApplicationController
 
   def alerts
     @group = group_with_role.object
+    render layout: false
   end
 
   private

@@ -1,6 +1,5 @@
-<h3> Member: <%= @member.full_name %> </h3>
-<p style='font-style: italic; color: gray; margin-left: 15px;'>
-  <%= @member.email %>
-</p>
+<h4>
+  <b> Recipient : <%= @member.full_name %> </b>
+</h4>
 
 <%= render 'shared/alerts_with_projects', alerts: @alerts %>

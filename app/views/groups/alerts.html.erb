@@ -1,4 +1,5 @@
-<h3> Group: <%= @group.name %> </h3>
-<p style='font-style: italic; color: gray; margin-left: 15px;'> <%= @group.description %></p>
+<h4>
+  <b>Group: <%= @group.name %></b>
+</h4>
 
 <%= render 'shared/alerts_with_projects', alerts: @group.alerts.includes(:project) %>
