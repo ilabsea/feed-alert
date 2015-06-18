@@ -18,6 +18,7 @@
 
 //= require bootstrap-timepicker
 //= require bootstrap-sprockets
+//= require bootstrap-switch
 //= require twitter/typeahead
 
 //= require shared/alert-animate
@@ -25,6 +26,7 @@
 //= require shared/notification
 //= require shared/hour-picker
 //= require shared/content-url-modal
+//= require shared/switch
 
 //= require group/member
 
@@ -34,6 +36,7 @@
 //= require alert/form
 //= require alert/alert_group
 //= require alert/alert_keyword
+//= require channel/form
 
 
 

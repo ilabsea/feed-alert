@@ -18,7 +18,7 @@ class Sms
   end
 
   def nuntium
-    @nuntium ||= Nuntium.new(ENV['NUNTIUM_URL'], ENV['NUNTIUM_ACCOUNT'], ENV['NUNTIUM_APP'], ENV['NUNTIUM_APP_PWD'])
+    @nuntium ||= Nuntium.new(ENV['NUNTIUM_HOST'], ENV['NUNTIUM_ACCOUNT'], ENV['NUNTIUM_APP'], ENV['NUNTIUM_APP_PWD'])
   end
 
 end

@@ -159,6 +159,7 @@ module ApplicationHelper
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: [:projects, :alerts], text: 'Projects', url: projects_path, class: '' },
            { controller: [:groups, :members], text: 'Recipient Groups', url: groups_path, class: '' },
+           { controller: [:channels], text: 'SMS Channels', url: channels_path, class: '' },
            { controller: :permissions, text: 'Permissions' ,url: permissions_path, class: '' }
     ]
 

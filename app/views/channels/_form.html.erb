@@ -1,0 +1,82 @@
+<%=form_for @channel, class: 'form form-horizontal' do |f| %>
+  <% content_for(:save_button) do %>
+    <div class='form-group form-action-group'>
+      <label></label>
+      <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+    </div>
+  <% end %>
+
+  <div class="panel panel-default">
+    <a href='#' class="panel-heading setup-flow" >
+      Android Phone SMS Gateway - Basic Setup(Recommended)
+    </a>
+    <div class="panel-body" style="<%=channel_active(@channel, Channel::SETUP_FLOW_BASIC) %>">
+       <p class="text-gray">
+          The android phone sms gateway allow you to use any adroid device as a local gateway for sending and receiving system SMS message Click here for instructions
+        </p>
+
+        <div class="control-inline" id='channel-name-wrapper'>
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+
+        <div class="control-inline">
+          <%= f.label :ticket_code, 'Key' %>
+          <%= f.text_field :ticket_code, class: 'form-control'%>
+        </div>
+        <br />
+        <%= yield(:save_button) %>
+        <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_BASIC %>
+        </div>
+  </div>
+<% end %>
+
+<%=form_for @channel, class: 'form form-horizontal' do |f| %>
+  <div class="panel panel-default">
+    <a href='' class="panel-heading setup-flow">
+      Android Phone SMS Gateway -Advanced Setup
+    </a>
+
+    <div class="panel-body" style="<%=channel_active(@channel, Channel::SETUP_FLOW_ADVANCED) %>">
+      <p class="text-gray">
+       The android phone sms gateway allow you to use any adroid device as a local gateway for sending and receiving system SMS message Click here for instructions
+      </p>
+
+      <div class="control-inline" id='channel-name-wrapper'>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+
+      <div class="control-inline">
+        <%= f.label :password, 'Password' %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+      <br />
+      <%= yield(:save_button) %>
+      <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_ADVANCED %>
+
+    </div>
+  </div>
+<% end %>
+
+<%=form_for @channel, class: 'form form-horizontal' do |f| %>
+  <div class="panel panel-default">
+    <a href='' class="panel-heading setup-flow">
+      Android Phone SMS Gateway - Advanced SetupNational Gateway(Only Some Country Supported)
+    </a>
+    <div class="panel-body" style="<%=channel_active(@channel, Channel::SETUP_FLOW_GLOBAL)%>">
+      <p class="text-gray">
+       In a limited number of countries we have a gateway provided by a local phone company that can be used to send and recieve system messages. Please select the list below to
+      </p>
+
+      <div class="control-inline">
+        <%= f.label :getway, 'SMS Gateway' %>
+        <%= f.select :name, options_for_select(Channel.global_sms_channel), {}, class: 'form-control' %>
+      </div>
+      <br />
+      <%= yield(:save_button) %>
+      <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_GLOBAL %>
+
+    </div>
+  </div>
+<% end %>

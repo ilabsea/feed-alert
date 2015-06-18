@@ -14,6 +14,12 @@ Rails.application.routes.draw do
   get 'confirm' => 'registrations#confirm'
   get 'welcome' => 'registrations#welcome'
 
+  resources :channels do
+    member do
+      put 'state'
+    end
+  end
+
   resources :passwords, only: [:new, :update] do
     collection do
       put 'request_change'

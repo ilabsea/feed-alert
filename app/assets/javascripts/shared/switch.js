@@ -1,0 +1,7 @@
+$(function(){
+  switchInit()
+})
+
+function switchInit() {
+  
+}

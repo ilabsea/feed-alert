@@ -1,0 +1,16 @@
+.control-inline {
+  padding-bottom: 10px;
+  input, select {
+    display: inline-block !important;
+    min-width: 300px;
+    width: auto;
+  }
+  label {
+    display: inline-block !important;
+    width: 8em;
+  }
+}
+.setup-flow {
+  display: block;
+  width: 100%;
+}
