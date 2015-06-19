@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617083242) do
+ActiveRecord::Schema.define(version: 20150618075202) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 20150617083242) do
   end
 
   add_index "alerts", ["project_id"], name: "index_alerts_on_project_id", using: :btree
+
+  create_table "channel_permissions", force: :cascade do |t|
+    t.integer  "channel_id", limit: 4
+    t.integer  "user_id",    limit: 4
+    t.string   "role",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "channel_permissions", ["channel_id"], name: "index_channel_permissions_on_channel_id", using: :btree
+  add_index "channel_permissions", ["user_id"], name: "index_channel_permissions_on_user_id", using: :btree
 
   create_table "channels", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -225,6 +236,8 @@ ActiveRecord::Schema.define(version: 20150617083242) do
   add_foreign_key "alert_places", "alerts"
   add_foreign_key "alert_places", "places"
   add_foreign_key "alerts", "projects"
+  add_foreign_key "channel_permissions", "channels"
+  add_foreign_key "channel_permissions", "users"
   add_foreign_key "channels", "users"
   add_foreign_key "feed_entries", "alerts"
   add_foreign_key "feed_entries", "feeds"

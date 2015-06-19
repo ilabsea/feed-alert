@@ -3,27 +3,25 @@ class Channel < ActiveRecord::Base
 
   belongs_to :user, counter_cache: true
 
+  has_many :channel_permissions, dependent: :destroy
+  has_many :shared_users, class_name: 'User', through: :channel_permissions, source: :user, dependent: :destroy
+
   SETUP_FLOW_BASIC    = 'Basic'
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'
 
-  validates :name, presence: true, length: { minimum: 3, maximum: 30}
+  validates :name, presence: true
+  validates :name, length: { minimum: 3, maximum: 30}
   validates :name, uniqueness: { scope: :user_id}
-  validates :password, :presence => true, :length => {:minimum => 4, :maximum => 6}, if: ->(u) { u.advanced_setup? }
-  validates :ticket_code, :presence => {:on => :create}, if: ->(u) { u.basic_setup? }
+  validates :password, presence: true, length: {minimum: 4, maximum: 6}, if: ->(u) { u.advanced_setup? }
+
+  validates :ticket_code, :presence => {:on => :create},  if: ->(u) { u.basic_setup? }
+
 
   attr_accessor :ticket_code
 
-  def random_password
-    self.password = SecureRandom.base64(6) if self.password.blank?
-  end
-
   def self.enabled
     where(is_enable: true)
-  end
-
-  def gateway_url
-    nuntium.endpoint
   end
 
   def basic_setup?
@@ -36,5 +34,13 @@ class Channel < ActiveRecord::Base
 
   def global_setup?
     self.setup_flow == Channel::SETUP_FLOW_GLOBAL
+  end
+
+  def update_state(state)
+    self.is_enable = state
+    if self.save && (state == true || state == 'true' || state == "1" || state == 1)
+      Channel.where(['user_id = ? AND id != ?', self.user_id, self.id ])
+             .update_all({is_enable: false })
+    end
   end
 end

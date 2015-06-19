@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project_with_role = current_user.accessible_project(params[:id])
+    @project_with_role.has_admin_role!
 
     if @project_with_role.update_attributes(filter_params)
       redirect_to projects_path, notice: 'Project updated'
@@ -39,7 +40,8 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project_with_role = current_user.accessible_project(params[:id])
-    
+    @project_with_role.has_admin_role!
+
     # ActiveRecord::StatementInvalid
     if @project_with_role.destroy
       redirect_to projects_path, notice: 'Project has been deleted'

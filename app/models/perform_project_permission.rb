@@ -1,11 +1,10 @@
 class PerformProjectPermission
-  def initialize(owner)
-    @user = owner
+  def initialize(user)
+    @user = user
   end
 
   def for_project(attrs)
-    project_id = attrs[:project_id]
-    if @user.accessible_project(project_id)
+    if @user.accessible_project(attrs[:project_id]).has_admin_role?
       group_permissions = GroupPermission.where(user_id: attrs[:user_id], project_id: attrs[:project_id])
 
       project_permission = ProjectPermission.where(user_id: attrs[:user_id], project_id: attrs[:project_id]).first_or_initialize
@@ -25,14 +24,13 @@ class PerformProjectPermission
             group_permission = GroupPermission.where(user_id: attrs[:user_id],
                                                      group_id: alert_group.group_id,
                                                      alert_id: alert_group.alert_id,
-                                                     project_id:attrs[:project_id]).first_or_initialize
+                                                     project_id: attrs[:project_id]).first_or_initialize
             group_permission.role = project_permission.role
 
             group_permission.save!
           end
         end
       end
-
     end
   end
 

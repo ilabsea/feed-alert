@@ -8,25 +8,25 @@ $(function(){
 })
 
 function toggleCollapsableProject(){
-  $('body').delegate(".project-collapsable", 'click', function(){
+  $('body').delegate(".kind-collapsable", 'click', function(){
     var $this = $(this)
     $this.find(".glyphicon").toggle()
-    $projectItems = $(".permission-" + $this.attr('data-user-id'))
-    $projectItems.toggle()
+    $this.parent().find(".permission-item").toggle()
   })
 }
 
 function toggleCollapsableUser(){
-  $('body').delegate(".user-project-collapsable", 'click', function(){
+  $('body').delegate(".user-collapsable", 'click', function(){
     var $this = $(this)
     $this.find(".glyphicon").toggle()
-    $projectTitle = $this.next()
-    $projectTitle.toggle()
+    $this.next().toggle()
+    $this.next().next().toggle()
+
   })
 }
 
 
-function permissionRoleMatch(user, projectId, role) {
+function permissionRoleMatchProjectPermission(user, projectId, role) {
   if(typeof user.project_permissions != 'undefined') {
     for(var i=0; i< user.project_permissions.length; i++) {
       var projectPermission = user.project_permissions[i]
@@ -38,6 +38,20 @@ function permissionRoleMatch(user, projectId, role) {
   return ""
 }
 
+function permissionRoleMatchChannelPermission(user, channelId, role) {
+  if(typeof user.channel_permissions != 'undefined') {
+    for(var i=0; i< user.channel_permissions.length; i++) {
+      var channelPermission = user.channel_permissions[i]
+
+      if(channelPermission.channel_id == channelId &&  channelPermission.user_id == user.id && channelPermission.role == role )
+        return "checked"
+    }
+  }
+  return ""
+}
+
+
+
 function updateSharedUsersTable(){
   if(typeof permissionUsers != 'undefined') {
     for(var i=0; i< permissionUsers.length; i++) {
@@ -47,11 +61,17 @@ function updateSharedUsersTable(){
 }
 
 function inputPermissionRoleChange() {
-  $('body').delegate(".project-permission-role", 'change', function(){
+  $('body').delegate(".permission-role", 'change', function(){
     var $this = $(this)
     var data = $this.data()
-    var params = {user_id: data.userId, project_id: data.projectId, role: data.role}
-    var url = $("#project-permission").attr('data-url')
+    var params = {user_id: data.userId, role: data.role}
+
+    if(data.projectId)
+      params.project_id = data.projectId
+    else if (data.channelId)
+      params.channel_id = data.channelId
+    
+    var url = $this.attr('data-url')
 
     $.ajax({
       data: params,
@@ -62,14 +82,9 @@ function inputPermissionRoleChange() {
       },
 
       error: function(response){
-
       }
 
     })
-  })
-
-  $('body').delegate(".project-permission-role", 'click', function(event){
-    event.stopPropagation()
   })
 }
 
@@ -115,7 +130,7 @@ function btnAddPermissionClick() {
 
 function addPermissionToTable(user) {
   if(typeof userTables[user.id] == 'undefined' ) {
-    var data = {user: user, projects: myProjects}
+    var data = {user: user, projects: myProjects, channels: myChannels}
     var template = $("#permission-tmpl").html()
 
     var result = tmpl(template, data)

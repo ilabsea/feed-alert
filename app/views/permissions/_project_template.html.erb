@@ -1,0 +1,62 @@
+<tr style='display:none;' >
+    <td colspan='5' style='cursor: pointer;' >
+      <div class='kind-collapsable'>
+        <span style='padding-left: 10px; font-weight:bold;'>
+          <i class='glyphicon glyphicon-triangle-right'> </i>
+          <i class='glyphicon glyphicon-triangle-bottom' style='display: none'> </i>
+          Projects
+        </span>
+      </div>
+
+      {% for(var i=0; i< o.projects.length; i++ ) { %}
+
+        <div class='permission-item' style='display:none;' >
+
+          <div class='permission-first'>
+            <span> {%= o.projects[i].name %} </span>
+          </div>
+          
+          <div class="role-type">
+            <input type='radio'
+                   class='permission-role'
+                   name='project-permission-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_NONE%>'
+                   data-url='<%=project_permissions_url()%>'
+
+                   {%= permissionRoleMatchProjectPermission(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_NONE%>') %}
+                   />
+
+          </div>
+
+          <div class="role-type">
+            <input type='radio'
+                   class='permission-role'
+                   name='project-permission-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_NORMAL%>'
+                   data-url='<%=project_permissions_url()%>'
+
+                   {%= permissionRoleMatchProjectPermission(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_NORMAL%>') %}
+                   />
+          </div>
+
+          <div class="role-type">
+            <input type='radio'
+                   class='permission-role'
+                   name='project-permission-{%=o.projects[i].id%}-{%=o.user.id%}'
+                   data-project-id='{%=o.projects[i].id%}'
+                   data-user-id='{%=o.user.id%}'
+                   data-role='<%=User::PERMISSION_ROLE_ADMIN %>'
+                   data-url='<%=project_permissions_url()%>'
+
+                   {%= permissionRoleMatchProjectPermission(o.user, o.projects[i].id, '<%=User::PERMISSION_ROLE_ADMIN%>') %}
+                   />
+          </div>
+
+        </div>
+        {% } %}
+    </td>
+  </tr>

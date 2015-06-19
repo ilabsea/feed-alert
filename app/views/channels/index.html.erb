@@ -1,4 +1,5 @@
 <% content_for(:title) { "Channels"} %>
+<h3 class='header-title'> Channels </h3>
 
 <div class='clearfix'>
   <div class='left'>
@@ -10,28 +11,21 @@
   </div>
 </div>
 
-
 <table class='table'>
-  <thead>
-    <tr>
-      <td>Name</td>
-      <td>Status</td>
-      <td class='td-last'>Action</td>
-    </tr>
-  </thead>
   <tbody>
-    <% @channels.each do |channel| %>
-      <tr>
-        <td><%= link_to channel.name, edit_channel_path(channel) %></td>
-        <td><%= check_box_tag "status", channel.id, channel.is_enable, 
-                               class: 'switchable channel-status',
-                               data: {url: state_channel_path(channel.id)}
-                                %></td>
-        <td>
-          <%= link_edit " ", edit_channel_path(channel) %>
-          <%= link_destroy " ", channel_path(channel), method: :delete, data: { confirm: 'Are you sure to delete this channel ?' } %>
-        </td>
-      </tr>
+    <% @my_channels.each do |channel| %>
+      <%= render 'channel', channel_with_role: ObjectWithRole.new(channel) %>
     <% end %>
+  </tbody>
+</table>
+
+<h3 class='header-title'> Shared Channels </h3>
+<table class='table'>
+  <tbody>
+    <% current_user.channel_permissions.each do |permission| %>
+      <%= render 'channel', channel_with_role: ObjectWithRole.new(permission.channel, permission.role), show_role: true %>
+    <% end %>
+    
+
   </tbody>
 </table>

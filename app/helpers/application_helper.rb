@@ -211,4 +211,10 @@ module ApplicationHelper
   def active_tab_for_index(tab_index, tab)
     tab_index == tab ? 'active' : ''
   end
+
+  def error_for(resource, field)
+    content_tag :span, class: 'error-field' do
+      resource.errors[field].first
+    end
+  end
 end

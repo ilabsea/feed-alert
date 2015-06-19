@@ -2,9 +2,13 @@ class User < ActiveRecord::Base
   has_secure_password(validations: false)
 
   has_many :my_projects, class_name: "Project"
+  has_many :my_channels, class_name: "Channel"
 
   has_many :project_permissions
   has_many :shared_projects, class_name: "Project", through: :project_permissions, source: :project
+
+  has_many :channel_permissions
+  has_many :shared_channels, class_name: "Channel", through: :channel_permissions, source: :channel
 
   has_many :groups
   has_many :members
@@ -90,6 +94,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def shared
+    project_permissions = ProjectPermission.select('user_id').where(project_id: self.my_projects.ids).uniq
+    channel_permissions = ChannelPermission.select('user_id').where(channel_id: self.my_channels.ids).uniq
+    user_ids = (project_permissions + channel_permissions).map{|item| item.user_id}.uniq
+    User.where(id: user_ids)
+  end
+
   def self.visible_roles
     [ROLE_NORMAL, ROLE_ADMIN]
   end
@@ -104,6 +115,15 @@ class User < ActiveRecord::Base
 
     permission = self.project_permissions.find_by(project_id: project_id)
     return ObjectWithRole.new(permission.project, permission.role) if permission
+    raise ActiveRecord::RecordNotFound
+  end
+
+  def accessible_channel(channel_id)
+    channel = self.my_channels.where(id: channel_id).first
+    return ObjectWithRole.new(channel) if channel
+
+    permission = self.channel_permissions.find_by(channel_id: channel_id)
+    return ObjectWithRole.new(permission.channel, permission.role) if permission
     raise ActiveRecord::RecordNotFound
   end
 

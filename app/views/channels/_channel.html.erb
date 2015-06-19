@@ -1,0 +1,34 @@
+<tr>
+  <td>
+    <b style='font-size: 120%;'>  <span> <%= channel_with_role.object.name %></span></b> 
+    <%= " - Shared as #{channel_with_role.role} " if defined?(show_role) %>
+
+    <% if !channel_with_role.object.global_setup? %>
+      <div class="sub-text">
+        <div> <span>Endpoint : </span> <b> <%= Channel.end_point %> </b> </div>
+        <div> <span>User name : </span> <b> <%= channel_with_role.object.name %> </b> </div>
+        <div> <span>Password : </span> <b> <%= channel_with_role.object.password %> </b> </div>
+      </div>
+    <% end %>
+
+  </td>
+
+  <td width="120">
+    <%  attr_options = channel_with_role.has_admin_role? ? {} : {disabled: 'disabled'}  %>
+    <%= check_box_tag "status",
+                      channel_with_role.object.id,
+                      channel_with_role.object.is_enable,
+                      { class: 'switchable channel-status',
+                        data: {url: state_channel_path(channel_with_role.object.id)} 
+                      }.merge(attr_options)
+                  %>
+  </td>
+  
+  <td width='50'>
+    <% if channel_with_role.has_admin_role? %>
+        <%= link_destroy " ", channel_path(channel_with_role.object),
+                              method: :delete, data: { confirm: 'Are you sure to delete this channel ?' } %>
+    <% end %>
+  </td>
+  
+</tr>

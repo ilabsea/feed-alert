@@ -5,8 +5,8 @@ module NuntiumConnector
   included do
     before_create :random_password, unless: :global_setup?
 
-    after_create :register_nuntium_channel, unless: :global_setup?
-    after_update :update_nuntium_channel, unless: :global_setup?
+    after_create  :register_nuntium_channel, unless: :global_setup?
+    after_update  :update_nuntium_channel, unless: :global_setup?
     after_destroy :delete_nuntium_channel, unless: :global_setup?
   end
 
@@ -17,7 +17,7 @@ module NuntiumConnector
       Sms.instance.nuntium
     end
 
-    def endpoint
+    def end_point
       ENV['NUNTIUM_HOST'] + '/' + ENV['NUNTIUM_ACCOUNT'] + '/qst'
     end
 
@@ -27,6 +27,10 @@ module NuntiumConnector
        { name: 'Cambodia National Gateway(smart)', code: 'smart'},
        { name: "Cambodia National Gateway(mobitel)",code: 'camgsm'} ].map{|c| [c[:name], c[:code] ]}
     end
+  end
+
+  def random_password
+    self.password = SecureRandom.base64(6) if self.password.blank?
   end
 
   def nuntium

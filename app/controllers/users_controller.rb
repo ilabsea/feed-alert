@@ -9,9 +9,7 @@ class UsersController < ApplicationController
 
   def list
     @users = User.from_query(params[:q])
-
-    shared_user_ids = current_user.my_projects.shared_users.ids
-    shared_user_ids << current_user.id
+    shared_user_ids = current_user.shared.ids + [current_user.id]
 
     @users  = @users.excludes(shared_user_ids)
     render json: @users
