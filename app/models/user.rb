@@ -141,4 +141,9 @@ class User < ActiveRecord::Base
     self.group_permissions.select("DISTINCT group_permissions.group_id, group_permissions.*").where("(group_id, order_number) in (#{group_permission_sub.to_sql}) ")
   end
 
+  def accessible_channels
+    channel_ids = self.my_channels.pluck(:id) + self.channel_permissions.pluck(:channel_id)
+    Channel.where(id: channel_ids)
+  end
+
 end

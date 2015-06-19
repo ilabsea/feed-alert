@@ -15,6 +15,13 @@
   </div>
 
   <div class='input-row'>
+    <%=f.input :channel_id, label: 'SMS Channel',
+                         collection: current_user.accessible_channels.enabled.map{|c| [c.name, c.id]},
+                         include_blank: 'Select SMS Channel',
+                         input_html: {class: 'form-control', autocomplete: :off}.merge(disabled) %>
+  </div>
+
+  <div class='input-row'>
     <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 4, cols: 40}.merge(disabled) %>
   </div>
 

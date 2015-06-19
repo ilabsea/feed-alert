@@ -40,9 +40,12 @@
         <td>
           <%= link_to alert.name, edit_project_alert_path(@project_with_role.object, alert) %>
           <div><%= alert.url %></div>
+          <% if alert.channel %>
           <p class="sub-text">
-            <span>Sms alert </span> (<%= alert_time(alert) %>)
+            <span>Sms alert </span> <%= alert_time(alert) %>
+              using channel <b> <%= alert.channel.name %></b>
           </p>
+          <% end %>
         </td>
         <td><%= truncate(alert.groups.map(&:name).join(", "), length: 120) %></td>
         <td><%= truncate(alert.keywords.map(&:name).join(", "), length: 120) %></td>

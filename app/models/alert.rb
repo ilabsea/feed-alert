@@ -14,6 +14,7 @@ class Alert < ActiveRecord::Base
   has_many :feed_entries
 
   belongs_to :project
+  belongs_to :channel
 
   # accepts_nested_attributes_for :alert_places, allow_destroy: true
 

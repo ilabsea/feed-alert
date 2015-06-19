@@ -83,7 +83,7 @@ class AlertsController < ApplicationController
   end
 
   def filter_params
-    params.require(:alert).permit(:name, :url, :interval, :from_time, :to_time, :sms_template, 
+    params.require(:alert).permit(:name, :url, :interval, :from_time, :to_time, :sms_template, :channel_id,
                                   alert_places_attributes: [:id, :place_id, :_destroy],)
   end
 

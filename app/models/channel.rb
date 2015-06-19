@@ -6,6 +6,8 @@ class Channel < ActiveRecord::Base
   has_many :channel_permissions, dependent: :destroy
   has_many :shared_users, class_name: 'User', through: :channel_permissions, source: :user, dependent: :destroy
 
+  has_many :alerts, dependent: :nullify
+
   SETUP_FLOW_BASIC    = 'Basic'
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618075202) do
+ActiveRecord::Schema.define(version: 20150619074115) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -58,8 +58,10 @@ ActiveRecord::Schema.define(version: 20150618075202) do
     t.string   "from_time",            limit: 255
     t.string   "to_time",              limit: 255
     t.integer  "project_id",           limit: 4
+    t.integer  "channel_id",           limit: 4
   end
 
+  add_index "alerts", ["channel_id"], name: "index_alerts_on_channel_id", using: :btree
   add_index "alerts", ["project_id"], name: "index_alerts_on_project_id", using: :btree
 
   create_table "channel_permissions", force: :cascade do |t|
