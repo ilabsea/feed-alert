@@ -16,7 +16,7 @@ class FeedEntryHighlight
   end
 
   def title
-   if @search_highlight["highlight"]["title"]
+   if @search_highlight["highlight"] && @search_highlight["highlight"]["title"]
      @search_highlight["highlight"]["title"].first
    elsif @search_highlight["_source"]["title"]
      @search_highlight["_source"]["title"]
@@ -26,7 +26,7 @@ class FeedEntryHighlight
   end
 
   def summary
-   if @search_highlight["highlight"]["summary"]
+   if @search_highlight["highlight"] && @search_highlight["highlight"]["summary"]
      @search_highlight["highlight"]["summary"].first
    else
     @search_highlight["_source"]["summary"]
@@ -34,7 +34,7 @@ class FeedEntryHighlight
   end
 
   def content
-    if @search_highlight["highlight"]["content"]
+    if @search_highlight["highlight"] && @search_highlight["highlight"]["content"]
       @search_highlight["highlight"]["content"].join(", ")
     end
   end

@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
   has_many :project_permissions, dependent: :destroy
   has_many :shared_users, class_name: 'User', through: :project_permissions
 
+  has_many :group_permissions, dependent: :destroy
+
   validates :name, presence: true
 
   has_many :alerts

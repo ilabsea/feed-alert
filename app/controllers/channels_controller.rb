@@ -10,8 +10,10 @@ class ChannelsController < ApplicationController
 
   def create
     @channel = current_user.channels.build(filter_params)
+    @channel.is_enable = true
     begin 
       if @channel.save
+        current_user.channels.disable_other(@channel.id)
         redirect_to channels_path, notice: 'Channel has been created'
       else
         flash.now[:alert] = 'Failed to create channel'

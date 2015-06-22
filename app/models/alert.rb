@@ -13,6 +13,8 @@ class Alert < ActiveRecord::Base
   has_many :feeds, dependent: :destroy
   has_many :feed_entries
 
+  has_many :group_permissions, dependent: :nullify
+
   belongs_to :project
   belongs_to :channel
 

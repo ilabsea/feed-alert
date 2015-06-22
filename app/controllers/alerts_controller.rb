@@ -1,5 +1,6 @@
 class AlertsController < ApplicationController
   before_action :require_project_admin_role!, only: [:new, :create, :update, :destroy]
+  before_action :check_channel_access!, only: [:create, :update]
 
   def new_groups
     alert = Alert.find(params[:id])
@@ -84,7 +85,11 @@ class AlertsController < ApplicationController
 
   def filter_params
     params.require(:alert).permit(:name, :url, :interval, :from_time, :to_time, :sms_template, :channel_id,
-                                  alert_places_attributes: [:id, :place_id, :_destroy],)
+                                  alert_places_attributes: [:id, :place_id, :_destroy])
+  end
+
+  def check_channel_access!
+    current_user.accessible_channel(params[:alert][:channel_id]) if params[:alert][:channel_id].present?
   end
 
   def project_with_role

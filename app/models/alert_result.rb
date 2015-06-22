@@ -14,7 +14,7 @@ class AlertResult
 
         group.members.each do |member|
           emails_to << member.email if member.email_alert
-          smses_to  << member.phone if member.sms_alert
+          smses_to  << member.phone if member.sms_alert && alert.channel && alert.channel.is_enable
         end
 
         delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes
@@ -31,9 +31,15 @@ class AlertResult
 
         sms_time = Time.zone.now
 
+        # alert.channel is duplicated but it offers clear
         if smses_to.length > 0 && alert.total_match > 0 && alert.is_time_appropiate?(sms_time)
           smses_to.each do |sms|
-            options = { from: ENV['APP_NAME'], to: "sms://#{sms}", body: alert.translate_message }
+            options = { from: ENV['APP_NAME'],
+                        to: "sms://#{sms}",
+                        body: alert.translate_message,
+                        suggested_channel: alert.channel.nuntium_channel_name
+                      }
+
             # wait_until, wait
             SmsAlertJob.set(wait: delay_time).perform_later(options)
           end

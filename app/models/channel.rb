@@ -45,4 +45,8 @@ class Channel < ActiveRecord::Base
              .update_all({is_enable: false })
     end
   end
+
+  def self.disable_other except_id
+    where(['id != ? ', except_id ]).update_all({is_enable: false })
+  end
 end

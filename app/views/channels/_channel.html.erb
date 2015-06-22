@@ -1,12 +1,12 @@
 <tr>
   <td>
-    <b style='font-size: 120%;'>  <span> <%= channel_with_role.object.name %></span></b> 
+    <b style='font-size: 120%;'>  <span> <%= channel_with_role.object.nuntium_channel_name %></span></b> 
     <%= " - Shared as #{channel_with_role.role} " if defined?(show_role) %>
 
     <% if !channel_with_role.object.global_setup? %>
       <div class="sub-text">
         <div> <span>Endpoint : </span> <b> <%= Channel.end_point %> </b> </div>
-        <div> <span>User name : </span> <b> <%= channel_with_role.object.name %> </b> </div>
+        <div> <span>User name : </span> <b> <%= channel_with_role.object.nuntium_channel_name %> </b> </div>
         <div> <span>Password : </span> <b> <%= channel_with_role.object.password %> </b> </div>
       </div>
     <% end %>
