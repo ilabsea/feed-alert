@@ -1,5 +1,4 @@
 class Channel < ActiveRecord::Base
-  include NuntiumConnector
 
   belongs_to :user, counter_cache: true
 
@@ -19,8 +18,12 @@ class Channel < ActiveRecord::Base
 
   validates :ticket_code, :presence => {:on => :create},  if: ->(u) { u.basic_setup? }
 
-
   attr_accessor :ticket_code
+  attr_accessor :nuntium_connection
+
+  def gen_password
+    self.password = SecureRandom.base64(6) if self.password.blank?
+  end
 
   def self.enabled
     where(is_enable: true)

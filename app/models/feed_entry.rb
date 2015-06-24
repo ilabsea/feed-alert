@@ -6,7 +6,7 @@ class FeedEntry < ActiveRecord::Base
   belongs_to :alert
   belongs_to :feed, counter_cache: true
 
-  validates :title, uniqueness: { scope: :feed_id }
+  # validates :title, uniqueness: { scope: :feed_id }
 
   before_save :invoke_fingerprint
   after_create :process_url
@@ -24,8 +24,8 @@ class FeedEntry < ActiveRecord::Base
   end
 
   def self.process_with options
-    feed_entry = FeedEntry.where(options.slice(:title, :url, :alert_id)).first
-    FeedEntry.create!(options) unless feed_entry
+    feed_entry = FeedEntry.where(options.slice(:title, :url)).first
+    FeedEntry.create(options) unless feed_entry
   end
 
   def process_url

@@ -11,44 +11,28 @@ class ChannelsController < ApplicationController
   def create
     @channel = current_user.channels.build(filter_params)
     @channel.is_enable = true
-    begin 
-      if @channel.save
-        current_user.channels.disable_other(@channel.id)
-        redirect_to channels_path, notice: 'Channel has been created'
-      else
-        flash.now[:alert] = 'Failed to create channel'
-        render :new
-      end
-    rescue Nuntium::Exception
-      @channel.destroy if @channel.persisted?
-      redirect_to channels_path, alert: 'Failed to sync with Nuntium server'
-    end
-  end
 
-  def edit
-    @channel = current_user.channels.find(params[:id])
-  end
+    channel_nuntium = ChannelNuntium.new(@channel)
 
-  def update
-    @channel_with_role = current_user.accessible_channel(params[:id])
-    @channel_with_role.has_admin_role!
-
-    if @channel_with_role.update_attributes(filter_params)
-      redirect_to channels_path, notice: 'Channel has been updated'
+    if channel_nuntium.create
+      current_user.channels.disable_other(@channel.id)
+      redirect_to channels_path, notice: 'Channel has been created'
     else
-      flash.now[:alert] = 'Failed to update channel'
-      render :edit
+      flash.now[:alert] = channel_nuntium.error_message
+      render :new
     end
   end
 
   def destroy
-    begin
-      @channel_with_role = current_user.accessible_channel(params[:id])
-      @channel_with_role.has_admin_role!
+    @channel_with_role = current_user.accessible_channel(params[:id])
+    @channel_with_role.has_admin_role!
 
-      @channel_with_role.destroy
-      redirect_to channels_path, notice: 'Channel deleted'
-    rescue
+    channel = @channel_with_role.object
+    channel_nuntium = ChannelNuntium.new(channel)
+
+    if channel_nuntium.delete
+      redirect_to channels_path, notice: 'Channel has been deleted'
+    else
       redirect_to channels_path, alert: 'Failed to delete channel'
     end
   end

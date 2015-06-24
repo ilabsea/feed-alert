@@ -66,7 +66,7 @@
 <%=form_for @channel, class: 'form form-horizontal' do |f| %>
   <div class="panel panel-default">
     <a href='' class="panel-heading setup-flow">
-      Android Phone SMS Gateway - Advanced SetupNational Gateway(Only Some Country Supported)
+      SMS Gateway - Advanced SetupNational Gateway(Only Some Country Supported)
     </a>
     <div class="panel-body" style="<%=channel_active(@channel, Channel::SETUP_FLOW_GLOBAL)%>">
       <p class="sub-text">
@@ -75,7 +75,7 @@
 
       <div class="control-inline">
         <%= f.label :getway, 'SMS Gateway' %>
-        <%= f.select :name, options_for_select(Channel.global_sms_channel), {}, class: 'form-control' %>
+        <%= f.select :name, options_for_select(ChannelNuntium.global_sms_channel), {}, class: 'form-control' %>
       </div>
       <br />
       <%= yield(:save_button) %>

@@ -42,11 +42,11 @@ class ProjectsController < ApplicationController
     @project_with_role = current_user.accessible_project(params[:id])
     @project_with_role.has_admin_role!
 
-    # ActiveRecord::StatementInvalid
-    if @project_with_role.destroy
+    begin 
+      @project_with_role.destroy
       redirect_to projects_path, notice: 'Project has been deleted'
-    else
-      flash.now[:alert] = "Failed to delete Project"
+    rescue ActiveRecord::StatementInvalid => ex
+      flash.now[:alert] = "To be able to delete please delete all related records first"
       render :edit
     end
   end

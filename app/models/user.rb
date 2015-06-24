@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   ROLE_NORMAL = 'Normal'
 
   PERMISSION_ROLE_ADMIN   = 'Admin'
-  PERMISSION_ROLE_NORMAL  = 'Normal'
+  PERMISSION_ROLE_NORMAL  = 'Read'
   PERMISSION_ROLE_NONE    = 'None'
 
   before_save :normalize_attrs

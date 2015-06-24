@@ -37,7 +37,7 @@ class AlertResult
             options = { from: ENV['APP_NAME'],
                         to: "sms://#{sms}",
                         body: alert.translate_message,
-                        suggested_channel: alert.channel.nuntium_channel_name
+                        suggested_channel: alert.channel.name
                       }
 
             # wait_until, wait
