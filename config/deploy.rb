@@ -3,6 +3,11 @@
 # sudo adduser ilab sudo
 # su ilab
 
+#### with sudo task for deployment user -ie ilab 
+#### sudo visudo and add this line ilab ALL=(ALL) NOPASSWD: ALL to skip password task
+#### visudo will override .bashrc so better put rbenv init config in rbenv installation to .bash_profile instead of .bashrc
+
+
 # sudo groupadd deployer
 # sudo usermod -a -G deployer ilab
 # sudo chown -R ilab:deployer /var/www
@@ -24,6 +29,7 @@ set :application, 'feed_alert'
 set :repo_url, 'https://channainfo@bitbucket.org/ilab/feed-alert.git'
 set :branch, :develop
 
+# set :pty, true
 # set :passenger_restart_with_sudo, false
 # set :passenger_restart_command, "touch "
 # set :passenger_restart_options, -> { "#{release_path.join('tmp/restart.txt')}" }
@@ -38,6 +44,50 @@ namespace :deploy do
     end
   end
 end
+
+
+
+#for sidekiq upstart
+
+namespace :sidekiq do
+  task :quiet do
+    on roles(:app) do
+      # Horrible hack to get PID without having to use terrible PID files
+      puts "Killing sidekiq-upstart process "
+      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart | grep /running | awk '{print $NF}') || :") 
+    end
+  end
+  task :restart do
+    on roles(:app) do
+      # execute :sudo, :initctl, '--system' ,:restart, :'sidekiq-upstart'
+      puts 'Restarting sidekiq-upstart project'
+      puts capture("sudo initctl --system restart sidekiq-upstart")
+    end
+  end
+end
+
+after 'deploy:starting', 'sidekiq:quiet'
+after 'deploy:reverted', 'sidekiq:restart'
+after 'deploy:published', 'sidekiq:restart'
+
+# namespace :monit do
+#   task :unmonitor do
+#     on roles(:app) do
+#       #execute :sudo, :monit, :unmonitor, :all
+#       puts capture("sudo monit unmonitor all")
+#     end
+#   end
+#   task :monitor do
+#     on roles(:app) do
+#       #execute :sudo, :monit, :monitor, :all
+#       puts capture("sudo monit monitor all")
+#     end
+#   end
+# end
+
+# before 'deploy:starting', 'monit:unmonitor'
+# after 'deploy:finished', 'monit:monitor'
+
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call

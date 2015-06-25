@@ -1,0 +1,5 @@
+development:
+  :pidfile: tmp/pids/sidekiq.pid
+
+production:
+  :pidfile: ../shared/tmp/pids/sidekiq.pid
