@@ -1,10 +1,25 @@
+# == Schema Information
+#
+# Table name: members
+#
+#  id          :integer          not null, primary key
+#  full_name   :string(255)
+#  email       :string(255)
+#  phone       :string(255)
+#  email_alert :boolean
+#  sms_alert   :boolean
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :integer
+#
+
 class Member < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
   belongs_to :user
 
-  validates :full_name, presence: true
+  validates :full_name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :phone, presence: true, uniqueness: true
 

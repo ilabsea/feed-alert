@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: group_permissions
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  group_id     :integer
+#  alert_id     :integer
+#  project_id   :integer
+#  role         :string(255)
+#  order_number :integer          default(0)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class GroupPermission < ActiveRecord::Base
   belongs_to :user
   belongs_to :group

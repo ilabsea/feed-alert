@@ -1,8 +1,14 @@
-<% content_for(:title) { "New User"} %>
+<% content_for(:title) { "New Project"} %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      {"New Project": nil}]) %>
+
 
 <%= render 'shared/project_alert',
            project_tab: 1,
            url_tab1: new_project_path,
            url_tab2: 'javascript:void(0)'
             %>
-<%=render 'form', project_with_role: @project_with_role %>
+
+<%= panel "New Project" do %>
+ <%= render 'form', project_with_role: @project_with_role %>
+<% end %>

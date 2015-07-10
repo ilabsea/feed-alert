@@ -1,7 +1,10 @@
-<% content_for(:title) { "New User"} %>
+<% content_for(:title) { "New Group"} %>
+<% breadcrumb_buffer([{ "Groups": groups_path},
+                      { "New Group": nil}
+  ]) %>
 
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 1 %>
-<br />
 
-<h4> New Group</h4>
-<%= render 'form', group_with_role: @group_with_role %>
+<%= panel "New Group" do %>
+  <%= render 'form', group_with_role: @group_with_role %>
+<% end %>

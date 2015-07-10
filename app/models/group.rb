@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  description :text(65535)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :integer
+#
+
 class Group < ActiveRecord::Base
   belongs_to :user
 
@@ -8,7 +20,7 @@ class Group < ActiveRecord::Base
   has_many :alerts, through: :alert_groups
 
   has_many :group_permissions
-  has_many :users, through: :group_permissions
+  has_many :users, through: :group_permissions, dependent: :destroy
 
   validates :name, presence: true
   validates :name, uniqueness: true

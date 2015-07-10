@@ -21,6 +21,7 @@
 //= require bootstrap-switch
 //= require twitter/typeahead
 
+//= require shared/delete-bootstrap
 //= require shared/alert-animate
 //= require shared/hidden-content
 //= require shared/notification

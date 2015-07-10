@@ -1,18 +1,27 @@
 <% content_for(:title) { "Edit Recipient"} %>
-
+<% breadcrumb_buffer([{ "Recipients": members_path}, {"#{@member.full_name}": nil}]) %>
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 2 %>
 <br />
 
-<h4>Edit Recipient</h4>
-<div class='row'>
-  <div class='col-lg-6'> <%= render 'form' %> </div>
+<div class='form-wrapper'>
+  <%= panel "Edit Recipient" do %>
+    <%= render 'form' %>
+  <% end %>
+  <br />
 
-  <div class='form-association col-lg-6'>
-    <h4 class='sub-title'> Registering groups</h4>
-    <%= render 'search_group' %>
-
-    <div id='group-list'>
-      <%= render 'memberships/groups', member: @member %>
+  <div class=' header-wrapper clearfix'>
+    <div class='pull-left'>
+      <h3 class='header-title'> Registered in these group</h3>
     </div>
+
+    <div class='pull-right'>
+      <div class="autocomplete-box">
+        <%= render 'search_group' %>
+      </div>
+    </div>
+  </div>
+
+  <div id='group-list'>
+    <%= render 'memberships/groups', member: @member %>
   </div>
 </div>

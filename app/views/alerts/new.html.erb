@@ -1,4 +1,9 @@
 <% content_for(:title) { "Create Alert"} %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      { "#{@project_with_role.object.name}": edit_project_path(@project_with_role.object)},
+                      {"Alerts": project_alerts_path(@project_with_role.object)},
+                      {"New Alert": nil}]) %>
+
 <%= render 'shared/project_alert',
             url_tab1: edit_project_path(@project_with_role.object),
             url_tab2: project_alerts_path(@project_with_role.object),
@@ -6,5 +11,6 @@
 
 
 
-<h4> Create new Alert </h4>
-<%= render'form', project_with_role: @project_with_role, alert: @alert %>
+<%= panel "New Alert" do %>
+  <%= render'form', project_with_role: @project_with_role, alert: @alert %>
+<% end %>

@@ -1,31 +1,50 @@
 <% content_for(:title) { "Channels"} %>
-<h3 class='header-title'> My Channels </h3>
+<% breadcrumb_buffer([{ "Channels": nil}]) %>
 
-<div class='clearfix'>
-  <div class='left'>
-    <%= link_custom 'New Channel', new_channel_path() %>
+<div class='header-wrapper clearfix'>
+  <div class='pull-left'>
+    <h3 class='header-title'> My Channels </h3>
   </div>
 
   <div class='right'>
-    <%= render 'shared/search_form', url: channels_path %>
+    <%= link_new 'New Channel', new_channel_path() %>
   </div>
 </div>
 
-<table class='table'>
-  <tbody>
-    <% @my_channels.each do |channel| %>
-      <%= render 'channel', channel_with_role: ObjectWithRole.new(channel) %>
-    <% end %>
-  </tbody>
-</table>
+<div class="panel panel-info">
+  <table class='table table-responsive' valign='center'>
+    <thead>
+      <tr>
+        <td>Channel</td>
+        <td>Status</td>
+        <td></td>
+      </tr>
+    </thead>
 
-<h3 class='header-title'> Shared Channels </h3>
-<table class='table'>
-  <tbody>
-    <% current_user.channel_permissions.each do |permission| %>
-      <%= render 'channel', channel_with_role: ObjectWithRole.new(permission.channel, permission.role), show_role: true %>
-    <% end %>
-    
+    <tbody>
+      <% @my_channels.each do |channel| %>
+        <%= render 'channel', channel_with_role: ObjectWithRole.new(channel) %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-  </tbody>
-</table>
+<% if current_user.channel_permissions.size > 0 %>
+  <h3 class='header-title'> Shared Channels </h3>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+      <thead>
+        <tr>
+          <td>Channel</td>
+          <td>Status</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% current_user.channel_permissions.each do |permission| %>
+          <%= render 'channel', channel_with_role: ObjectWithRole.new(permission.channel, permission.role), show_role: true %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

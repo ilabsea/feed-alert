@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: channels
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  user_id    :integer
+#  password   :string(255)
+#  setup_flow :string(255)
+#  is_enable  :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Channel < ActiveRecord::Base
 
   belongs_to :user, counter_cache: true
@@ -44,8 +58,7 @@ class Channel < ActiveRecord::Base
   def update_state(state)
     self.is_enable = state
     if self.save && (state == true || state == 'true' || state == "1" || state == 1)
-      Channel.where(['user_id = ? AND id != ?', self.user_id, self.id ])
-             .update_all({is_enable: false })
+      # Channel.where(['user_id = ? AND id != ?', self.user_id, self.id ]).update_all({is_enable: false })
     end
   end
 

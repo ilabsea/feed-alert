@@ -1,27 +1,29 @@
 <% if group_with_role.object.memberships.size > 0 %>
-  <table class='table panel'>
-    <thead>
-      <tr>
-        <td>Full Name</td>
-        <td>Email</td>
-        <td>Phone</td>
-        <% if group_with_role.has_admin_role? %>
-          <td class='td-last'> Action </td>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% group_with_role.object.memberships.each do |membership| %>
-        <tr id='membership-<%=membership.id%>'>
-          <td><%= membership.member.full_name %></td>
-          <td><%= membership.member.email %></td>
-          <td><%= membership.member.phone %></td>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+      <thead>
+        <tr>
+          <td>Full Name</td>
+          <td>Email</td>
+          <td>Phone</td>
           <% if group_with_role.has_admin_role? %>
-            <td><%= link_destroy ' ', membership_path(membership.id), class: 'remove-member', data: {id: membership.id} %></td>
+            <td class='td-last'> Action </td>
           <% end %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% group_with_role.object.memberships.each do |membership| %>
+          <tr id='membership-<%=membership.id%>'>
+            <td><%= membership.member.full_name %></td>
+            <td><%= membership.member.email %></td>
+            <td><%= membership.member.phone %></td>
+            <% if group_with_role.has_admin_role? %>
+              <td><%= link_destroy ' ', membership_path(membership.id), class: 'remove-member', data: {id: membership.id} %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

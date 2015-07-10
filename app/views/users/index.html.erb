@@ -12,31 +12,33 @@
 </div>
 
 
-<table class='table panel'>
-  <thead>
-    <tr>
-      <td>Name</td>
-      <td>Email</td>
-      <td>Number</td>
-      <td>Role</td>
-      <td class='td-last'>Action</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
       <tr>
-        <td><%= link_to user.full_name, edit_user_path(user) %></td>
-        <td><%=user.email%></td>
-        <td><%=user.phone %></td>
-        <td><%=user.role%></td>
-        <td>
-           <%= link_edit " ", edit_user_path(user)  %>
-          <% if !user.is_admin? %>
-           <%= link_destroy " ", user_path(user), method: :delete, data: { confirm: 'Are you sure to delete this user ?' } %>
-          <% end %>
-        </td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Number</td>
+        <td>Role</td>
+        <td class='td-last'>Action</td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= link_to user.full_name, edit_user_path(user) %></td>
+          <td><%=user.email%></td>
+          <td><%=user.phone %></td>
+          <td><%=user.role%></td>
+          <td>
+             <%= link_edit " ", edit_user_path(user)  %>
+            <% if !user.is_admin? %>
+             <%= link_destroy " ", user_path(user), method: :delete, data: { confirm: 'Are you sure to delete this user ?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <%= paginate_for(@users) %>

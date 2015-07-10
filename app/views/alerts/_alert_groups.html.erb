@@ -1,26 +1,26 @@
-<div style='max-width: 500px;'>
-  <h3 class='header-group'> Alert Groups </h3>
+<div class="header-wrapper clearfix">
+  <div class="pull-left"><h3 class='header-title'>Registered groups</h3></div>
 
-  <% if project_with_role.has_admin_role? %>
-    <div id='alert-group' >
-      <div class="input-group">
-        <input type="text" 
-              class="form-control typeahead" placeholder="Group"
-              id="alert-group-typeahead"
-              data-url="<%= new_groups_alert_path(alert) %>" >
+  <div class="pull-right" >
+    <% if project_with_role.has_admin_role? %>
+      <div id='alert-group' >
+        <div class="input-group search-wrapper">
+          <input type="text" 
+                class="form-control typeahead" placeholder="Group"
+                id="alert-group-typeahead"
+                data-url="<%= new_groups_alert_path(alert) %>" >
 
-        <span class="input-group-btn">
-          <%= link_to "Add Group", alert_alert_groups_path(alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-group' %>
-        </span>
+          <span class="input-group-btn">
+            <%= link_to "Add Group", alert_alert_groups_path(alert), class: 'btn btn-primary btn-app typeahead-add', id: 'add-alert-group' %>
+          </span>
+        </div>
+
+        <input type='hidden' id='alert-group-value' >
       </div>
-
-      <input type='hidden' id='alert-group-value' >
-    </div>
-  <% end %>
-
-
-  <div id='alert-group-list'>
-    <%= render 'alert_groups/groups', alert: alert, admin: project_with_role.has_admin_role? %>
+    <% end %>
   </div>
+</div>
 
+<div id='alert-group-list'>
+  <%= render 'alert_groups/groups', alert: alert, admin: project_with_role.has_admin_role? %>
 </div>

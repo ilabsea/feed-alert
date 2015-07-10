@@ -3,7 +3,8 @@
   <% input_attrs = project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
 
   <%=f.input :name, input_html: {class: 'form-control'}.merge(input_attrs) %>
-  <%=f.input :description, as: :text, input_html: {class: 'form-control'}.merge(input_attrs), wrapper_html: { class: 'inline'} %>
+  <%=f.input :description, as: :text, input_html: {class: 'form-control', rows: 4}.merge(input_attrs), 
+             wrapper_html: { class: 'inline'} %>
   
   <% if project_with_role.has_admin_role? %>
     <div class='form-group form-action-group'>
@@ -13,17 +14,4 @@
   <% end %>
 
 <% end %>
-
-
-<% if project_with_role.object.persisted? && project_with_role.has_admin_role? %>
-      <p style="margin-top: 60px;">
-        <%= link_to project_path(project_with_role.object),
-                    method: :delete,
-                    data: {confirm: 'Are you sure to delete this project'},
-                    style: 'margin-left: 13em;' do %>
-          <i class='glyphicon glyphicon-trash'> </i> Delete this project
-        <% end %>
-      </p>
-<% end %>
-
 

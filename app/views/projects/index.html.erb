@@ -1,24 +1,57 @@
 <% content_for(:title) { "Projects"} %>
+<% breadcrumb_buffer([{
+    "Projects": nil
+  }]) %>
 
-<h3 class='header-title'> My Projects </h3>
-<div class='clearfix' style="margin-bottom: 10px;">
-  <div class='left'>
-    <%= link_custom 'New Project', new_project_path() %>
+
+<div class='header-wrapper clearfix'>
+  <div class='pull-left'>
+    <h3 class='header-title'> List of my Projects </h3>
+    <%= render 'shared/search_form', url: projects_path %>
   </div>
 
-  <div class='right'>
-    <%= render 'shared/search_form', url: projects_path %>
+  <div class='pull-right'>
+    <%= link_new 'New Project', new_project_path() %>
   </div>
 </div>
 
-<% @my_projects.each do |project| %>
-  <%= render 'project', project_with_role: ObjectWithRole.new(project), show_role: false %>
-<% end %>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
+      <tr>
+        <td width="250">Name</td>
+        <td>Description</td>
+        <td class='td-last'></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @my_projects.each do |project| %>
+        <%= render 'project', project_with_role: ObjectWithRole.new(project), show_role: false %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 
-<br />
-<h3 class='header-title'> Shared Projects </h3>
-<% current_user.project_permissions.each do |permission| %>
-  <%= render 'project', project_with_role: ObjectWithRole.new(permission.project, permission.role), show_role: true %>
+<% if current_user.project_permissions.size > 0 %>
+  <br />
+  <h3 class='header-title'> Shared Projects </h3>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+      <thead>
+        <tr>
+          <td width="250">Name</td>
+          <td>Description</td>
+          <td class='td-last'></td>
+        </tr>
+      </thead>
+      <tbody>
+      <% current_user.project_permissions.each do |permission| %>
+        <%= render 'project', project_with_role: ObjectWithRole.new(permission.project, permission.role), show_role: true %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
 <% end %>
 

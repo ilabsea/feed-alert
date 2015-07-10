@@ -47,6 +47,8 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
 
+gem 'annotate'
+
 group :development do
   gem 'capistrano', '3.3.5'
   gem 'capistrano-rails'

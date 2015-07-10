@@ -1,2 +1,4 @@
 <% content_for(:title) { "New SMS Channel"} %>
+<% breadcrumb_buffer([{ "Channels": channels_path}, {"New SMS Channel": nil}]) %>
+
 <%= render 'form' %>

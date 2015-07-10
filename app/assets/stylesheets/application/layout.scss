@@ -1,6 +1,5 @@
 .logo {
   font-family: Lato, Arial, "Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 36px;
   font-weight: normal;
   color: $app_color;
   margin-top: 20px;
@@ -17,21 +16,22 @@
 }
 
 .footer {
-  border-top: 1px solid #eee;
+  border-top: transparent;
   bottom: 0;
   padding-top: 10px;
   position: fixed;
   background: #fff;
-  z-index: 999;
+  z-index: 1;
 }
 
 .btn-app {
-  background-color: transparent;
-  background: -moz-linear-gradient(-90deg, rgba(98, 174, 253, 1) 0%, rgba(0, 123, 255, 1) 100%);
-  background: -webkit-linear-gradient(-90deg, rgba(98, 174, 253, 1) 0%, rgba(0, 123, 255, 1) 100%);
-  background-position: center center;
-  background-repeat: repeat;
-  background-size: auto auto;
+  // background-color: transparent;
+  // background: -moz-linear-gradient(-90deg, rgba(98, 174, 253, 1) 0%, rgba(0, 123, 255, 1) 100%);
+  // background: -webkit-linear-gradient(-90deg, rgba(98, 174, 253, 1) 0%, rgba(0, 123, 255, 1) 100%);
+  // background-position: center center;
+  // background-repeat: repeat;
+  // background-size: auto auto;
+  
   border-color: #67b1fd;
   border-radius: 2px;
   border-style: solid;
@@ -42,8 +42,8 @@
   font-style: normal;
   font-weight: normal;
   text-align: center;
-  z-index: 10006;
   padding: 8px 20px;
+  margin-left: -5px;
   &:hover {
     color: #fff;
   }

@@ -5,9 +5,8 @@
   </div>
 
   <div class='input-row'>
-    <%=f.input :description, input_html: {class: 'form-control'}.merge(disabled) %>
+    <%=f.input :description, input_html: {class: 'form-control', rows: '6'}.merge(disabled) %>
   </div>
-
 
   <% if group_with_role.has_admin_role? %>
     <div class='form-group form-action-group'>

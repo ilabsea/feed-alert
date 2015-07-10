@@ -1,56 +1,58 @@
 <% content_for(:title) { "Recipients"} %>
+<% breadcrumb_buffer([{ "Recipients": nil}]) %>
 
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 2 %>
-<br />
 
-<div class='clearfix'>
-  <div class='left'>
-    <%= link_custom 'New Recipient', new_member_path() %>
+<div class='header-wrapper clearfix'>
+  <div class='pull-left'>
+    <h3 class='header-title'> List of Recipients</h3>
   </div>
 
-  <div class='right'>
-    <%= render 'shared/search_form', url: members_path %>
+  <div class='pull-right'>
+    <%= link_new 'New Recipient', new_member_path() %>
   </div>
 </div>
 
 
-<table class='table'>
-  <thead>
-    <tr>
-      <td>Full Name</td>
-      <td>Email</td>
-      <td>Phone Number</td>
-      <td align="center">Alert by</td>
-      <td>Groups</td>
-      <td align="center"> Projects & Alerts</td>
-      <td class='td-last'>Action</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @members.each do |member| %>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
       <tr>
-        <td><%= link_to member.full_name, edit_member_path(member) %></td>
-        <td><%= member.email %></td>
-        <td><%= member.phone %></td>
-        <td align="center">
-          <% if member.email_alert %>
-            <i class='glyphicon glyphicon-envelope'> </i>
-          <% end %>
-          <% if member.sms_alert %>
-            <i class='glyphicon glyphicon-phone'> </i>
-          <% end %>
-
-        </td>
-        <td><%= truncate(member.groups.map(&:name).join(", "), length: 45) %></td>
-        <td align="center"> <%= link_to 'View', alerts_member_path(member), class: 'content-url' %> </td>
-        <td>
-          <%= link_edit " ", edit_member_path(member) %>
-          <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this recipient ?' } %>
-        </td>
+        <td width='100'>Full Name</td>
+        <td>Email</td>
+        <td>Phone Number</td>
+        <td align="center">Alert by</td>
+        <td>Groups</td>
+        <td align="center"> Projects & Alerts</td>
+        <td class='td-last'>Action</td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @members.each do |member| %>
+        <tr>
+          <td><%= link_to member.full_name, edit_member_path(member) %></td>
+          <td><%= member.email %></td>
+          <td><%= member.phone %></td>
+          <td align="center">
+            <% if member.email_alert %>
+              <i class='glyphicon glyphicon-envelope'> </i>
+            <% end %>
+            <% if member.sms_alert %>
+              <i class='glyphicon glyphicon-phone'> </i>
+            <% end %>
+
+          </td>
+          <td><%= truncate(member.groups.map(&:name).join(", "), length: 45) %></td>
+          <td align="center"> <%= link_to 'View', alerts_member_path(member), class: 'content-url' %> </td>
+          <td>
+            <%= link_edit " ", edit_member_path(member) %>
+            <%= link_destroy " ", member_path(member), method: :delete, data: { confirm: 'Are you sure to delete this recipient ?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= paginate_for(@members) %>
 <%= render 'shared/content_url_modal' %>

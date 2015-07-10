@@ -1,26 +1,28 @@
 <% if alert.alert_groups.length > 0 %>
-  <table class='table panel'>
-   <thead>
-      <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <% if admin %>
-        <td class='td-last'>Action</td>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% alert.alert_groups.each do |alert_group| %>
-        <tr id='alert-group-<%=alert_group.id%>'>
-          <td><%= alert_group.group.name %></td>
-          <td><%= truncate(alert_group.group.description) %></td>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+     <thead>
+        <tr>
+          <td>Name</td>
+          <td>Description</td>
           <% if admin %>
-          <td><%= link_destroy ' ', alert_alert_group_path(alert, alert_group),
-                          class: 'remove-alert-group', data: {id: alert_group.id } %></td>
+          <td class='td-last'>Action</td>
           <% end %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% alert.alert_groups.each do |alert_group| %>
+          <tr id='alert-group-<%=alert_group.id%>'>
+            <td><%= alert_group.group.name %></td>
+            <td><%= truncate(alert_group.group.description) %></td>
+            <% if admin %>
+            <td><%= link_destroy ' ', alert_alert_group_path(alert, alert_group),
+                            class: 'remove-alert-group', data: {id: alert_group.id } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

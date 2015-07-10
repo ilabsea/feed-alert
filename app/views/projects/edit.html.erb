@@ -1,8 +1,13 @@
 <% content_for(:title) { "Edit Project"} %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      {"#{@project_with_role.object.name}": nil}]) %>
 
 <%= render 'shared/project_alert',
            project_tab: 1,
            url_tab1: edit_project_url(@project_with_role.object),
            url_tab2: project_alerts_path(@project_with_role.object)
             %>
-<%= render 'form', project_with_role: @project_with_role %>
+
+<%= panel "Edit Project" do %>
+  <%= render 'form', project_with_role: @project_with_role %>
+<% end %>

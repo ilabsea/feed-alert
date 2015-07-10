@@ -1,8 +1,10 @@
-<div class='footer clearfix'>
+<div class='footer clearfix' style="margin-left: -15px;">
   <div class="container">
-    <div class='left'> Version: <%= ENV['APP_VERSION'] %> </div>
-    <div class='right'>
-      <%=image_tag 'ilab-instedd.png', width: '120px;' %>
-    </div>
+    <div class="clearfix">
+      <div class='pull-left'> Version: <%= ENV['APP_VERSION'] %> </div>
+      <div class='pull-right'>
+        <%=image_tag 'ilab-instedd.png', width: '120px;' %>
+      </div>
+     </div>
   </div>
 </div>

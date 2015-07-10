@@ -1,18 +1,19 @@
-<table class="table table-strip">
-  <thead>
-    <tr>
-      <td> Project </td>
-      <td> Alert </td>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% alerts.each do |alert| %>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
       <tr>
-        <td><%= alert.name %></td>
-        <td><%= alert.project.name %></td>
+        <td> Project </td>
+        <td> Alert </td>
       </tr>
-    <% end %>
-  </tbody>
-  
-</table>
+    </thead>
+
+    <tbody>
+      <% alerts.each do |alert| %>
+        <tr>
+          <td><%= alert.name %></td>
+          <td><%= alert.project.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

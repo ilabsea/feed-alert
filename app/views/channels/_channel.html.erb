@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <b style='font-size: 120%;'>  <span> <%= channel_with_role.object.name %></span></b> 
+    <%= channel_with_role.object.name %> 
     <%= " - Shared as #{channel_with_role.role} " if defined?(show_role) %>
 
     <% if !channel_with_role.object.global_setup? %>

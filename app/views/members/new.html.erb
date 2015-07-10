@@ -1,6 +1,7 @@
 <% content_for(:title) { "New Recipient"} %>
-
+<% breadcrumb_buffer([{ "Recipients": members_path}, {"New Recipient": nil}]) %>
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 2 %>
-<br />
-<h4> Create Recipient </h4>
-<%= render 'form' %>
+
+<%= panel "New Recipient" do %>
+  <%= render 'form' %>
+<% end %>

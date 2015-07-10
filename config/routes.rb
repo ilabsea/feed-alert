@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
+  resources :users, only: [] do
     collection do
       get 'profile'
       put 'update_profile'

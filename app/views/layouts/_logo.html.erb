@@ -1,8 +1,21 @@
-<div>
-  <div class='text-left logo'> 
-    <%= link_to root_url do %>
-      <%=image_tag 'feed-alert-logo.png', alt: ENV['APP_NAME'] %>
+<div class="row">
+  <div class='text-left logo col-lg-12'>
+
+    <div class="pull-left" style="width: 200px">
+      <%= link_to root_url do %>
+        <%=image_tag 'feed-alert-logo.png', alt: ENV['APP_NAME'] %>
+      <% end %>
+    </div>
+    
+    <% if content_for? (:breadcrumb) %>
+      <div class='breadcrumb-wrapper'>
+        <%= yield(:breadcrumb)  %>
+      </div>
     <% end %>
+
    </div>
-  <div class='logo-bar'></div>
+</div>
+
+<div class='row'>
+  <div class="logo-bar col-lg-12"> </div>
 </div>

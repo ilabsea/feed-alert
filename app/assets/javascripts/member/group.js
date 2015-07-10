@@ -88,9 +88,6 @@ function removeGroup(){
   $(document).on("click", ".remove-group", function(){
     var membershipId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this group ?"))
-      return false
-
     $this = $(this)
     var url = $this.attr("href")
     $.ajax({

@@ -22,13 +22,16 @@
               <li role="presentation">
                 <%= link_to "Change Password", password_users_path, role: 'menuitem' %>
               </li>
+              <li> </li>
+
+              <li>
+                <%= link_to 'Sign Out', sign_out_path(), class: 'btn-delete', method: :delete, 
+                            data: {confirm: 'Are you sure to sign out ? ',
+                                   confirm_explain: ' ',
+                                   btn_confirm: 'Confirm Signout'} %>
+              </li>
             </ul>
 
-          </li>
-          <li>
-            <%= link_to sign_out_path(), method: :delete do %>
-              <i class='glyphicon glyphicon-log-out'> </i> Sign Out
-            <% end %>
           </li>
         </ul>
       <% end %>

@@ -1,25 +1,27 @@
 <% if alert.alert_keywords.length > 0 %>
-  <table class='table panel'>
-   <thead>
-      <tr>
-        <td>Name</td>
-        <% if admin %>
-        <td class='td-last'>Action</td>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% alert.alert_keywords.each do |alert_keyword| %>
-        <tr id='alert-keyword-<%=alert_keyword.id%>'>
-          <td><%= alert_keyword.keyword.name %></td>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+     <thead>
+        <tr>
+          <td>Name</td>
           <% if admin %>
-            <td>
-              <%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
-                            class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+          <td class='td-last'>Action</td>
           <% end %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% alert.alert_keywords.each do |alert_keyword| %>
+          <tr id='alert-keyword-<%=alert_keyword.id%>'>
+            <td><%= alert_keyword.keyword.name %></td>
+            <% if admin %>
+              <td>
+                <%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
+                              class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

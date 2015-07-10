@@ -1,4 +1,8 @@
 <%= page_title "Alert matched" %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      { "#{@project_with_role.object.name}": edit_project_path(@project_with_role.object)},
+                      {"Alerts": project_alerts_path(@project_with_role.object)},
+                      {"Matched alerts": nil}]) %>
 
 <%= render 'shared/project_alert',
             url_tab1: edit_project_path(@project_with_role.object),

@@ -84,9 +84,6 @@ function removeMember(){
   $(document).on("click", ".remove-member", function(){
     var membershipId = $(this).attr("data-id")
 
-    if(!confirm("Are you sure to remove this recipient ?"))
-      return false
-
     $this = $(this)
     var url = $this.attr("href")
     $.ajax({

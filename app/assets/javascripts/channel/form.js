@@ -7,8 +7,9 @@ $(function(){
 function collasableSetupFlowForm(){
   $(".setup-flow").on('click', function(){
     var $this = $(this)
-    $(".setup-flow").parent().find(".panel-body").hide()
-    $this.parent().find(".panel-body").show()
+    var $body = $this.parent().find(".panel-body")
+    $body.toggle()
+    $(".setup-flow").parent().find(".panel-body").not($body).hide()
     return false
   })
 }

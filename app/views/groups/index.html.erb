@@ -1,58 +1,64 @@
 <% content_for(:title) { "Groups"} %>
+<% breadcrumb_buffer([{ "Groups": nil}]) %>
+
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 1 %>
 
-<h3 class='header-title'> My Groups </h3>
-
-<div class='clearfix'>
-  <div class='left'>
-    <%= link_custom 'New Group', new_group_path() %>
+<div class=' header-wrapper clearfix'>
+  <div class='pull-left'>
+    <h3 class='header-title'> My Groups </h3>
   </div>
 
-  <div class='right'>
-    <%= render 'shared/search_form', url: groups_path %>
+  <div class='pull-right'>
+    <%= link_new 'New Group', new_group_path() %>
   </div>
 </div>
 
-<table class='table panel'>
-  <thead>
-    <tr>
-      <td width="200">Name</td>
-      <td width="250">Description</td>
-      <td width="150" align="center" >Projects & Alerts</td>
-      <td>Recipients</td>
-      <td class='td-last'>Action</td>
-    </tr>
-  </thead>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
+      <tr>
+        <td width="200">Name</td>
+        <td width="250">Description</td>
+        <td width="150" align="center" >Projects & Alerts</td>
+        <td>Recipients</td>
+        <td class='td-last'>Action</td>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% @groups.each do |group| %>
-      <%= render 'group', group_with_role: ObjectWithRole.new(group) %>
-    <% end %>
-  </tbody>
-</table>
+    <tbody>
+      <% @groups.each do |group| %>
+        <%= render 'group', group_with_role: ObjectWithRole.new(group) %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <%= paginate_for(@groups) %>
 
 
-<br />
-<h3 class='header-title'> Shared Groups</h3>
+<% if @group_permissions.size > 0 %>
+  <br />
+  <h3 class='header-title'> Shared Groups</h3>
 
-<table class='table panel'>
-  <thead>
-    <tr>
-      <td width="200">Name</td>
-      <td width="250">Description</td>
-      <td  width="150" align="center">Projects & Alerts</td>
-      <td>Recipients</td>
-      <td class='td-last'>Action</td>
-    </tr>
-  </thead>
+  <div class="panel panel-info">
+    <table class='table table-responsive'>
+      <thead>
+        <tr>
+          <td width="200">Name</td>
+          <td width="250">Description</td>
+          <td  width="150" align="center">Projects & Alerts</td>
+          <td>Recipients</td>
+          <td class='td-last'>Action</td>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @group_permissions.each do |group_permission| %>
-      <%= render 'group', group_with_role: ObjectWithRole.new(group_permission.group, group_permission.role) %>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate_for(@group_permissions) %>
+      <tbody>
+        <% @group_permissions.each do |group_permission| %>
+          <%= render 'group', group_with_role: ObjectWithRole.new(group_permission.group, group_permission.role) %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate_for(@group_permissions) %>
+<% end %>
 
 <%= render 'shared/content_url_modal' %>

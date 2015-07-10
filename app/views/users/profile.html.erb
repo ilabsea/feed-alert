@@ -1,12 +1,18 @@
-<%= simple_form_for @user, { url: update_profile_users_path, method: :put, html: { class: 'form-inline form'} } do |f| %>
+<% content_for(:title) { "Edit Profile"} %>
+<% breadcrumb_buffer([{ "Edit Profile": nil}]) %>
 
-  <%=f.input :full_name, required: true, input_html: {class: 'form-control'} %>
-  <%=f.input :email, required: true, input_html: {class: 'form-control'} %>
-  <%=f.input :phone, required: true, label: 'Number', input_html: {class: 'form-control'} %>
+<%=panel("Edit Profile") do %>
+  <%= simple_form_for @user, { url: update_profile_users_path, method: :put, html: { class: 'form-inline form'} } do |f| %>
 
-  <div class='form-group form-action-group'>
-    <label class='control-label'></label>
-    <%=f.submit 'Save', class: 'btn btn-primary btn-app' %>
-  </div>
+    <%=f.input :full_name, required: true, input_html: {class: 'form-control'} %>
+    <%=f.input :email, required: true, input_html: {class: 'form-control'} %>
+    <%=f.input :phone, required: true, label: 'Number', input_html: {class: 'form-control'} %>
 
+    <div class='form-group form-action-group'>
+      <label class='control-label'></label>
+      <%=f.submit 'Save', class: 'btn btn-primary btn-app' %>
+    </div>
+
+  <% end %>
 <% end %>
+

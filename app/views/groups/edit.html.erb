@@ -1,18 +1,31 @@
 <% content_for(:title) { "Edit Group"} %>
+<% breadcrumb_buffer([{ "Groups": groups_path},
+                      { "#{@group_with_role.object.name}": nil}
+  ]) %>
 
 <%= render "shared/group_recipient_tab", group_recipient_tab_index: 1 %>
-<br />
-<h4> Edit Group</h4>
 
-<div class='row'>
-  <div class='col-lg-6'> <%= render 'form', group_with_role: @group_with_role %> </div>
-  <div class='col-lg-6'>
-    <h4 class='sub-title'> Registering Recipient </h4>
-    <%= render('search_member', group_with_role: @group_with_role) if @group_with_role.has_admin_role? %>
+<div class='form-wrapper'>
+  <%= panel "Edit Group" do %> 
+    <%= render 'form', group_with_role: @group_with_role %>
+  <% end %>
 
-    <div id='member-list'>
-      <%= render 'memberships/members', group_with_role: @group_with_role %>
+  <br />
+  <div class=' header-wrapper clearfix'>
+    <div class='pull-left'>
+      <h3 class='header-title'> Recipients in this group</h3>
+    </div>
+
+    <div class='pull-right'>
+      <div class="autocomplete-box"> <%= render('search_member', group_with_role: @group_with_role) if @group_with_role.has_admin_role? %></div>
     </div>
   </div>
+
+
+  <div id='member-list'>
+    <%= render 'memberships/members', group_with_role: @group_with_role %>
+  </div>
 </div>
+
+
 

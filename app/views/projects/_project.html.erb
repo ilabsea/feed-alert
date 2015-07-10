@@ -1,13 +1,19 @@
-<div class='hoz-item panel'>
-  <%=link_to edit_project_path(project_with_role.object), style: "display:block; width: 100%;", class:"clearfix" do %>
-    <div class='pull-left'> <%=project_with_role.object.name%> </div>
-    <div class="pull-right">
-      
-      <% if show_role %>
-        <span style='color: gray; font-style: italic' > <%= project_with_role.role %></span>
-      <% end %>
+<tr>
+  <td>
+    <%=link_to project_with_role.object.name, edit_project_path(project_with_role.object) %>
+    <% if show_role %>
+      - <span style='color: gray; font-style: italic' > <%= project_with_role.role %></span>
+    <% end %>
+  </td>
 
-      <i class='glyphicon glyphicon-chevron-right'> </i>
-    </div>
-  <%end %>
-</div>
+  <td> <%= project_with_role.object.description %> </td>
+
+  <td>
+    <% if project_with_role.has_admin_role? %>
+      <%= link_edit " ", edit_project_path(project_with_role.object) %>
+      <%= link_destroy " ", project_path(project_with_role.object),
+                            method: :delete,
+                            data: { confirm: 'Are you sure to delete this project ?' } %>
+    <% end %>
+  </td>
+</tr>

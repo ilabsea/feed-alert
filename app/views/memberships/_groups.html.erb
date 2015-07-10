@@ -1,21 +1,23 @@
 <% if member.memberships.size > 0 %>
-  <table class='table panel'>
-   <thead>
-      <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <td class='td-last'> Action </td>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% member.memberships.each do |membership| %>
-        <tr id='membership-<%=membership.id%>'>
-          <td><%= membership.group.name %></td>
-          <td><%= truncate(membership.group.description) %></td>
-          <td><%= link_destroy ' ', membership_path(membership.id), class: 'remove-group', data: {id: membership.id } %></td>
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+     <thead>
+        <tr>
+          <td>Name</td>
+          <td>Description</td>
+          <td class='td-last'> Action </td>
         </tr>
-      <% end %>
-    </tbody>
+      </thead>
+
+      <tbody>
+        <% member.memberships.each do |membership| %>
+          <tr id='membership-<%=membership.id%>'>
+            <td><%= membership.group.name %></td>
+            <td><%= truncate(membership.group.description) %></td>
+            <td><%= link_destroy ' ', membership_path(membership.id), class: 'remove-group', data: {id: membership.id } %></td>
+          </tr>
+        <% end %>
+      </tbody>
   </table>
+</div>
 <% end %>

@@ -10,20 +10,26 @@ table {
 
 thead{
   tr {
-    background: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
-    background: -webkit-linear-gradient(-90deg,rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%)
-  }
-  td {
-    padding: 14px !important;
-    font-size: 16px;
-  }
-}
-tbody {
-  td {
-    padding: 14px 10px !important;
+    // background: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    // background: -webkit-linear-gradient(-90deg,rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%)
+    background: #d9edf7;
   }
 }
 
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
+td, th {
+  font-size: 14px;
+  border: #bce8f1;
+  color: #31708f;
+}
+
+.table > thead > tr > th, .table > thead > tr > td {
+  // font-size: 120%;
+  font-weight: 600;
+}
 
 a:hover, a:focus {
   color: #23527c;
@@ -35,8 +41,7 @@ a:hover, a:focus {
 }
 table {
   @include border-radius(4px);
-  border: 1px solid #eee !important;
-  margin: 15px 0px !important;
+  border: 1px solid #bce8f1;
 }
 
 .form-control {
@@ -52,7 +57,6 @@ table {
     margin-top: 0px;
   }
   .form-action-group {
-    padding-top: 25px;
   }
 }
 .inline {
@@ -78,7 +82,7 @@ table {
     display: block;
   }
   .form-control {
-    width: 18em;
+    width: 26em;
   }
   .cb-block {
     .checkbox {
@@ -86,7 +90,43 @@ table {
     }
   }
 }
+.nav-tabs, .nav-pills {
+  margin-bottom: 25px;
+}
 
+.container {
+  max-width: 900px !important;
+}
+
+.form-wrapper{
+  max-width: 900px !important;
+}
+.search-wrapper {
+  max-width: 400px;
+}
+
+.panel {
+  border: 1px solid #eee;
+  margin-top: 5px;
+
+  // @include border-radius(0px);
+  // .panel-heading {
+  //   @include border-radius(0px);
+  // }
+}
+.panel-info > .panel-heading {
+  font-weight: 600;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #d9edf7;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background: #d9edf7;
+  color: #31708f;
+  border-color: transparent;
+}
 
 // @media (max-width: 979px) {
 //   body {

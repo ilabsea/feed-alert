@@ -12,6 +12,10 @@
 default: &default
   adapter: mysql2
   encoding: utf8
+
+  # http://stackoverflow.com/questions/1008287/illegal-mix-of-collations-mysql-error
+  collation: utf8_general_ci
+
   pool: 50
   username: root
   password: <%= ENV['STREAM_ALERT_DATABASE_PASSWORD'] %>

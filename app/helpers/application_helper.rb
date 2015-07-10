@@ -48,6 +48,10 @@ module ApplicationHelper
     end
   end
 
+  def breadcrumb_buffer options=nil
+    content_for(:breadcrumb) { breadcrumb(options)}
+  end
+
   def breadcrumb options=nil
     content_tag(:ul, breadcrumb_str(options), :class => "breadcrumb")
   end
@@ -55,7 +59,7 @@ module ApplicationHelper
   def breadcrumb_str options
     items = []
     if(!options.blank?)
-      items <<  content_tag(:li, link_home("Home", root_path) , :class => "active")
+      items <<  content_tag(:li, link_to("Home", root_path) , :class => "active")
       options.each do |option|
         items << breadcrumb_node(option.first)
       end
@@ -90,6 +94,15 @@ module ApplicationHelper
      end
   end
 
+  def panel(header, &block)
+    content_tag :div, class: 'panel panel-info inline-block' do
+      content_tag(:div, header, class: 'panel-heading') +
+      content_tag(:div, class: 'panel-body') do
+        with_output_buffer(&block)
+      end
+    end
+  end
+
 
   def sms_template_params_for selector
     template_params = %w(alert_name total_match keywords)
@@ -115,6 +128,7 @@ module ApplicationHelper
 
   def link_destroy value , url, options={}, &block
     options[:title] ||= "Delete"
+    options[:class] = "btn-delete #{options[:class]}" if options[:method] == :delete
     link_icon "glyphicon-trash", value, url, options, &block
   end
 
@@ -130,8 +144,15 @@ module ApplicationHelper
   end
 
   def link_custom value, url, options={}, &block
-    options[:class] = "btn-icon btn btn-primary btn-app #{options[:class]}"
+    options[:class] = "btn btn-primary btn-app #{options[:class]}"
     link_to value, url, options, &block
+  end
+
+  def link_new value, url, options = {}
+    options[:class] = "btn btn-primary btn-app btn btn-default #{options[:class]}"
+    link_to url, options do
+      content_tag(:i, ' ', class: 'glyphicon glyphicon-plus') + " #{value}"
+    end
   end
 
   def link_icon icon, value, url, options={}, &block

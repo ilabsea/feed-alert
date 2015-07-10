@@ -1,28 +1,27 @@
-<div class="input-group" style='max-width: 400px;'>
-  <%= text_field_tag :permission_user, params[:q], class: "form-control typeahead", placeholder: "User email", data: {url: list_users_path} %>
-  <%= hidden_field_tag :permission_user_id, '' %>
-  <span class="input-group-btn">
-    <button class="btn btn-primary btn-app" type="button" style="min-width: 60px;" id='add-permission'>
-      <i class=' glyphicon glyphicon-plus'> </i>
-    </button>
-  </span>
+<% content_for(:title) { "Permissions"} %>
+<% breadcrumb_buffer([{ "Permissions": nil}]) %>
+
+<div class="header-wrapper clearfix">
+  <div class="pull-left"> <h3 class='header-title'> List of Permissions</h3> </div>
+  <div class="pull-right"> <%= render 'search_user' %> </div>
 </div>
 
-<table class="table table-strip table-permission">
-  <thead>
-    <tr>
-      <td class="permission-first"> User > Projects > Channels</td>
-      <td class="role-type"> None </td>
-      <td class="role-type"> Read </td>
-      <td class="role-type"> Admin </td>
-      <td> </td>
-    </tr>
-  </thead>
+<div class="panel panel-info">
+  <table class='table table-responsive table-permission'>
+    <thead>
+      <tr>
+        <td class="permission-first"> User > Projects > Channels</td>
+        <td class="role-type" style="margin-left: 25px;"> None </td>
+        <td class="role-type"> Read </td>
+        <td class="role-type"> Admin </td>
+      </tr>
+    </thead>
 
-  <tbody id='permission-items'>
-  </tbody>
+    <tbody id='permission-items'>
+    </tbody>
 
-</table>
+  </table>
+</div>
 
 <script type="text/javascript">
   var myProjects = <%= ActiveModel::ArraySerializer.new(@projects).to_json.html_safe %>
@@ -33,7 +32,7 @@
 
 <script type="text/x-tmpl" id="permission-tmpl">
   <tr class='user-collapsable' >
-    <td colspan='5' style='background: #eee; cursor: pointer;'>
+    <td colspan='4' style='cursor: pointer;'>
       <i class='glyphicon glyphicon-triangle-right'> </i>
       <i class='glyphicon glyphicon-triangle-bottom' style='display:none;'> </i>
       <span>{%= o.user.email %}</span>
