@@ -32,4 +32,8 @@ every 30.minutes do
   rbenv_rake "feed:alert"
 end
 
+every 1.day do
+  rbenv_rake "feed:clean_feed_entry"
+end
+
 

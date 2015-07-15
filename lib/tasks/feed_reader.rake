@@ -20,4 +20,9 @@ namespace :feed do
     Alert.apply_search(date_range)
   end
 
+  desc 'Remove old feed entries from database'
+  task clean_feed_entry: :environment do
+    FeedEntry.where(['updated_at < ?', 1.month.ago]).destroy_all
+  end
+
 end
