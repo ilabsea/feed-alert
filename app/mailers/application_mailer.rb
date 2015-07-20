@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV['NO_REPLY_MAIL']
+  default from: ENV['NO_REPLY_EMAIL']
   layout 'mailer'
   self.asset_host = nil
   include Roadie::Rails::Mailer

@@ -4,8 +4,9 @@ default: &default
 
   TIME_ZONE: 'Bangkok'
 
-  FEED_ALERT_MAIL: "channa.ly@gmail.com"
+  FEED_ALERT_EMAIL: "channa.ly@gmail.com"
   SUPPORT_EMAIL: ''
+  NO_REPLY_EMAIL: 'feedalert-noreply@google.com'
 
   MANDRILL_USERNAME: 'channa.info@gmail.com'
   MANDRILL_PASSWORD: 'f3dQZgGqJGiojkNQfcpiBg'

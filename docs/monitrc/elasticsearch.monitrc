@@ -1,5 +1,8 @@
 check host elasticsearch_connection with address 0.0.0.0
-  if failed url http://0.0.0.0:9200/ with timeout 15 seconds then alert
+  start "/home/ilab/elasticsearch-1.5.1/bin"
+  stop "/home/ilab/elasticsearch-1.5.1/bin"
+  if failed url http://0.0.0.0:9200/ with timeout 15 seconds then restart
+  if 5 restarts within 5 cycles then alert
  
 check host elasticsearch_cluster_health with address 0.0.0.0
   if failed url http://0.0.0.0:9200/_cluster/health

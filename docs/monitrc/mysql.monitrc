@@ -2,5 +2,5 @@ check process mysql with pidfile /var/run/mysqld/mysqld.pid
   group db
   start "/etc/init.d/mysql start"
   stop "/etc/init.d/mysql stop"
-  if failed port 3306 protocol mysql then restart
-  if 5 restarts within 5 cycles then timeout
+  if failed port 3306 with timeout 15 seconds then restart
+  if 5 restarts within 5 cycles then alert
