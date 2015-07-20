@@ -16,10 +16,12 @@
   </div>
 
   <div class='pull-right'>
-    <%= link_custom 'Alert Content', matched_project_alerts_path(@project_with_role.object), class: 'btn btn-default'%>
+    <%# link_custom 'Alert Content', matched_project_alerts_path(@project_with_role.object), class: 'btn btn-default'%>
     <% if @project_with_role.has_admin_role? %>
       <span> </span>
-      <%= link_new 'New Alert', new_project_alert_path(@project_with_role.object), class: 'btn btn-default', style: 'margin-left: 5px;' %>
+      <%= link_new 'New Alert', new_project_alert_path(@project_with_role.object), 
+                   class: 'btn btn-default',
+                   style: 'margin-left: 5px;' %>
     <% end %>
   </div>
 </div>
