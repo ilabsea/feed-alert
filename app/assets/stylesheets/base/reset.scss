@@ -20,10 +20,12 @@ thead{
   vertical-align: middle;
 }
 
-td, th {
-  font-size: 14px;
-  border: #bce8f1;
-  color: #31708f;
+thead {
+  td, th {
+    font-size: 14px;
+    border: #bce8f1;
+    color: #31708f;
+  }
 }
 
 .table > thead > tr > th, .table > thead > tr > td {

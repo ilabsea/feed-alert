@@ -1,4 +1,3 @@
-<% if member.memberships.size > 0 %>
 <div class="panel panel-info">
   <table class='table table-responsive'>
      <thead>
@@ -8,7 +7,7 @@
           <td class='td-last'> Action </td>
         </tr>
       </thead>
-
+    <% if member.memberships.size > 0 %>
       <tbody>
         <% member.memberships.each do |membership| %>
           <tr id='membership-<%=membership.id%>'>
@@ -18,6 +17,7 @@
           </tr>
         <% end %>
       </tbody>
+    <% end %>
   </table>
 </div>
-<% end %>
+

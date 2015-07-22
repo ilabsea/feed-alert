@@ -19,9 +19,7 @@ module Authenticable
   end
 
   def current_user
-    if user_signed_in?
-      @current_user ||= User.find_by(auth_token: cookies[:auth_token])
-    end
+    @current_user ||= User.find_by(auth_token: cookies.signed[cookie_access_name])
   end
 
   def authenticate_user!
@@ -39,19 +37,20 @@ module Authenticable
   end
 
   def user_signed_in?
-    cookies[:auth_token].present?
+    current_user
   end
 
   def sign_in(user)
     if params[:remember_me]
-      cookies.permanent[:auth_token] = user.auth_token
+      cookies.permanent.signed[cookie_access_name] = user.auth_token
     else
-      cookies[:auth_token] = user.auth_token
+      cookies.signed[cookie_access_name] = user.auth_token
     end
   end
 
   def sign_out
-    cookies.delete(:auth_token)
+    cookies.delete(cookie_access_name)
+    @current_user = nil
   end
 
   def sign_in_and_redirect_for(user)
@@ -62,6 +61,10 @@ module Authenticable
   def sign_out_and_redirect_for(user)
     sign_out
     after_signed_out_path_for(user)
+  end
+
+  def cookie_access_name
+    :_r_request
   end
 
 
