@@ -36,5 +36,6 @@ module StreamAlert
     config.action_mailer.asset_host = ENV['HOST']
 
     config.time_zone = ENV['TIME_ZONE']
+    GC::Profiler.enable
   end
 end
