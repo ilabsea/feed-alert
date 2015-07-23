@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619074115) do
+ActiveRecord::Schema.define(version: 20150723090315) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20150619074115) do
 
   create_table "feed_entries", force: :cascade do |t|
     t.string   "title",        limit: 255
-    t.string   "url",          limit: 255
+    t.text     "url",          limit: 65535
     t.datetime "published_at"
     t.text     "summary",      limit: 65535
     t.text     "content",      limit: 4294967295
