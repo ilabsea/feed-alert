@@ -1,7 +1,11 @@
 class ChannelsController < ApplicationController
   def index
-    @my_channels = current_user.channels
-    @shared_channels = current_user.shared_channels.includes(:channel_permissions)
+    @my_channels     = current_user.channels
+                                   .page(params[:page])
+
+    @channel_permissions = current_user.channel_permissions
+                                   .includes(:channel)
+                                   .page(params[:shared_page])
   end
 
   def new

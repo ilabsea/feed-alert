@@ -7,7 +7,9 @@
     <%= link_to "View", alerts_group_path(group_with_role.object.id), class:'content-url', data: {id: group_with_role.object.id} %>
   </td>
 
-  <td><%= truncate(group_with_role.object.members.map(&:full_name).join(", "), length: 45) %></td>
+  <td>
+     <%= truncate(group_with_role.object.members.map(&:full_name).join(", "), length: 45) %>
+  </td>
 
   <td>
      <% if group_with_role.has_admin_role? %>

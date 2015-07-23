@@ -37,7 +37,10 @@ class AlertsController < ApplicationController
   end
 
   def index
-    @alerts = project_with_role.object.alerts.includes(:keywords).order('created_at DESC').page(params[:page])
+    @alerts = project_with_role.object.alerts
+                                      .includes(:keywords, groups: :alert_groups)
+                                      .order('created_at DESC')
+                                      .page(params[:page])
   end
 
   def new

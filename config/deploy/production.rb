@@ -5,9 +5,11 @@
 # property set.  Don't declare `role :all`, it's a meta role.
 
 # set :server_name, "192.168.1.104"  #"54.254.181.235" 
-role :app, "ilab@192.168.1.104"
-role :web, "ilab@192.168.1.104"
-role :db, "ilab@192.168.1.104"
+server_address = "192.168.1.104"
+
+role :app, "ilab@#{server_address}"
+role :web, "ilab@#{server_address}"
+role :db,  "ilab@#{server_address}"
 
 
 # Extended Server Syntax
@@ -16,7 +18,7 @@ role :db, "ilab@192.168.1.104"
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server "192.168.1.104", user: 'ilab', roles: %w{web app}, my_property: :my_value
+server server_address, user: 'ilab', roles: %w{web app}, my_property: :my_value
 
 
 # set :ssh_options, {

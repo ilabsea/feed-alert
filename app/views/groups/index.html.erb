@@ -5,7 +5,7 @@
 
 <div class=' header-wrapper clearfix'>
   <div class='pull-left'>
-    <h3 class='header-title'> My Groups </h3>
+    <h3 class='header-title'> List of My Groups </h3>
   </div>
 
   <div class='pull-right'>
@@ -17,9 +17,9 @@
   <table class='table table-responsive'>
     <thead>
       <tr>
-        <td width="200">Name</td>
-        <td width="250">Description</td>
-        <td width="150" align="center" >Projects & Alerts</td>
+        <td width="150">Name</td>
+        <td>Description</td>
+        <td align="center" >Projects/Alerts</td>
         <td>Recipients</td>
         <td class='td-last'>Action</td>
       </tr>
@@ -37,15 +37,18 @@
 
 <% if @group_permissions.size > 0 %>
   <br />
+  <br />
+  <br />
+
   <h3 class='header-title'> Shared Groups</h3>
 
   <div class="panel panel-info">
     <table class='table table-responsive'>
       <thead>
         <tr>
-          <td width="200">Name</td>
-          <td width="250">Description</td>
-          <td  width="150" align="center">Projects & Alerts</td>
+          <td width="150">Name</td>
+          <td>Description</td>
+          <td align="center">Projects/Alerts</td>
           <td>Recipients</td>
           <td class='td-last'>Action</td>
         </tr>
@@ -58,7 +61,7 @@
       </tbody>
     </table>
   </div>
-  <%= paginate_for(@group_permissions) %>
+  <%= paginate_for(@group_permissions, param_name: :shared_page) %>
 <% end %>
 
 <%= render 'shared/content_url_modal' %>

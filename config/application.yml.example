@@ -30,6 +30,10 @@ default: &default
   PROCESS_TIME_IN_MINUTES: '30'
   DELAY_DELIVER_IN_MINUTES: '10'
 
+  SIDEKIQ_USERNAME: ''
+  SIDEKIQ_PASSWORD: ''
+  NEW_RELIC_KEY: ''
+
 development:
   <<: *default
 

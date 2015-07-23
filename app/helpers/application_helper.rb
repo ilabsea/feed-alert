@@ -15,8 +15,8 @@ module ApplicationHelper
     content_for(:title) { title + " - " + ENV['APP_NAME'] }
   end
   
-  def paginate_for(records)
-    content_tag :div, paginate(records, theme: 'twitter-bootstrap-3'), class: 'paginate-nav'
+  def paginate_for(records, options={})
+    content_tag :div, paginate(records, {theme: 'twitter-bootstrap-3'}.merge(options)), class: 'paginate-nav pull-right'
   end
 
   def errors_for(record)

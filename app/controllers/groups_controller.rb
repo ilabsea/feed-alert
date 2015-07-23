@@ -1,8 +1,14 @@
 class GroupsController < ApplicationController
 
   def index
-    @groups = current_user.groups.includes(memberships: :member, alert_groups: [alert: :project]).order('groups.name').page(params[:page])
-    @group_permissions = current_user.high_level_group_permissions.includes(:alert, :project, group: [{memberships: :member}]).page(params[:shared_page])
+    @groups = current_user.groups
+                          .includes(:memberships, :members)
+                          .order('groups.name')
+                          .page(params[:page])
+
+    @group_permissions = current_user.high_level_group_permissions
+                                     .includes(:alert, :project, group: [:memberships, :members])
+                                     .page(params[:shared_page])
   end
 
   def new_members

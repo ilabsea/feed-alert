@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-    @members = current_user.members.order('full_name')
+    @members = current_user.members.includes(:groups).order('full_name')
     @members = @members.from_query(params[:q]) if params[:q]
     @members = @members.page(params[:page])
   end

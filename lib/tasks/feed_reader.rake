@@ -25,4 +25,12 @@ namespace :feed do
     FeedEntry.where(['updated_at < ?', 1.month.ago]).destroy_all
   end
 
+  desc 'Migrate Old data'
+  task upgrade_data: :environment do
+    user_email = 'admin@ilabsea.org' # soksamnangcdc@online.com.kh
+    user = User.find_by(email: user_email)
+
+    MigrationUser.start(user)
+  end
+
 end

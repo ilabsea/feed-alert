@@ -41,7 +41,7 @@
     </thead>
 
     <tbody>
-      <% @project_with_role.object.alerts.each do |alert| %>
+      <% @alerts.each do |alert| %>
         <tr>
           <td>
             <%= link_to alert.name, edit_project_alert_path(@project_with_role.object, alert) %>
@@ -68,3 +68,4 @@
     </tbody>
   </table>
 </div>
+<%= paginate_for(@alerts) %>

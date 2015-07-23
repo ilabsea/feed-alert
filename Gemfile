@@ -48,6 +48,8 @@ gem 'elasticsearch-rails'
 gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
 
 gem 'annotate'
+gem 'foreman'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'capistrano', '3.3.5'
@@ -55,6 +57,7 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger' #using gem passenger 4.0.58
+  gem 'thin'
 end
 
 group :development, :test do

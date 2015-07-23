@@ -3,7 +3,7 @@
 
 <div class='header-wrapper clearfix'>
   <div class='pull-left'>
-    <h3 class='header-title'> My Channels </h3>
+    <h3 class='header-title'> List of My Channels </h3>
   </div>
 
   <div class='right'>
@@ -28,8 +28,12 @@
     </tbody>
   </table>
 </div>
+<%= paginate_for(@my_channels) %>
 
-<% if current_user.channel_permissions.size > 0 %>
+<% if @channel_permissions.size > 0 %>
+  <br/>
+  <br/>
+  <br/>
   <h3 class='header-title'> Shared Channels </h3>
   <div class="panel panel-info">
     <table class='table table-responsive'>
@@ -41,10 +45,11 @@
         </tr>
       </thead>
       <tbody>
-        <% current_user.channel_permissions.each do |permission| %>
+        <% @channel_permissions.each do |permission| %>
           <%= render 'channel', channel_with_role: ObjectWithRole.new(permission.channel, permission.role), show_role: true %>
         <% end %>
       </tbody>
     </table>
   </div>
 <% end %>
+<%= paginate_for(@channel_permissions, param_name: :shared_page) %>

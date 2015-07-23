@@ -1,7 +1,11 @@
 class ProjectsController < ApplicationController
   def index
-    @my_projects = current_user.my_projects.page(params[:page])
-    @shared_projects = current_user.shared_projects.includes(:project_permissions).page(params[:page])
+    @my_projects = current_user.my_projects
+                               .page(params[:page])
+
+    @project_permissions = current_user.project_permissions
+                                       .includes(:project)
+                                       .page(params[:shared_page])
   end
 
   def new

@@ -6,7 +6,7 @@
 
 <div class='header-wrapper clearfix'>
   <div class='pull-left'>
-    <h3 class='header-title'> List of my Projects </h3>
+    <h3 class='header-title'> List of My Projects </h3>
     <%= render 'shared/search_form', url: projects_path %>
   </div>
 
@@ -31,9 +31,12 @@
     </tbody>
   </table>
 </div>
+<%= paginate_for(@my_projects)%>
 
 
-<% if current_user.project_permissions.size > 0 %>
+<% if @project_permissions.size > 0 %>
+  <br />
+  <br />
   <br />
   <h3 class='header-title'> Shared Projects </h3>
   <div class="panel panel-info">
@@ -46,12 +49,13 @@
         </tr>
       </thead>
       <tbody>
-      <% current_user.project_permissions.each do |permission| %>
+      <% @project_permissions.each do |permission| %>
         <%= render 'project', project_with_role: ObjectWithRole.new(permission.project, permission.role), show_role: true %>
       <% end %>
       </tbody>
     </table>
   </div>
+  <%=paginate_for(@project_permissions, param_name: :shared_page) %>
 
 <% end %>
 
