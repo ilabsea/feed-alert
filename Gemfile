@@ -51,6 +51,8 @@ gem 'annotate'
 gem 'foreman'
 gem 'newrelic_rpm'
 
+gem 'open_uri_redirections'
+
 group :development do
   gem 'capistrano', '3.3.5'
   gem 'capistrano-rails'

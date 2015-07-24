@@ -206,6 +206,7 @@ GEM
     nuntium_api (0.21)
       json
       rest-client
+    open_uri_redirections (0.2.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -401,6 +402,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   nuntium_api
+  open_uri_redirections
   pry-rails
   rails (= 4.2.0)
   rails_12factor

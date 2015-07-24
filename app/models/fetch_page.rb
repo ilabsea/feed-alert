@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'open_uri_redirections'
+
 class FetchPage
 
   def self.instance
@@ -6,7 +9,7 @@ class FetchPage
   end
 
   def content_from(url)
-    open(url) { |io| io.read }
+    open(url, allow_redirections: :all) { |io| io.read }
   end
 
   def complete_url_in_content(url, content)

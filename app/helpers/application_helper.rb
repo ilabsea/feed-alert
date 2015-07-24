@@ -238,4 +238,28 @@ module ApplicationHelper
       resource.errors[field].first
     end
   end
+
+  def metas_for_page options={}
+    content_for(:meta_tag) do
+
+      meta_tag  = tag(:meta, name: 'description', content: options[:description])
+      meta_tag += tag(:meta, name: 'keywords', content: options[:keyword]) 
+      #open graph
+      meta_tag += tag(:meta, property: 'og:type', content: 'article')
+      meta_tag += tag(:meta, property: 'og:title', content: options[:title]) 
+      meta_tag += tag(:meta, property: 'og:image', content: image_url(options[:image]))
+      meta_tag += tag(:meta, property: 'og:description', content: options[:description])
+      meta_tag += tag(:meta, property: 'og:url', content: options[:url])
+
+      #twitter
+      meta_tag += tag(:meta, name: 'twitter:card', content: 'summary')
+      meta_tag += tag(:meta, name: 'twitter:title', content: options[:title])
+      meta_tag += tag(:meta, name: 'twitter:description', content: options[:description])
+      meta_tag += tag(:meta, name: 'twitter:image', content: image_url(options[:image]))
+
+      meta_tag
+    end
+
+  end
+
 end
