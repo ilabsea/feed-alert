@@ -37,7 +37,10 @@ gem 'twitter-typeahead-rails'
 
 gem 'feedjira'
 gem 'sinatra', :require => nil
+
 gem 'sidekiq'
+gem "sidekiq-cron", "~> 0.3.0"
+
 gem 'roadie-rails'
 gem 'nuntium_api'
 

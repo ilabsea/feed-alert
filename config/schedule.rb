@@ -19,21 +19,21 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, :production
-env :PATH, ENV['PATH']
-job_type :rbenv_rake, %q!eval "$(rbenv init -)"; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output!
+# set :environment, :production
+# env :PATH, ENV['PATH']
+# job_type :rbenv_rake, %q!eval "$(rbenv init -)"; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output!
 
-every 5.minutes do
-  rbenv_rake "feed:read_data"
-end
+# every 5.minutes do
+#   rbenv_rake "feed:read_data"
+# end
 
-#Alert::PROCESS_TIME is not accessible
-every 30.minutes do
-  rbenv_rake "feed:alert"
-end
+# #Alert::PROCESS_TIME is not accessible
+# every 30.minutes do
+#   rbenv_rake "feed:alert"
+# end
 
-every 1.day do
-  rbenv_rake "feed:clean_feed_entry"
-end
+# every 1.day do
+#   rbenv_rake "feed:clean_feed_entry"
+# end
 
 

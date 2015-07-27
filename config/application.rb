@@ -23,7 +23,7 @@ module StreamAlert
     # config.i18n.default_locale = :de
 
     # For sidekiq https://github.com/mperham/sidekiq/wiki/FAQ
-    config.eager_load_paths += %W( #{config.root}/lib #{config.root}/app/presenters)
+    config.eager_load_paths += %W( #{config.root}/lib #{config.root}/app/crons #{config.root}/app/presenters)
 
     # config.autoload_paths += %W( #{config.root}/lib #{config.root}/app/presenters)
 
