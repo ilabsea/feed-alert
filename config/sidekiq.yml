@@ -3,3 +3,10 @@ development:
 
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq.pid
+
+:queues:
+  - [mailers, 4]
+  - [default, 3]
+  - [low_priority, 2]
+  - lowest_priority
+

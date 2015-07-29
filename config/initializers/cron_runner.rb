@@ -1,4 +1,4 @@
-queue_name = 'default'
+queue_name = 'lowest_priority'
 
 schedules = {
   'Read feeds from alert' => {

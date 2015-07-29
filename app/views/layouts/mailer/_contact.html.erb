@@ -23,7 +23,8 @@
             <h5 class="">Contact Info:</h5>
             <p>
               Phone: <strong>017 777457</strong><br/>
-              Email: <strong><a href="emailto:ilabphnompenh@instedd.org">ilabphnompenh@instedd.org</a></strong>
+
+              Email: <strong> <%=link_to ENV['SUPPORT_EMAIL'], "mailto:#{ENV['SUPPORT_EMAIL']}" %></strong>
             </p>
           </td>
         </tr>

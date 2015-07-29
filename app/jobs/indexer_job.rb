@@ -1,5 +1,5 @@
 class IndexerJob < ActiveJob::Base
-  queue_as :default
+  queue_as :low_priority
 
   Logger = Sidekiq.logger.level == Logger::DEBUG ? Sidekiq.logger : nil
   Client = Elasticsearch::Client.new host: (ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'), logger: Logger
