@@ -6,7 +6,7 @@ class AlertsController < ApplicationController
     alert = Alert.find(params[:id])
     existing_groups = alert.groups.ids
 
-    groups = Group.all
+    groups = current_user.my_groups
     groups = groups.excludes(existing_groups) if existing_groups.length > 0
     groups = groups.from_query(params[:q]) if params[:q].present?
     render json: groups
@@ -59,7 +59,7 @@ class AlertsController < ApplicationController
   end
 
   def edit
-    @alert = project_with_role.object.alerts.find(params[:id])
+    @alert = project_with_role.object.alerts.includes(:groups, :keywords).find(params[:id])
   end
 
   def update

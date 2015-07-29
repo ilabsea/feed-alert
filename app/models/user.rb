@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   has_many :shared_channels, class_name: "Channel", through: :channel_permissions, source: :channel
 
   has_many :groups
+  has_many :my_groups, class_name: "Group"
   has_many :members
 
   has_many :group_permissions

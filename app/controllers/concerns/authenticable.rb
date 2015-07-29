@@ -15,7 +15,7 @@ module Authenticable
   end
 
   def no_auth_path
-    ['/sign_in', '/sign_up', '/confirm', '/welcome', '/sign_out', "/", 'passwords/new', '/users/reset',
+    ['/sign_in', '/sign_up', '/confirm', '/welcome', '/sign_out', "/", '/passwords/new', '/users/reset',
      '/passwords/request_change', '/passwords/reset', '/passwords/change']
   end
 
