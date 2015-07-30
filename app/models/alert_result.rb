@@ -17,16 +17,14 @@ class AlertResult
           smses_to  << member.phone if member.sms_alert && alert.channel && alert.channel.is_enable
         end
 
-        delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes
-
         if emails_to.length > 0 && alert.total_match > 0
 
           # delay, delay_for, delay_unitl
-          AlertMailer.delay_for(delay_time).notify_matched(search_result.results_by_alert(alert.id),
-                                                           alert.id,
-                                                           group.name,
-                                                           emails_to,
-                                                           @date_range)
+          AlertMailer.notify_matched(search_result.results_by_alert(alert.id),
+                                     alert.id,
+                                     group.name,
+                                     emails_to,
+                                     @date_range).deliver_later
         end
 
         sms_time = Time.zone.now
@@ -40,8 +38,7 @@ class AlertResult
                         suggested_channel: alert.channel.name
                       }
 
-            # wait_until, wait
-            SmsAlertJob.set(wait: delay_time).perform_later(options)
+            SmsAlertJob.perform_later(options)
           end
         end
       end

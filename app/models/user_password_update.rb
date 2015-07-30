@@ -13,7 +13,7 @@ class UserPasswordUpdate
     @user.reset_password_at = Time.zone.now
 
     if @user.save
-      UserMailer.delay_for(ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes).password_change(@user)
+      UserMailer.password_change(@user).deliver_later
       true
     else
       false

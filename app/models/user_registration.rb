@@ -15,7 +15,7 @@ class UserRegistration
       user.confirmed_at = Time.zone.now
       user.confirmed_token = nil
       if user.save
-        UserMailer.delay_for(ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes).welcome(user)
+        UserMailer.welcome(user).deliver_later
         true
       else
         false

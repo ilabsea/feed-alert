@@ -10,7 +10,7 @@ class UserPasswordToken
 
     @user.generate_token_for(:reset_password_token)
     if @user.save
-      UserMailer.delay_for(ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes).change_password_instruction(@user)
+      UserMailer.change_password_instruction(@user).deliver_later
       true
     else
       false

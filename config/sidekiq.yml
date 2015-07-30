@@ -1,11 +1,13 @@
+:concurrency: 25
 development:
   :pidfile: tmp/pids/sidekiq.pid
 
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq.pid
+  :concurrency: 20
 
 :queues:
-  - [default, 2]
+  - [mailers, 50]
+  - [default, 10]
   - low_priority
-  - lowest_priority
 
