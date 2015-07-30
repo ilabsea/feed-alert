@@ -13,7 +13,7 @@ class UserPasswordUpdate
     @user.reset_password_at = Time.zone.now
 
     if @user.save
-      UserMailer.password_change(@user).deliver_later
+      UserMailer.password_changed(@user).deliver_later
       true
     else
       false

@@ -2,7 +2,7 @@ class UserRegistration
 
   def self.register user
     if user.save
-      UserMailer.delay_for(ENV['DELAY_DELIVER_IN_MINUTES'].to_i.minutes).registration(user)
+      UserMailer.registration(user).deliver_later
       true
     else
       false
