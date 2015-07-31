@@ -6,6 +6,7 @@ class AlertResult
 
   def run
     search_result = FeedEntry.search(Alert.search_options(@alerts, @date_range))
+    delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
 
     search_result.alerts.each do |alert|
       alert.groups.each do |group|
@@ -20,11 +21,11 @@ class AlertResult
         if emails_to.length > 0 && alert.total_match > 0
 
           # delay, delay_for, delay_unitl
-          AlertMailer.notify_matched(search_result.results_by_alert(alert.id),
+          AlertMailer.delay_for(delay_time.minute).notify_matched(search_result.results_by_alert(alert.id),
                                      alert.id,
                                      group.name,
                                      emails_to,
-                                     @date_range).deliver_later
+                                     @date_range)
         end
 
         sms_time = Time.zone.now
@@ -38,7 +39,7 @@ class AlertResult
                         suggested_channel: alert.channel.name
                       }
 
-            SmsAlertJob.perform_later(options)
+            SmsAlertJob.set(wait: delay_time.minute).perform_later(options)
           end
         end
       end

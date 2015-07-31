@@ -1,0 +1,14 @@
+:concurrency: 15
+development:
+  :pidfile: tmp/pids/sidekiq-cron.pid
+  # :logfile: log/sidekiq-cron.log
+
+production:
+  :pidfile: ../../shared/tmp/pids/sidekiq-cron.pid
+  :logfile: ../../shared/log/sidekiq-cron.log
+  :concurrency: 15
+
+:queues:
+  - cron
+  - low_priority
+

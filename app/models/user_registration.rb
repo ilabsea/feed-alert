@@ -2,7 +2,8 @@ class UserRegistration
 
   def self.register user
     if user.save
-      UserMailer.registration(user).deliver_later
+      delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
+      UserMailer.delay_for(delay_time.minute).registration(user)
       true
     else
       false
@@ -15,7 +16,8 @@ class UserRegistration
       user.confirmed_at = Time.zone.now
       user.confirmed_token = nil
       if user.save
-        UserMailer.welcome(user).deliver_later
+        delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
+        UserMailer.delay_for(delay_time).welcome(user)
         true
       else
         false

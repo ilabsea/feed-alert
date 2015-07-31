@@ -54,15 +54,20 @@ namespace :sidekiq do
     on roles(:app) do
       # Horrible hack to get PID without having to use terrible PID files
       puts "Killing sidekiq-upstart process "
-      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart | grep /running | awk '{print $NF}') || :") 
-      puts capture("sudo initctl stop sidekiq-upstart")
+      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-main | grep /running | awk '{print $NF}') || :") 
+      puts capture("sudo initctl stop sidekiq-upstart-main")
+
+      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-cron | grep /running | awk '{print $NF}') || :") 
+      puts capture("sudo initctl stop sidekiq-upstart-cron")
+
     end
   end
   task :restart do
     on roles(:app) do
       # execute :sudo, :initctl, '--system' ,:restart, :'sidekiq-upstart'
-      puts 'Restarting sidekiq-upstart project'
-      puts capture("sudo initctl start sidekiq-upstart")
+      puts 'Restarting sidekiq-upstart-cron project'
+      puts capture("sudo initctl start sidekiq-upstart-main")
+      puts capture("sudo initctl start sidekiq-upstart-cron")
     end
   end
 end
