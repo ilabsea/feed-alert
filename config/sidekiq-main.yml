@@ -1,4 +1,4 @@
-:concurrency: 10
+:concurrency: 25
 development:
   :pidfile: tmp/pids/sidekiq-main.pid
   # :logfile: log/sidekiq-main.log
@@ -6,7 +6,7 @@ development:
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-main.pid
   :logfile: ../../shared/log/sidekiq-main.log
-  :concurrency: 10
+  :concurrency: 25
 
 :queues:
   - mailers
