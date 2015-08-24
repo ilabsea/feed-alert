@@ -24,7 +24,7 @@ class FeedEntry < ActiveRecord::Base
   include FeedEntrySearch
 
   belongs_to :alert
-  belongs_to :feed, counter_cache: true
+  belongs_to :feed
 
   # validates :title, uniqueness: { scope: :feed_id }
 
