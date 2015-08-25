@@ -53,7 +53,18 @@ class Alert < ActiveRecord::Base
   validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
   validates :to_time, numericality: {message: "must be greater than From field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
 
+  before_save :set_attrs
+
   attr_accessor :total_match
+
+  def set_attrs
+    self.invalid_url = false
+    self.error_message = nil
+  end
+
+  def self.valid_url
+    where(invalid_url: false)
+  end
 
   def self.apply_search date_range
     Alert.includes(:keywords).find_in_batches(batch_size: 5) do |alerts|
