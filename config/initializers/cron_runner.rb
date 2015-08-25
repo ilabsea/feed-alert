@@ -1,5 +1,3 @@
-queue_name = 'cron'
-
 schedules = {
   'Read feeds from alert' => {
     'class' => 'FeedReaderFromAlertCron',
@@ -15,7 +13,7 @@ schedules = {
 
   'Remove old feed entries for a month' => {
     'class' => 'FeedEntryCleanUpCron',
-    'cron'  => '0 0 * * *',
+    'cron'  => '0 0 1 * *',
     'queue' => 'default'
   }
 }

@@ -1,11 +1,11 @@
 class IndexerJob < ActiveJob::Base
-  queue_as :low_priority
+  queue_as :indexer
 
   Logger = Sidekiq.logger.level == Logger::DEBUG ? Sidekiq.logger : nil
   Client = Elasticsearch::Client.new host: (ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'), logger: Logger
 
   def perform(operation, klass, record_id, options={})
-    logger.debug [operation, "#{klass}##{record_id} #{options.inspect}"]
+    logger.debug [operation, ": #{klass}##{record_id} #{options.inspect}"]
 
     case operation
       when /index|update/

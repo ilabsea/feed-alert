@@ -49,7 +49,7 @@ class FeedEntry < ActiveRecord::Base
   end
 
   def process_url
-    ProcessFeedEntryUrlJob.set(wait: 10.seconds).perform_later(self.id)
+    ProcessFeedEntryJob.set(wait: 1.seconds).perform_later(self.id)
   end
 
 end

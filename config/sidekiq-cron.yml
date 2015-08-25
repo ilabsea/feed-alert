@@ -1,7 +1,7 @@
 :concurrency: 25
 development:
   :pidfile: tmp/pids/sidekiq-cron.pid
-  # :logfile: log/sidekiq-cron.log
+
 
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-cron.pid
@@ -9,6 +9,7 @@ production:
   :concurrency: 25
 
 :queues:
+  - process_feed
+  - process_feed_entry
   - cron
-  - low_priority
 
