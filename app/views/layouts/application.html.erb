@@ -8,12 +8,9 @@
     <%= render 'layouts/shared/default_page_meta' %>
 
     <%= content_for(:meta_tag) %>
-
-
-    <link href="/favicon.ico?version=20150504102347" type="image/x-icon" rel="icon">
     <title><%= content_for?(:title) ? yield(:title) : ENV['APP_NAME'] %></title>
 
-    <%= stylesheet_link_tag    "application" %>
+    
     <%= csrf_meta_tags %>
   </head>
 
@@ -29,9 +26,11 @@
       <%= render "layouts/footer" %>
     </div>
 
+    <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/shared/notification' %>
     <%= render 'layouts/shared/config' %>
     <%= render 'layouts/shared/google_analytic' %>
+
   </body>
 </html>
