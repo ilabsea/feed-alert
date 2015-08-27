@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= render 'layouts/shared/google_search_console' %>
     <%= favicon_link_tag 'favicon.ico' %>
     <%= render 'layouts/shared/default_page_meta' %>
 
@@ -31,5 +32,6 @@
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/shared/notification' %>
     <%= render 'layouts/shared/config' %>
+    <%= render 'layouts/shared/google_analytic' %>
   </body>
 </html>

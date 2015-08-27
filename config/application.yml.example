@@ -32,6 +32,8 @@ default: &default
 
   MAX_ERROR_NUMBER: '3'
 
+  GOOGLE_ANALYTIC: ''
+
   SIDEKIQ_USERNAME: ''
   SIDEKIQ_PASSWORD: ''
   NEW_RELIC_KEY: ''
