@@ -49,7 +49,7 @@ class Alert < ActiveRecord::Base
 
   validates :name, presence: true
   validates :url, presence: true
-  # validates :url, url: true
+  validates :url, url: true
 
   validates :from_time, :to_time, presence: true
   validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}

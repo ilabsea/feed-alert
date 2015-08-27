@@ -60,7 +60,7 @@ gem 'newrelic_rpm'
 gem 'open_uri_redirections'
 
 group :development do
-  gem 'capistrano', '3.3.5'
+  gem 'capistrano', '3.4.0'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
