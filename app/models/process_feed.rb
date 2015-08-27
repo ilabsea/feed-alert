@@ -29,19 +29,16 @@ class ProcessFeed
         Rails.logger.debug { "alert: #{alert.name} with url: #{alert.url} could not be read with error: #{feed_jira.class}" }
       end
     rescue Feedjira::FetchFailure => e
-      self.mark_error(alert, e.message)
+      alert.mark_error("Fetching feed with failure")
     rescue Feedjira::NoParserAvailable => e
-      self.mark_error(alert, e.message)
+      alert.mark_error("Invalid feed format.")
+    rescue NoMethodError => e
+      alert.mark_error("Invalid feed url")
+    rescue Exception => e
+      alert.mark_error("Unexpected error")
     end
 
   end
-
-  def self.mark_error(alert, error_message)
-    alert.invalid_url = true
-    alert.error_message = error_message
-    alert.save
-  end
-
 
 
 end

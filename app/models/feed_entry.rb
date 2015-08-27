@@ -26,7 +26,8 @@ class FeedEntry < ActiveRecord::Base
   belongs_to :alert
   belongs_to :feed
 
-  # validates :title, uniqueness: { scope: :feed_id }
+  validates :title, uniqueness: { scope: :url }
+  validates :fingerprint, uniqueness: true
 
   before_save :invoke_fingerprint
   after_create :process_url
@@ -40,16 +41,31 @@ class FeedEntry < ActiveRecord::Base
   end
 
   def invoke_fingerprint
-    self.fingerprint = Digest::MD5.hexdigest(self.content) unless self.content.blank?
+    uniqueness_attribute = self.title + self.url
+    self.fingerprint = Digest::MD5.hexdigest(uniqueness_attribute)
   end
 
   def self.process_with options
-    feed_entry = FeedEntry.where(options.slice(:title, :url)).first
-    FeedEntry.create(options) unless feed_entry
+    feed_entries = FeedEntry.where(title: options[:title])
+
+    # prevent reindexing for feed entry with same title and url 
+    if feed_entries.length > 0
+      # if url is still the same -> old content thus do nothing
+      feed_entries.each do |feed_entry|
+        return false if feed_entry.url == options[:url]
+      end
+      Rails.logger.debug {"Update entry: #{options}"}
+      feed_entry = feed_entries.first
+      feed_entry.update_attributes(options)
+    else
+      Rails.logger.debug {"Duplicate entry: #{options}"}
+      feed_entry = FeedEntry.new(options)
+      feed_entry.save
+    end
   end
 
   def process_url
-    ProcessFeedEntryJob.set(wait: 1.seconds).perform_later(self.id)
+    ProcessFeedEntryJob.perform_later(self.id)
   end
 
 end

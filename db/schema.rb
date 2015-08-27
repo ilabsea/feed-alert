@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825101916) do
+ActiveRecord::Schema.define(version: 20150826100416) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20150825101916) do
     t.string   "interval_unit",        limit: 255
     t.text     "email_template",       limit: 65535
     t.text     "sms_template",         limit: 65535
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "alert_places_count",   limit: 4,     default: 0
     t.integer  "alert_groups_count",   limit: 4,     default: 0
     t.integer  "alert_keywords_count", limit: 4,     default: 0
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20150825101916) do
     t.string   "to_time",              limit: 255
     t.integer  "project_id",           limit: 4
     t.integer  "channel_id",           limit: 4
-    t.boolean  "invalid_url",          limit: 1,     default: false
+    t.integer  "invalid_url",          limit: 4,     default: 0
     t.string   "error_message",        limit: 255
   end
 
@@ -91,12 +91,12 @@ ActiveRecord::Schema.define(version: 20150825101916) do
 
   create_table "feed_entries", force: :cascade do |t|
     t.string   "title",        limit: 255
-    t.text     "url",          limit: 16777215
+    t.text     "url",          limit: 65535
     t.datetime "published_at"
     t.text     "summary",      limit: 16777215
     t.text     "content",      limit: 4294967295
     t.boolean  "alerted",      limit: 1,          default: false
-    t.string   "fingerprint",  limit: 255
+    t.string   "fingerprint",  limit: 32
     t.integer  "alert_id",     limit: 4
     t.integer  "feed_id",      limit: 4
     t.datetime "created_at",                                      null: false
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150825101916) do
 
   add_index "feed_entries", ["alert_id"], name: "index_feed_entries_on_alert_id", using: :btree
   add_index "feed_entries", ["feed_id"], name: "index_feed_entries_on_feed_id", using: :btree
+  add_index "feed_entries", ["fingerprint"], name: "index_feed_entries_on_fingerprint", unique: true, using: :btree
 
   create_table "feeds", force: :cascade do |t|
     t.string   "url",                limit: 255

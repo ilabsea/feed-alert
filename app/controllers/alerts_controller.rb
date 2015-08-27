@@ -39,7 +39,7 @@ class AlertsController < ApplicationController
   def index
     @alerts = project_with_role.object.alerts
                                       .includes(:keywords, groups: :alert_groups)
-                                      .order('created_at DESC')
+                                      .order('updated_at DESC')
                                       .page(params[:page])
   end
 
@@ -64,6 +64,8 @@ class AlertsController < ApplicationController
 
   def update
     @alert = project_with_role.object.alerts.find(params[:id])
+    @alert.reset_error
+
     if(@alert.update_attributes(filter_params))
       redirect_to project_alerts_path(project_with_role.object), notice: 'Alert has been updated'
     else

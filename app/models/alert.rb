@@ -49,21 +49,25 @@ class Alert < ActiveRecord::Base
 
   validates :name, presence: true
   validates :url, presence: true
+  # validates :url, url: true
+
   validates :from_time, :to_time, presence: true
   validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
   validates :to_time, numericality: {message: "must be greater than From field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
 
-  before_save :set_attrs
-
   attr_accessor :total_match
 
-  def set_attrs
-    self.invalid_url = false
+  def reset_error
+    self.invalid_url = 0
     self.error_message = nil
   end
 
   def self.valid_url
-    where(invalid_url: false)
+    where("invalid_url < ? ", ENV['MAX_ERROR_NUMBER'].to_i)
+  end
+
+  def has_invalid_url_error
+    self.invalid_url >= ENV['MAX_ERROR_NUMBER'].to_i
   end
 
   def self.apply_search date_range
@@ -110,5 +114,11 @@ class Alert < ActiveRecord::Base
     self.includes(:project).select('distinct alerts.id, alerts.*')
                            .joins('INNER JOIN alert_groups ON alert_groups.alert_id = alerts.id')
                            .where("alert_groups.group_id in (#{group_sql})")
+  end
+
+  def mark_error message
+    self.invalid_url = self.invalid_url + 1
+    self.error_message = message
+    self.save(validate: false)
   end
 end

@@ -29,7 +29,10 @@ gem 'active_model_serializers'
 gem 'unicorn'
 
 gem 'bootstrap-sass', '~> 3.3.3'
+
 gem 'email_validator'
+gem "validate_url"
+
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'simple_form'
@@ -79,7 +82,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'pry-rails'
 
-  gem 'faker'
+  gem 'ffaker'
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'spring-commands-rspec'

@@ -52,6 +52,11 @@
                 using channel <b> <%= alert.channel.name %></b>
             </p>
             <% end %>
+            <% if alert.error_message %>
+              <span class='error'>
+               <i class='glyphicon glyphicon-remove'> </i> <%= alert.error_message%>
+              </span>
+            <% end %>
           </td>
           <td><%= truncate(alert.groups.map(&:name).join(", "), length: 120) %></td>
           <td><%= truncate(alert.keywords.map(&:name).join(", "), length: 120) %></td>

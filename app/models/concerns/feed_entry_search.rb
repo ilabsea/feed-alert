@@ -7,7 +7,7 @@ module FeedEntrySearch
     index_name    "feed_entry-#{Rails.env}"
     document_type "feed_entry"
 
-    settings index: { number_of_shards: 1 } do
+    settings index: { number_of_shards: 5 } do
       mappings do
         indexes :title, analyzer: 'english', index_options: 'offsets'
         indexes :summary, analyzer: 'english', index_options: 'offsets'

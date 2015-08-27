@@ -5,7 +5,7 @@
 # property set.  Don't declare `role :all`, it's a meta role.
 
 # set :server_name, "192.168.1.104"  #"54.254.181.235" 
-server_address =  "feedalert.com" # "192.168.1.104"
+server_address = "52.76.56.115" # "feedalert.com" # "192.168.1.104"
 
 role :app, "ilab@#{server_address}"
 role :web, "ilab@#{server_address}"
