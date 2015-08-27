@@ -1,13 +1,13 @@
 schedules = {
   'Read feeds from alert' => {
     'class' => 'FeedReaderFromAlertCron',
-    'cron'  => '*/30 * * * *',
+    'cron'  => '*/20 * * * *',
     'queue' => 'cron'
   },
 
   'Alert fetched feed if criteria match' => {
     'class' => 'AlertResultCron',
-    'cron'  => '0 * * * *',
+    'cron'  => '*/30 * * * *',
     'queue' => 'default'
   },
 
