@@ -5,7 +5,7 @@ development:
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-main.pid
   :logfile: ../../shared/log/sidekiq-main.log
-  :concurrency: 25
+  :concurrency: 10
 
 :queues:
   - mailers

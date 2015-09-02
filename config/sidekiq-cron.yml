@@ -6,7 +6,7 @@ development:
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-cron.pid
   :logfile: ../../shared/log/sidekiq-cron.log
-  :concurrency: 25
+  :concurrency: 10
 
 :queues:
   - process_feed
