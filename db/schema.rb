@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826100416) do
+ActiveRecord::Schema.define(version: 20150904085243) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20150826100416) do
     t.string   "title",        limit: 255
     t.text     "url",          limit: 65535
     t.datetime "published_at"
-    t.text     "summary",      limit: 16777215
+    t.text     "summary",      limit: 65535
     t.text     "content",      limit: 4294967295
     t.boolean  "alerted",      limit: 1,          default: false
     t.string   "fingerprint",  limit: 32
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150826100416) do
     t.integer  "feed_id",      limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.text     "keywords",     limit: 16777215
+    t.text     "keywords",     limit: 65535
     t.boolean  "matched",      limit: 1,          default: false
   end
 
@@ -196,11 +196,12 @@ ActiveRecord::Schema.define(version: 20150826100416) do
   add_index "project_permissions", ["user_id"], name: "index_project_permissions_on_user_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "description", limit: 255
-    t.integer  "user_id",     limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",                        limit: 255
+    t.string   "description",                 limit: 255
+    t.integer  "user_id",                     limit: 4
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.boolean  "is_enabled_national_gateway", limit: 1,   default: false
   end
 
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
