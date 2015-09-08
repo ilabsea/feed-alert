@@ -1,0 +1,36 @@
+<% content_for(:title) { "Channel accesses"} %>
+<% breadcrumb_buffer([{
+    "Channel accesses": nil
+  }]) %>
+
+
+<div class='header-wrapper clearfix'>
+  <div class="pull-right"> <%= render 'search_user' %> </div>
+  <div class='pull-left'>
+    <h3 class='header-title'> List of all projects </h3>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <table class='table table-responsive'>
+    <thead>
+      <tr>
+        <td width="250">Account</td>
+        <td>Project</td>
+        <td>Is enabled using National Gateway ?</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.user.email %></td>
+        <td><%= project.name %></td>
+        <%= simple_form_for project, :url => channel_accesses_path, :method => :post do |f| %>
+          <%= f.hidden_field :id, :value => project.id %>
+        <td><%= f.check_box :is_enabled_national_gateway, :onclick => "javascript: submit();" %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

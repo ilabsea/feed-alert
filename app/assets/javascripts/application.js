@@ -39,6 +39,8 @@
 //= require alert/alert_keyword
 //= require channel/form
 
+//= require channel_access/user
+
 
 
 

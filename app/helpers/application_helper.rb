@@ -174,6 +174,10 @@ module ApplicationHelper
       {controller: '', text: '', url: root_path, class: 'after'}]
   end
 
+  def app_menu_admin
+    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
+  end
+
   # user_signed_in?
   def app_menu_signed_in name
     menu = [
@@ -183,6 +187,8 @@ module ApplicationHelper
            { controller: [:channels], text: 'SMS Channels', url: channels_path, class: '' },
            { controller: :permissions, text: 'Permissions' ,url: permissions_path, class: '' }
     ]
+    
+    menu = menu + app_menu_admin if user_admin?
 
     index_first = 0
     index_last = menu.size - 1

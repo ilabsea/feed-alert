@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   get 'confirm' => 'registrations#confirm'
   get 'welcome' => 'registrations#welcome'
 
+  # resource :channel_accesses
+  get 'channel_accesses' => 'channel_accesses#index'
+  post 'channel_accesses' => 'channel_accesses#create'
+
   resources :channels do
     member do
       put 'state'
@@ -38,7 +42,6 @@ Rails.application.routes.draw do
   resources :permissions
   resources :project_permissions
   resources :channel_permissions
-
 
   resources :projects do
     member do

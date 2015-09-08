@@ -4,7 +4,7 @@ module Authenticable
   included do
     before_action :remember_location
     before_action :authenticate_user!
-    helper_method :current_user, :user_signed_in?
+    helper_method :current_user, :user_signed_in?, :user_admin?
     
   end
 
@@ -39,6 +39,10 @@ module Authenticable
 
   def user_signed_in?
     current_user
+  end
+
+  def user_admin?
+    current_user.is_admin?
   end
 
   def sign_in(user)

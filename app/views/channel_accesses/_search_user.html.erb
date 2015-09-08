@@ -1,0 +1,12 @@
+<%= form_tag '', :method => :get do %>
+  <div class="input-group" style='min-width: 300px;'>
+    <%= text_field_tag :user_email, params[:q], class: "form-control typeahead", 
+                       placeholder: "User email", data: {url: list_users_path} %>
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-primary btn-app" type="button" style="min-width: 60px;">
+        <i class='glyphicon glyphicon-search'> </i>
+      </button>
+    </span>
+  </div>
+<% end %>
+

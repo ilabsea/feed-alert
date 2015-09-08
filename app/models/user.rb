@@ -133,6 +133,8 @@ class User < ActiveRecord::Base
   end
 
   def accessible_project(project_id)
+    return ObjectWithRole.new(Project.find(project_id)) if is_admin?
+    
     project = self.my_projects.where(id: project_id).first
     return ObjectWithRole.new(project) if project
 
