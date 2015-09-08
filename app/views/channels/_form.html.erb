@@ -80,35 +80,3 @@
     </div>
   </div>
 <% end %>
-
-<%=form_for @channel, html: { class: 'form form-inline'} do |f| %>
-  <div class="panel panel-info">
-    
-    <div class="panel-heading setup-flow clearfix" style='cursor:pointer;'>
-      <div class="pull-left" style='width: 60px; font-size: 40px; margin-top: 10px;'>
-        <i class='glyphicon glyphicon-cloud'></i>
-      </div>
-
-      <div style="margin-left: 60px">
-        <h4> Nuntium SMS Gateway</h4>
-        <p class="sub-text"> Advanced Setup - National Gateway(Only Some Country Supported)</p>
-      </div>
-    </div>
-
-    <div class="panel-body" style="<%=channel_active(@channel, Channel::SETUP_FLOW_GLOBAL)%>">
-      <p class="sub-text">
-        In a limited number of countries we have a gateway provided by a local phone company that can be used to send and recieve system messages.
-        Please select the list below
-      </p>
-      <div class="control-inline">
-        <%= f.label :getway, 'SMS Gateway' %>
-        <%= f.select :name, options_for_select(ChannelNuntium.global_sms_channel), {}, class: 'form-control' %>
-      </div>
-
-      <%= yield(:save_button) %>
-      <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_GLOBAL %>
-
-    </div>
-
-  </div>
-<% end %>
