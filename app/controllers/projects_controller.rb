@@ -55,6 +55,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def sms_setting
+    @project_with_role = current_user.accessible_project(params[:id])
+  end
+
   private
 
   def filter_params

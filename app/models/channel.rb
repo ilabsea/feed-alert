@@ -21,6 +21,9 @@ class Channel < ActiveRecord::Base
 
   has_many :alerts, dependent: :nullify
 
+  has_many :project_channels
+  has_many :projects, through: :project_channels
+
   SETUP_FLOW_BASIC    = 'Basic'
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'

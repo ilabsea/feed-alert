@@ -1,0 +1,53 @@
+<% content_for(:title) { "SMS Settings"} %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      { "#{@project_with_role.object.name}": edit_project_path(@project_with_role.object)},
+                      { "SMS Settings": nil}]) %>
+
+<%= render 'shared/project_alert', 
+           project_tab: 3,
+           url_tab1: edit_project_path(@project_with_role.object),
+           url_tab2: project_alerts_path(@project_with_role.object),
+           url_tab3: sms_setting_project_path(@project_with_role.object)
+            %>
+<%= panel "SMS Settings" do %>
+  <%=simple_form_for(@project_with_role.object, html: { class: 'form-inline form'}) do |f| %>
+
+    <% input_attrs = @project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
+    
+    <div class="form-group boolean cb-block ">
+      <label>SMS Channels</label>           
+      <% @project_with_role.object.accessible_channels.each do |channel| %>
+          <label class="boolean">
+            <%= check_box_tag :channels, channel.id, @project_with_role.object.channels.include?(channel) %>
+            <%= channel.name %>
+          </label>
+      <% end %>
+    </div>
+
+    <div class='from-group'>
+      <label>SMS alert time</label>
+      <div class="input-group">
+        <span class="input-group-addon">From</span>
+        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon">To</span>
+        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+      </div>
+    </div>
+
+    <div class='from-group'>
+      <label>SMS template</label>
+      <textarea class="form-control" rows="3"></textarea>
+      <%#=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 6, cols: 40}.merge(disabled) %>
+    </div>
+
+    <% if @project_with_role.has_admin_role? %>
+      <div class='form-group form-action-group'>
+        <label></label>
+        <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+      </div>
+    <% end %>
+  <% end %>  
+<% end -%>         

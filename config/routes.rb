@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       get 'share'
+      get 'sms_setting'
     end
 
     resources :alerts do

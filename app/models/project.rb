@@ -21,6 +21,8 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :alerts
+  has_many :project_channels
+  has_many :channels, through: :project_channels
 
   def access_role=(role)
     @access_role = role
@@ -30,4 +32,26 @@ class Project < ActiveRecord::Base
   def admin_access_role?
     @access_role != User::PERMISSION_ROLE_NORMAL
   end
+
+  def accessible_channels
+    channel_ids = self.user.my_channels.pluck(:id) + self.user.channel_permissions.pluck(:channel_id)
+    if is_enabled_national_gateway
+      return Channel.where("id in (?) or setup_flow = ?", channel_ids, Channel::SETUP_FLOW_GLOBAL)
+    else
+      return Channel.where(id: channel_ids)
+    end
+  end
+
+  def accessible_channel(channel_id)
+    channels = self.accessible_channels
+    channel = channels.where(id: channel_id)
+    return ObjectWithRole.new(channel) if channel
+
+    permission = self.user.channel_permissions.find_by(channel_id: channel_id)
+    return ObjectWithRole.new(permission.channel, permission.role) if permission
+    raise ActiveRecord::RecordNotFound
+
+  end
+
+
 end

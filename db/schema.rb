@@ -85,10 +85,8 @@ ActiveRecord::Schema.define(version: 20150909034421) do
     t.boolean  "is_enable",  limit: 1,   default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.integer  "project_id", limit: 4
   end
 
-  add_index "channels", ["project_id"], name: "index_channels_on_project_id", using: :btree
   add_index "channels", ["user_id"], name: "index_channels_on_user_id", using: :btree
 
   create_table "feed_entries", force: :cascade do |t|
@@ -253,7 +251,6 @@ ActiveRecord::Schema.define(version: 20150909034421) do
   add_foreign_key "alerts", "projects"
   add_foreign_key "channel_permissions", "channels"
   add_foreign_key "channel_permissions", "users"
-  add_foreign_key "channels", "projects"
   add_foreign_key "channels", "users"
   add_foreign_key "feed_entries", "alerts"
   add_foreign_key "feed_entries", "feeds"

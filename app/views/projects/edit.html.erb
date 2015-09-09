@@ -5,7 +5,8 @@
 <%= render 'shared/project_alert',
            project_tab: 1,
            url_tab1: edit_project_url(@project_with_role.object),
-           url_tab2: project_alerts_path(@project_with_role.object)
+           url_tab2: project_alerts_path(@project_with_role.object),
+           url_tab3: sms_setting_project_path(@project_with_role.object)
             %>
 
 <%= panel "Edit Project" do %>
