@@ -62,6 +62,6 @@ class ProjectsController < ApplicationController
   private
 
   def filter_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :sms_alert_started_at, :sms_alert_ended_at, :sms_alert_template, channel_ids: [])
   end
 end
