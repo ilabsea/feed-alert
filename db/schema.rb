@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909034421) do
+ActiveRecord::Schema.define(version: 20150909081532) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -206,9 +206,12 @@ ActiveRecord::Schema.define(version: 20150909034421) do
     t.string   "name",                        limit: 255
     t.string   "description",                 limit: 255
     t.integer  "user_id",                     limit: 4
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
-    t.boolean  "is_enabled_national_gateway", limit: 1,   default: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.boolean  "is_enabled_national_gateway", limit: 1,     default: false
+    t.datetime "sms_alert_started_at"
+    t.datetime "sms_alert_ended_at"
+    t.text     "sms_alert_template",          limit: 65535
   end
 
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
