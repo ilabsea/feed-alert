@@ -5,10 +5,6 @@
   <%=f.input :name, input_html: {class: 'form-control'}.merge(input_attrs) %>
   <%=f.input :description, as: :text, input_html: {class: 'form-control', rows: 4}.merge(input_attrs), 
              wrapper_html: { class: 'inline'} %>
-  <% project_with_role.object.accessible_channels.all.each do |channel| %>
-    <%= check_box_tag :channel_id, channel.id, project_with_role.object.channels.include?(channel) %>
-    <%= channel.name %>
-  <% end %>
   <% if project_with_role.has_admin_role? %>
     <div class='form-group form-action-group'>
       <label></label>

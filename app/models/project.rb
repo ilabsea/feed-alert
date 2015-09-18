@@ -34,12 +34,8 @@ class Project < ActiveRecord::Base
   end
 
   def accessible_channels
-    channel_ids = self.user.my_channels.pluck(:id) + self.user.channel_permissions.pluck(:channel_id)
-    if is_enabled_national_gateway
-      return Channel.where("id in (?) or setup_flow = ?", channel_ids, Channel::SETUP_FLOW_GLOBAL)
-    else
-      return Channel.where(id: channel_ids)
-    end
+    channel_ids = self.channels.map(&:id) + self.user.my_channels.pluck(:id) + self.user.channel_permissions.pluck(:channel_id)
+    Channel.where(id: channel_ids)
   end
 
   def accessible_channel(channel_id)
