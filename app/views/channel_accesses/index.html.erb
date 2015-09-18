@@ -9,7 +9,7 @@
     <h3 class='header-title'> List of all projects </h3>
   </div>
   <div class="pull-right">
-    <%= link_new 'New Accessibility', new_project_channel_path %>
+    <%= link_new 'New Accessibility', new_channel_access_path %>
   </div>  
 </div>
 
@@ -32,7 +32,7 @@
       <tr>
         <td><%= row[0].email %></td>
         <td><%= row[1].name %></td>
-        <%= form_for @project_channel do |f| %>
+        <%= form_for @channel_access do |f| %>
           <%= f.hidden_field :project_id, value: row[1].id %>          
           <% (row.size - 2).times.each do |i| %>
             <td>

@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   get 'welcome' => 'registrations#welcome'
 
   resources :channel_accesses
-  resources :project_channels
 
   resources :channels do
     member do

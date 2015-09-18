@@ -1,4 +1,4 @@
-class ProjectChannel < ActiveRecord::Base
+class ChannelAccess < ActiveRecord::Base
   belongs_to :project
   belongs_to :channel
   	

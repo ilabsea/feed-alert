@@ -21,8 +21,8 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :alerts
-  has_many :project_channels
-  has_many :channels, through: :project_channels
+  has_many :channel_accesses
+  has_many :channels, through: :channel_accesses
 
   def access_role=(role)
     @access_role = role
