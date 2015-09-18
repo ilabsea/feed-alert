@@ -59,6 +59,12 @@ class ProjectsController < ApplicationController
     @project_with_role = current_user.accessible_project(params[:id])
   end
 
+  def list
+    @projects = Project.where(user_id: params[:user_id])
+    @projects = @projects.from_query(params[:project_name])
+    render json: @projects
+  end
+
   private
 
   def filter_params

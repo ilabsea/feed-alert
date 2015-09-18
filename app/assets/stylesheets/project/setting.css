@@ -5,3 +5,8 @@
 .checkbox-list{
 	display: inline-block;
 }
+
+
+.checkbox-list > span{
+  display: block;
+} 

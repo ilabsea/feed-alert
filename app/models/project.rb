@@ -53,5 +53,9 @@ class Project < ActiveRecord::Base
 
   end
 
+  def self.from_query(query)
+    like = "#{query}%"
+    where([ "name LIKE ?", like ]) 
+  end
 
 end

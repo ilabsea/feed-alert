@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bin/jquery_ui
 
 //= require jquery.fieldSelection
 //= require tmpl
@@ -39,6 +40,7 @@
 //= require alert/alert_keyword
 //= require channel/form
 
+//= require channel_access/form
 //= require channel_access/user
 
 

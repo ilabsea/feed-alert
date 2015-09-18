@@ -68,4 +68,8 @@ class Channel < ActiveRecord::Base
   def self.disable_other except_id
     where(['id != ? ', except_id ]).update_all({is_enable: false })
   end
+
+  def self.national_gateway
+    where(:setup_flow => Channel::SETUP_FLOW_GLOBAL)
+  end
 end

@@ -19,9 +19,8 @@ Rails.application.routes.draw do
   get 'confirm' => 'registrations#confirm'
   get 'welcome' => 'registrations#welcome'
 
-  # resource :channel_accesses
-  get 'channel_accesses' => 'channel_accesses#index'
-  post 'channel_accesses' => 'channel_accesses#create'
+  resources :channel_accesses
+  resources :project_channels
 
   resources :channels do
     member do
@@ -47,6 +46,10 @@ Rails.application.routes.draw do
     member do
       get 'share'
       get 'sms_setting'
+    end
+
+    collection do
+      get 'list'
     end
 
     resources :alerts do

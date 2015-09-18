@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  helper_method :require_admin
+  helper_method :require_admin, :national_gateway_channels
   protect_from_forgery with: :exception
   include Authenticable
 
@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
   	unless user_admin?
   		redirect_to root_url, alert: "You cannot access that part of the website."
   	end
+  end
+
+  def national_gateway_channels
+    Channel.national_gateway
   end
 
 end

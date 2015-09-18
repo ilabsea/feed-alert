@@ -11,11 +11,7 @@
             %>
 <%= panel "SMS Settings" do %>
   <%=form_for(@project_with_role.object, html: { class: 'form-inline form'}) do |f| %>
-
     <% input_attrs = @project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
-    
-
-
     <div class="form-group horizontal-group">
       <label>SMS Channels</label>
       <div class="checkbox-list">
