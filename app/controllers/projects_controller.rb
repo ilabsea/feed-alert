@@ -60,7 +60,7 @@ class ProjectsController < ApplicationController
   end
 
   def list
-    @projects = Project.where(user_id: params[:user_id])
+    @projects = Project.query_by_user(params[:user_id])
     @projects = @projects.from_query(params[:project_name])
     render json: @projects
   end

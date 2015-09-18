@@ -54,12 +54,14 @@ function buildUserAutoComplete(){
     minLength: 0
   }).focus(function(){            
     $userInput.autocomplete("search");
+  }).change(function(){
+    console.log(change);
   });  
 }
 
 function buildProjectAutoComplete(){
   var $projectInput = $("#project_name");
-  var $userId = $('#user_id')
+  var $userId = $('#user_id');
   var urlSearch = $projectInput.attr("data-url");
   $projectInput.autocomplete({
     source: function (request, response) {
@@ -68,10 +70,10 @@ function buildProjectAutoComplete(){
               data: { user_id: $userId.val(), project_name: $projectInput.val()},
               success: function (data) {
                   var transformed = $.map(data, function (el) {
-                      return {
-                          label: el.name,
-                          id: el.id
-                      };
+                    return {
+                      label: el.name,
+                      id: el.id
+                    };
                   });
                   response(transformed);
               },
@@ -82,12 +84,16 @@ function buildProjectAutoComplete(){
     },
     select: function( event, ui ) {
       // $('#user_id').val(ui.item.label);
-      $('#project_channel_project_id').val(ui.item.id);
+      $('#channel_access_project_id').val(ui.item.id);
     },
     minLength: 0
   }).focus(function(){            
     $projectInput.autocomplete("search");
   });  
+}
+
+function buildQueryParams(){
+
 }
 
 

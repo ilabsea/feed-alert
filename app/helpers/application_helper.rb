@@ -175,7 +175,7 @@ module ApplicationHelper
   end
 
   def app_menu_admin
-    [{ controller: :project_channels, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
+    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
   end
 
   # user_signed_in?

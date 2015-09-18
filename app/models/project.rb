@@ -54,4 +54,12 @@ class Project < ActiveRecord::Base
     where([ "name LIKE ?", like ]) 
   end
 
+  def self.query_by_user(user_id)
+    if user_id == ''
+      all
+    else
+      where(user_id: params[:user_id])
+    end
+  end
+
 end
