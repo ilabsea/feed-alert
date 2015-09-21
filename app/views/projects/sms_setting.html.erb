@@ -17,8 +17,8 @@
       <div class="checkbox-list">
         <%= f.collection_check_boxes :channel_ids, @project_with_role.object.accessible_channels, :id, :name do |channel| %>
           <div>
-          <%= channel.label(class: "boolean") do  %>
-            <%= channel.check_box %>
+          <%= channel.label do  %>
+            <%= channel.check_box({checked: false}) %>
             <%= channel.text %>
           <% end -%>
           </div>
