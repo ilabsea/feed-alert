@@ -58,7 +58,7 @@ class Project < ActiveRecord::Base
     if user_id == ''
       all
     else
-      where(user_id: params[:user_id])
+      where(user_id: user_id)
     end
   end
 

@@ -32,7 +32,7 @@ class ChannelAccessesController < ApplicationController
     else
       flash.now[:alert] = "Failed to update project"
       render :edit
-    end    
+    end   
   end
 
   def new
