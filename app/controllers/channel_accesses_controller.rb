@@ -4,16 +4,16 @@ class ChannelAccessesController < ApplicationController
   
   def index
     if params[:user_email]
-      projects = Project.joins(:user).where('users.email' => params[:user_email]).group('users.email', 'name')
+      @projects = Project.joins(:user).where('users.email' => params[:user_email]).group('users.email', 'name').page(params[:page])
     else
-      projects = Project.joins(:user).group('users.email', 'name')
+      @projects = Project.joins(:user).group('users.email', 'name').page(params[:page])
     end
 
-    project_ids = projects.map(&:id)
+    project_ids = @projects.map(&:id)
     channel_accesses = ChannelAccess.where(project_id: project_ids)
     @rows = []
     @channel_access = ChannelAccess.new
-    projects.each_with_index do |project, i|
+    @projects.each_with_index do |project, i|
       row = []
       row << project.user
       row << project

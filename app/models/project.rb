@@ -50,7 +50,7 @@ class Project < ActiveRecord::Base
   end
  
   def is_active_channel? channel
-    self.channel_accesses.select { |c| c.channel_id ==  channel.id}.first.is_active
+    self.channel_accesses.select { |c| c.channel_id ==  channel.id}.first ? true : false
   end
 
   def self.from_query(query)
