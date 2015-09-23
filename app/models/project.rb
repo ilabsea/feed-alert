@@ -48,6 +48,10 @@ class Project < ActiveRecord::Base
     raise ActiveRecord::RecordNotFound
 
   end
+ 
+  def is_active_channel? channel
+    self.channel_accesses.select { |c| c.channel_id ==  channel.id}.first.is_active
+  end
 
   def self.from_query(query)
     like = "#{query}%"

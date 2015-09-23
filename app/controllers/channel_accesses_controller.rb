@@ -26,13 +26,14 @@ class ChannelAccessesController < ApplicationController
   end
 
   def create
-    @channel_access = Project.find(filter_params[:project_id])
-    if @channel_access.update_attributes(channel_ids: filter_params[:channel_id])
-      redirect_to channel_accesses_path, notice: 'Project updated'
+    if valid_params? filter_params
+      @channel_access = Project.find(filter_params[:project_id])
+      @channel_access.update_attributes(channel_ids: filter_params[:channel_id])
     else
-      flash.now[:alert] = "Failed to update project"
-      render :edit
-    end   
+      redirect_to new_channel_access_path, :flash => { :alert => "Please enter the require fields" }
+      return
+    end
+    redirect_to channel_accesses_path, notice: 'Project updated' 
   end
 
   def new
@@ -46,6 +47,10 @@ class ChannelAccessesController < ApplicationController
   private
   def filter_params
     params.require(:channel_access).permit(:project_id, channel_id: [])
+  end
+
+  def valid_params? params
+    !params[:channel_id].nil? && (!params[:project_id].nil? || params[:project_id] != "")
   end
 
 end

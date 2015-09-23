@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     member do
       get 'share'
       get 'sms_setting'
+      post 'update_sms_setting'
     end
 
     collection do

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  helper_method :require_admin, :national_gateway_channels
+  helper_method :require_admin, :national_gateway_channels, :is_active_channel?
   protect_from_forgery with: :exception
   include Authenticable
 

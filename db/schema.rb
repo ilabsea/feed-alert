@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918070249) do
+ActiveRecord::Schema.define(version: 20150921032423) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -69,8 +69,9 @@ ActiveRecord::Schema.define(version: 20150918070249) do
   create_table "channel_accesses", force: :cascade do |t|
     t.integer  "project_id", limit: 4
     t.integer  "channel_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "is_active",  limit: 1, default: false
   end
 
   create_table "channel_permissions", force: :cascade do |t|
