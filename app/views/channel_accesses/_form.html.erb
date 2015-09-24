@@ -7,14 +7,14 @@
   </div>
 
   <div class="form-group">
-    <label class="control-label required" style="margin-right: 0.2em;"><abbr>*</abbr>Project</label>
+    <label class="control-label required" style="margin-right: 0.2em;"><abbr>*</abbr> Project</label>
     <%= text_field_tag 'project_name', nil, class: 'form-control', data: {url: list_projects_path} %>
     <%=f.input :project_id, as: :hidden %>
   </div>  
   
 
   <div class="form-group horizontal-group">
-    <label class="control-label required"><abbr>*</abbr>ProjectSMS Channels</label>
+    <label class="control-label required"><abbr>*</abbr> ProjectSMS Channels</label>
     <div class="checkbox-list">
       <%= f.collection_check_boxes :channel_id, national_gateway_channels, :id, :name, include_hidden: false do |channel| %>
         <div>

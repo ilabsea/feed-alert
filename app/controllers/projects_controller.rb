@@ -77,9 +77,8 @@ class ProjectsController < ApplicationController
       end
       redirect_to projects_path, notice: 'Project updated'
     else
-      redirect_to sms_setting_project_path, :flash => { :alert => "Failed to update project sms setting" }
+      redirect_to sms_setting_project_path, :flash => { :alert => "Please enter all required fields." }
     end
-
   end
 
   def list
@@ -95,6 +94,6 @@ class ProjectsController < ApplicationController
   end
 
   def valid_params?
-    filter_params[:channel_ids].present?
+    filter_params[:channel_ids].present? && filter_params[:sms_alert_started_at].present? && filter_params[:sms_alert_ended_at].present? && filter_params[sms_alert_template].present?
   end
 end

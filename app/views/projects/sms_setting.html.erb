@@ -14,7 +14,7 @@
     <% input_attrs = @project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
 
     <div class="form-group horizontal-group">
-      <label>SMS Channels</label>
+      <label class="control-label required"><abbr>*</abbr> SMS Channels</label>
       <div class="checkbox-list">
         <%= f.collection_check_boxes :channel_ids, @project_with_role.object.accessible_channels, :id, :name, include_hidden: false do |channel| %>
           <div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class='form-group'>
-      <label>SMS alert time</label>
+      <label class="control-label required"><abbr>*</abbr> SMS alert time</label>
       <div class="input-group">
         <span class="input-group-addon">From</span>
         <%= f.text_field :sms_alert_started_at, class: "form-control hour-picker", autocomplete: :off, placeholder: "00:00"%>
@@ -47,13 +47,13 @@
     </div>
 
     <div class='form-group'>
-      <label>SMS template</label>
+      <label class="control-label required"><abbr>*</abbr> SMS template</label>
       <%= f.text_area :sms_alert_template, as: :text, class: 'form-control', rows: 6, cols: 40 %>
     </div>
 
     <div class='form-group'>
       <label></label>
-      <%=sms_template_params_for(:project_sms_alert_template) %>
+      <%= sms_template_params_for(:project_sms_alert_template) %>
     </div>
 
 
