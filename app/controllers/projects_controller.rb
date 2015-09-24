@@ -94,6 +94,6 @@ class ProjectsController < ApplicationController
   end
 
   def valid_params?
-    filter_params[:channel_ids].present? && filter_params[:sms_alert_started_at].present? && filter_params[:sms_alert_ended_at].present? && filter_params[sms_alert_template].present?
+    filter_params[:channel_ids].present? && filter_params[:sms_alert_started_at].present? && filter_params[:sms_alert_ended_at].present? && filter_params[:sms_alert_template].present?
   end
 end

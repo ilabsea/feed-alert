@@ -121,4 +121,18 @@ class Alert < ActiveRecord::Base
     self.error_message = message
     self.save(validate: false)
   end
+
+  def self.migrate_channel
+    Alert.transaction do
+      Alert.find_each(batch_size: 100) do |alert|
+        channel = alert.channel
+        project = alert.project
+        channel_access = project.channel_accesses.select { |c| c.channel_id == channel.id }.first
+        if !channel_access
+          project.channel_accesses.new(channel_id: channel.id, is_active: true)
+          project.save!
+        end
+      end
+    end    
+  end
 end
