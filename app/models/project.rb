@@ -67,4 +67,11 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def self.query_by_user_email(email)
+    if email && email != ""
+      return self.joins(:user).where('users.email' => email).group('users.email', 'name')
+    end
+    self.joins(:user).group('users.email', 'name')
+  end
+
 end

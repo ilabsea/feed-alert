@@ -3,16 +3,13 @@ class ChannelAccessesController < ApplicationController
   before_action :require_admin
   
   def index
-    if params[:user_email]
-      @projects = Project.joins(:user).where('users.email' => params[:user_email]).group('users.email', 'name').page(params[:page])
-    else
-      @projects = Project.joins(:user).group('users.email', 'name').page(params[:page])
-    end
+    @projects = Project.query_by_user_email(params[:user_email]).page(params[:page])
+    @rows = []
+    @channel_access = ChannelAccess.new
 
     project_ids = @projects.map(&:id)
     channel_accesses = ChannelAccess.where(project_id: project_ids)
-    @rows = []
-    @channel_access = ChannelAccess.new
+    
     @projects.each_with_index do |project, i|
       row = []
       row << project.user
