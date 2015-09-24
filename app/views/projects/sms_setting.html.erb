@@ -14,7 +14,7 @@
     <% input_attrs = @project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
 
     <div class="form-group horizontal-group">
-      <label class="control-label required"><abbr>*</abbr> SMS Channels</label>
+      <label class="required"><abbr>*</abbr> SMS Channels</label>
       <div class="checkbox-list">
         <%= f.collection_check_boxes :channel_ids, @project_with_role.object.accessible_channels, :id, :name, include_hidden: false do |channel| %>
           <div>

@@ -14,7 +14,7 @@
   
 
   <div class="form-group horizontal-group">
-    <label class="control-label required"><abbr>*</abbr> ProjectSMS Channels</label>
+    <label class="required"><abbr>*</abbr> ProjectSMS Channels</label>
     <div class="checkbox-list">
       <%= f.collection_check_boxes :channel_id, national_gateway_channels, :id, :name, include_hidden: false do |channel| %>
         <div>
