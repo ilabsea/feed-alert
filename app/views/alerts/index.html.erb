@@ -50,7 +50,7 @@
             <% if alert.channel %>
             <p class="sub-text">
               <span>Sms alert </span> <%= alert_time(alert) %>
-                using channel <b> <%= alert.channel.name %></b>
+                using channel <b><%= build_channel_list alert.project.channels %></b>
             </p>
             <% end %>
             <% if alert.error_message %>

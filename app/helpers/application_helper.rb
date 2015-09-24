@@ -268,4 +268,16 @@ module ApplicationHelper
 
   end
 
+  def build_channel_list channels
+    list = ""
+    channels.each_with_index do |channel, i|
+      if i == channels.length - 1
+        list = list + channel.name
+      else
+        list = list + channel.name + ", "
+      end
+    end
+    list
+  end
+
 end
