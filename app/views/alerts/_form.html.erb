@@ -3,33 +3,6 @@
   <%=f.input :name, input_html: {class: 'form-control'}.merge(disabled) %>
   <%=f.input :url, input_html: {class: 'form-control'}.merge(disabled) %>
 
-
-  <div class='input-row'>
-    <%=f.input :from_time, as: :string, label: 'From (HH:MM)',
-               input_html: {class: 'form-control hour-picker', autocomplete: :off}.merge(disabled) %>
-  </div>
-
-  <div class='input-row'>
-    <%=f.input :to_time, as: :string, label: 'To (HH:MM)', 
-                         input_html: {class: 'form-control hour-picker', autocomplete: :off}.merge(disabled) %>
-  </div>
-
-  <div class='input-row'>
-    <%=f.input :channel_id, label: 'SMS Channel',
-                         collection: current_user.accessible_channels.enabled.map{|c| [c.name, c.id]},
-                         include_blank: 'Select SMS Channel',
-                         input_html: {class: 'form-control', autocomplete: :off}.merge(disabled) %>
-  </div>
-
-  <div class='input-row'>
-    <%=f.input :sms_template, as: :text, input_html: {class: 'form-control', rows: 6, cols: 40}.merge(disabled) %>
-  </div>
-
-  <div class='input-row-close'>
-    <label></label>
-    <%=sms_template_params_for(:alert_sms_template) %>
-  </div>
-
   <% if project_with_role.has_admin_role? %>
     <div class='form-group form-action-group'>
       <label></label>

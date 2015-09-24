@@ -51,10 +51,6 @@ class Alert < ActiveRecord::Base
   validates :url, presence: true
   validates :url, url: true
 
-  validates :from_time, :to_time, presence: true
-  validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
-  validates :to_time, numericality: {message: "must be greater than From field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
-
   attr_accessor :total_match
 
   def reset_error
