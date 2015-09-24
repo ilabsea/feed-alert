@@ -11,13 +11,15 @@ class ChannelAccessesController < ApplicationController
     channel_accesses = ChannelAccess.where(project_id: project_ids)
     
     @projects.each_with_index do |project, i|
-      row = []
-      row << project.user
-      row << project
-      national_gateway_channels.each_with_index do |national_channel, j|
-        row << channel_accesses.select{ |channel_access| channel_access.project_id == project.id && channel_access.channel_id == national_channel.id}.first
+      if project.channels.size > 0
+        row = []
+        row << project.user
+        row << project
+        national_gateway_channels.each_with_index do |national_channel, j|
+          row << channel_accesses.select{ |channel_access| channel_access.project_id == project.id && channel_access.channel_id == national_channel.id}.first
+        end
+        @rows << row
       end
-      @rows << row
     end
 
   end
@@ -47,7 +49,7 @@ class ChannelAccessesController < ApplicationController
   end
 
   def valid_params? params
-    !params[:channel_id].nil? && (!params[:project_id].nil? || params[:project_id] != "")
+    (!params[:project_id].nil? || params[:project_id] != "")
   end
 
 end

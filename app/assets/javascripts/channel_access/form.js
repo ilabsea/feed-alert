@@ -55,7 +55,7 @@ function buildUserAutoComplete(){
   }).focus(function(){            
     $userInput.autocomplete("search");
   }).change(function(){
-    console.log(change);
+    $("#project_name").val('');
   });  
 }
 
