@@ -1,6 +1,6 @@
 <div class="input-group" style='min-width: 300px;'>
   <%= text_field_tag :permission_user, params[:q], class: "form-control typeahead", 
-                     placeholder: "User email", data: {url: list_users_path} %>
+                     placeholder: "Enter user's email to assign permission", data: {url: list_users_path} %>
   <%= hidden_field_tag :permission_user_id, '' %>
   <span class="input-group-btn">
     <button class="btn btn-primary btn-app" type="button" style="min-width: 60px;" id='add-permission'>
