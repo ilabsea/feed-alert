@@ -36,6 +36,19 @@ describe ProjectSuggestedChannel, :type => :model do
           expect(project_channels.by_phone_number "+85598999999").to eq smart
         end      
       end
+
+      context 'when all channels accessing are not actived' do
+        before{
+          smart_access = create(:channel_access, project_id: project.id, channel_id: smart.id)
+          camgsm_access = create(:channel_access, project_id: project.id, channel_id: camgsm.id)         
+          channel_access = create(:channel_access, project_id: project.id, channel_id: channel.id)    
+        }
+        it 'return nil' do
+          project_channels = ProjectSuggestedChannel.new(project)
+          expect(project_channels.by_phone_number "85511999999").to be_nil
+        end
+      end
+
     end
 
     context 'with no national channels accessing' do
