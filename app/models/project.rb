@@ -35,7 +35,7 @@ class Project < ActiveRecord::Base
 
   def accessible_channels
     channel_ids = self.channels.map(&:id) + self.user.my_channels.pluck(:id) + self.user.channel_permissions.pluck(:channel_id)
-    Channel.where(id: channel_ids)
+    Channel.where(id: channel_ids, is_enable: true)
   end
 
   def accessible_channel(channel_id)
@@ -73,5 +73,18 @@ class Project < ActiveRecord::Base
     end
     self.joins(:user).group('users.email', 'name')
   end
+
+  def enabled_channels
+    self.channels.where('channel_accesses.is_active = ?', true)
+  end
+
+  def is_time_appropiate? sms_time
+    working_minutes = sms_time.hour * 60 + sms_time.min
+    in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
+  end 
+
+  def in_minutes field
+    field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
+  end   
 
 end

@@ -92,7 +92,7 @@ class Alert < ActiveRecord::Base
       keywords: self.keywords.map(&:name).join(", ")
     }
 
-    StringSearch.instance.set_source(self.sms_template).translate(translate_options)
+    StringSearch.instance.set_source(self.project.sms_alert_template).translate(translate_options)
   end
 
   def self.search_options alerts, date_range
