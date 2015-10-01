@@ -19,7 +19,7 @@ function buildAlertGroupTypeahead(){
   var $alertGroupValue = $("#alert-group-value")
 
   // instantiate the typeahead UI
-  $typeAheadInput.typeahead({ hint: true, highlight: true, minLength: 1 }, {
+  $typeAheadInput.typeahead({ hint: false, highlight: true, minLength: 0}, {
     displayKey: 'name',
     source: sources.ttAdapter(),
     templates: {
@@ -31,6 +31,9 @@ function buildAlertGroupTypeahead(){
   }).
   on('typeahead:autocompleted', function(e, data){
     $alertGroupValue.val(data.id)
+  }).on( 'focus', function() {
+    if($(this).val() === '') // you can also check for minLength
+      $(this).data().ttTypeahead.input.trigger('queryChanged', '');
   });
 }
 

@@ -16,7 +16,7 @@ function buildGroupTypeahead(){
   sources.initialize();
 
   // instantiate the typeahead UI
-  $('#group-typeahead').typeahead({ hint: true, highlight: true, minLength: 1 }, {
+  $('#group-typeahead').typeahead({ hint: false, highlight: true, minLength: 0 }, {
     displayKey: 'name',
     source: sources.ttAdapter(),
     templates: {
@@ -28,6 +28,9 @@ function buildGroupTypeahead(){
   }).
   on('typeahead:autocompleted', function(e, data){
     $("#group-value").val(data.id)
+  }).on( 'focus', function() {
+    if($(this).val() === '') // you can also check for minLength
+      $(this).data().ttTypeahead.input.trigger('queryChanged', '');
   });
 }
 
