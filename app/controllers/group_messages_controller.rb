@@ -5,7 +5,13 @@ class GroupMessagesController < ApplicationController
   end
 
   def create
-    @group_message = GroupMessage.new
+    @group_message = GroupMessage.new(filter_params)
+    if @group_message.save
+      redirect_to group_messages_path, notice: 'Group message has been created'
+    else
+      flash.now[:alert] = "Failed to create group message"
+      render :new
+    end
   end
 
   private
