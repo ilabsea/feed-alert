@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :shared_groups, class_name: "Group", through: :group_permissions, source: :group
 
   has_many :channels
+  has_many :group_messages
 
   # password must be present within 6..72
   validates :password, presence: true, on: :create

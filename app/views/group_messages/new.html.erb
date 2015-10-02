@@ -1,0 +1,30 @@
+<% content_for(:title) { "Send SMS"} %>
+<% breadcrumb_buffer([{ "Send SMS": nil}]) %>
+
+<%= panel "Send SMS" do %>
+  <%=simple_form_for(@group_message, html: { class: 'form-inline form'}) do |f| %>
+
+    <div class="form-group horizontal-group">
+      <label class="required" style="vertical-align: top">Groups</label>
+      <div class="checkbox-list ">
+        <%= f.collection_check_boxes :receivers, current_user.groups, :id, :name, include_hidden: false do |group| %>
+          <%= group.label do  %>
+            <%= group.check_box({checked: false}) %>
+            <%= group.text %>
+          <% end -%>
+        <% end -%>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label required" style="vertical-align: top">Type a message here</label>
+      <%= f.text_area :message, as: :text, class: 'form-control', rows: 6, cols: 40 %>
+    </div>
+
+    <div class='form-group form-action-group'>
+      <label></label>
+      <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+    </div>
+
+  <% end %>  
+<% end %>  

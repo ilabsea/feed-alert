@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'confirm' => 'registrations#confirm'
   get 'welcome' => 'registrations#welcome'
 
+  resources :group_messages
+
   resources :channels do
     member do
       put 'state'
