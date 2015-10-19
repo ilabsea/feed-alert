@@ -18,6 +18,10 @@ label.required abbr{
   font-weight: bold;
 }
 
+label.required abbr[title]{
+  border: none;
+}
+
 form {
   // max-width: 800px;
   label {
