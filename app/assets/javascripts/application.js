@@ -32,12 +32,16 @@
 //= require group/member
 
 //= require member/group
+
 //= require permission/user
 
 //= require alert/form
 //= require alert/alert_group
 //= require alert/alert_keyword
+
 //= require channel/form
+
+//= require group_messages/form
 
 
 
