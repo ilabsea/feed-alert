@@ -33,4 +33,9 @@ class Group < ActiveRecord::Base
     like = "#{query}%"
     where([ "name LIKE ? OR description LIKE ? ", like, like ])
   end
+
+  def self.unique_members(groups)
+    Member.joins(:memberships).where([" memberships.group_id  in (?)", groups]).uniq
+  end
+
 end
