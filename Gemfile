@@ -37,7 +37,7 @@ gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'simple_form'
 gem 'twitter-typeahead-rails'
-
+gem 'rails4-autocomplete', '~> 1.1.1'
 gem 'feedjira'
 gem 'sinatra', :require => nil
 

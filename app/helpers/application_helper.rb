@@ -174,6 +174,10 @@ module ApplicationHelper
       {controller: '', text: '', url: root_path, class: 'after'}]
   end
 
+  def app_menu_admin
+    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
+  end
+
   # user_signed_in?
   def app_menu_signed_in name
     menu = [
@@ -188,6 +192,8 @@ module ApplicationHelper
            },
            { controller: :permissions, text: 'Permissions' ,url: permissions_path, class: '' }
     ]
+    
+    menu = menu + app_menu_admin if user_admin?
 
     index_first = 0
     index_last = menu.size - 1
@@ -265,6 +271,18 @@ module ApplicationHelper
       meta_tag
     end
 
+  end
+
+  def build_channel_list channels
+    list = ""
+    channels.each_with_index do |channel, i|
+      if i == channels.length - 1
+        list = list + channel.name
+      else
+        list = list + channel.name + ", "
+      end
+    end
+    list
   end
 
 end

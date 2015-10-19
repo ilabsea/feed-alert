@@ -21,6 +21,9 @@ class Channel < ActiveRecord::Base
 
   has_many :alerts, dependent: :nullify
 
+  has_many :channel_accesses
+  has_many :projects, through: :channel_accesses
+
   SETUP_FLOW_BASIC    = 'Basic'
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'
@@ -64,5 +67,9 @@ class Channel < ActiveRecord::Base
 
   def self.disable_other except_id
     where(['id != ? ', except_id ]).update_all({is_enable: false })
+  end
+
+  def self.national_gateway
+    where(:setup_flow => Channel::SETUP_FLOW_GLOBAL)
   end
 end

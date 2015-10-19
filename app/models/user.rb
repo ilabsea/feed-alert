@@ -134,6 +134,8 @@ class User < ActiveRecord::Base
   end
 
   def accessible_project(project_id)
+    return ObjectWithRole.new(Project.find(project_id)) if is_admin?
+    
     project = self.my_projects.where(id: project_id).first
     return ObjectWithRole.new(project) if project
 
@@ -162,7 +164,7 @@ class User < ActiveRecord::Base
 
   def high_level_group_permissions
     group_permission_sub = self.group_permissions.select('group_id, max(order_number) as max_order_number').group('group_id')
-    self.group_permissions.select("DISTINCT group_permissions.group_id, group_permissions.*").where("(group_id, order_number) in (#{group_permission_sub.to_sql}) ")
+    self.group_permissions.group(:group_id).select("group_permissions.*").where("(group_id, order_number) in (#{group_permission_sub.to_sql}) ")
   end
 
   def accessible_channels

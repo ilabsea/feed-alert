@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bin/jquery_ui
 
 //= require jquery.fieldSelection
 //= require tmpl
@@ -43,6 +44,8 @@
 
 //= require group_messages/form
 
+//= require channel_access/form
+//= require channel_access/user
 
 
 
