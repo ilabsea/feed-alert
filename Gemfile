@@ -45,7 +45,7 @@ gem 'sidekiq'
 gem "sidekiq-cron", "~> 0.3.0"
 
 gem 'roadie-rails'
-gem 'nuntium_api'
+gem 'nuntium_api', github: 'channainfo/nuntium-api-ruby', branch: 'encode_uri'
 
 gem 'whenever', :require => false
 
