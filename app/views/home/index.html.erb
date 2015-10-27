@@ -12,12 +12,9 @@
     <% if !user_signed_in? %>
       <p class="app-desc">
         <span style='margin-right: 15px;'> Get started </span>
-        <%= link_to "Sign In", sign_in_path(), class: 'btn btn-primary btn-app' %>
+        <%= link_to "Sign up for free", sign_up_path(), class: 'btn btn-primary btn-app' %>
       </p>
 
-      <p class="app-desc" style="margin-top: 45px;">
-        <%= render 'shared/account' %>
-      </p>
     <% else %>
       <p class="app-desc">
         <span style='margin-right: 15px;'> Access your projects  </span>

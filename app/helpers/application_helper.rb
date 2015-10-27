@@ -171,7 +171,7 @@ module ApplicationHelper
   def app_menu_default
     [ {controller: '', text: '', url: root_path, class: 'before'},
       {controller: :home, text: 'Home', url: root_path, class: 'active'},
-      {controller: '', text: '', url: root_path, class: 'after'}]
+      {controller: :sessions, text: 'Log in', url: sign_in_path, class: 'after'}]
   end
 
   # user_signed_in?
