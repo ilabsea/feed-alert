@@ -21,7 +21,7 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :alerts
-  has_many :channel_accesses
+  has_many :channel_accesses, dependent: :destroy
   has_many :channels, through: :channel_accesses
 
   def access_role=(role)
@@ -75,7 +75,7 @@ class Project < ActiveRecord::Base
   end
 
   def enabled_channels
-    self.channels.where('channel_accesses.is_active = ?', true)
+    self.channels.where('channel_accesses.is_active = ? && channels.is_enable = ?', true, true)
   end
 
   def is_time_appropiate? sms_time

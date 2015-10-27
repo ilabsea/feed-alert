@@ -45,6 +45,7 @@ RSpec.describe Project, type: :model do
       }      
       it 'return all active channels' do
         expect(project.enabled_channels).to include(smart,channel)      
+        expect(project.enabled_channels).not_to include(camgsm)      
       end
     end
 

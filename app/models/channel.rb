@@ -21,7 +21,7 @@ class Channel < ActiveRecord::Base
 
   has_many :alerts, dependent: :nullify
 
-  has_many :channel_accesses
+  has_many :channel_accesses, dependent: :destroy
   has_many :projects, through: :channel_accesses
 
   SETUP_FLOW_BASIC    = 'Basic'
@@ -72,4 +72,32 @@ class Channel < ActiveRecord::Base
   def self.national_gateway
     where(:setup_flow => Channel::SETUP_FLOW_GLOBAL)
   end
+
+  def self.suggested_by_phone(channels,phone)
+    phone_carrier = Tel.new(phone).carrier
+    if phone_carrier
+      channels.each do |channel|
+        return channel if channel["name"] == phone_carrier
+      end
+    end
+    return channels.first
+  end
+
+  # def self.active_channel(channels)
+  #   channels.each do |channel|
+  #     return channel if ChannelNuntium.new(channel).client_connected
+  #   end
+  #   return nil
+  # end
+
+  def self.active_channels(channels)
+    active_channels = []
+    channels.each do |channel|
+      if channel.is_enable && ChannelNuntium.new(channel).client_connected
+        active_channels.push channel
+      end
+    end
+    return active_channels    
+  end
+
 end

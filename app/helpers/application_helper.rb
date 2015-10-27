@@ -184,7 +184,7 @@ module ApplicationHelper
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: [:projects, :alerts], text: 'Projects', url: projects_path, class: '' },
            { controller: [:groups, :members], text: 'Recipient Groups', url: groups_path, class: '' },
-           { controller: [:channels], text: 'SMS', url: channels_path, class: 'dropdown', 
+           { controller: [:channels, :group_messages], text: 'SMS', url: channels_path, class: 'dropdown', 
             sub: [
               {text: 'SMS Setting', url: channels_path},
               {text: 'Send SMS', url: new_group_message_path}

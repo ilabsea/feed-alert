@@ -11,8 +11,8 @@ class GroupMessagesController < ApplicationController
   def create
     @group_message = GroupMessage.new(filter_params)
     @group_message.user_id = current_user.id
-    if @group_message.save
-      redirect_to group_messages_path, notice: 'Group message has been created'
+    if @group_message.send_ao
+      redirect_to new_group_message_path, notice: 'Group message has been send'
     else
       flash.now[:alert] = "Failed to create group message"
       render :new

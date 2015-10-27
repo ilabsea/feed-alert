@@ -100,4 +100,87 @@ RSpec.describe User, :type => :model do
       expect(user.email).to eq 'channa.info@gmail.com'
     end
   end
+
+  describe User, '.project_with_admin_permission' do
+    let(:user) { create(:user, role: nil) }
+    before{
+      @health = create(:project, user_id: user.id)
+      @education = create(:project, user_id: user.id)
+    }    
+    context 'with the projects' do      
+      it "return the projects" do 
+        expect(user.project_with_admin_permission).to include @health, @education
+        expect(user.project_with_admin_permission).to eq [@health, @education]
+      end
+    end
+
+    context 'with the shared projects' do
+      before{
+        @environment = create(:project)
+        @agriculture = create(:project)
+
+        create(:project_permission, user_id: user.id, project_id: @environment.id, role: User::PERMISSION_ROLE_ADMIN)
+        create(:project_permission, user_id: user.id, project_id: @agriculture.id, role: User::PERMISSION_ROLE_NORMAL)
+      }
+      it "return the projects and the shared_project with admin role" do
+        expect(user.project_with_admin_permission).to include @health, @education, @environment
+        expect(user.project_with_admin_permission).to eq [@health, @education, @environment]
+      end
+
+      it "does not return the shared_project with non_admin role" do
+        expect(user.project_with_admin_permission).not_to include @agriculture
+      end
+    end
+  end
+
+  describe User, '.accessible_channels' do
+    let(:user) { create(:user, role: nil) }
+    before{
+      @channel1 = create(:channel, user_id: user.id)
+      @channel2 = create(:channel, user_id: user.id)
+    }
+    context 'with the channels' do
+      it "return the channels" do
+        expect(user.accessible_channels).to include @channel1, @channel2
+        expect(user.accessible_channels).to eq [@channel1, @channel2] 
+      end
+    end
+
+    context 'with the shared channels' do
+      before{
+        @channel3 = create(:channel)
+        create(:channel_permission, user_id: user.id, channel_id: @channel3.id)
+      }
+      it "return the channels and the shared_channels" do
+        expect(user.accessible_channels).to include @channel1, @channel2, @channel3
+        expect(user.accessible_channels).to eq [@channel1, @channel2, @channel3]
+      end
+    end
+
+    context 'with the channel access of the project' do
+      before{
+        @project = create(:project, user_id: user.id)
+        @channel4 = create(:national_channel)
+        create(:channel_access, project_id: @project.id, channel_id: @channel4.id)
+      }
+      context 'with the projects' do
+        it "return the user channels and the project's channels" do
+          expect(user.accessible_channels).to include @channel1, @channel2, @channel4
+        end
+      end
+      context 'with the shared project' do
+        before{
+          @shared_project = create(:project)
+          @channel5 = create(:basic_channel)
+          create(:channel_access, project_id: @shared_project.id, channel_id: @channel5.id)
+          create(:project_permission, user_id: user.id, project_id: @shared_project.id, role: User::PERMISSION_ROLE_ADMIN)
+        }
+        it "return the user, the project, and the shared project's channels " do
+          expect(user.accessible_channels).to include @channel1, @channel2, @channel4, @channel5
+        end        
+      end
+    end
+
+  end
+
 end
