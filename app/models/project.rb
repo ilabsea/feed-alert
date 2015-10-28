@@ -21,6 +21,8 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :alerts
+  has_many :channel_accesses, dependent: :destroy
+  has_many :channels, through: :channel_accesses
 
   def access_role=(role)
     @access_role = role
@@ -30,4 +32,59 @@ class Project < ActiveRecord::Base
   def admin_access_role?
     @access_role != User::PERMISSION_ROLE_NORMAL
   end
+
+  def accessible_channels
+    channel_ids = self.channels.map(&:id) + self.user.my_channels.pluck(:id) + self.user.channel_permissions.pluck(:channel_id)
+    Channel.where(id: channel_ids, is_enable: true)
+  end
+
+  def accessible_channel(channel_id)
+    channels = self.accessible_channels
+    channel = channels.where(id: channel_id)
+    return ObjectWithRole.new(channel) if channel
+
+    permission = self.user.channel_permissions.find_by(channel_id: channel_id)
+    return ObjectWithRole.new(permission.channel, permission.role) if permission
+    raise ActiveRecord::RecordNotFound
+
+  end
+ 
+  def is_active_channel? channel
+    channel_access = self.channel_accesses.select { |c| c.channel_id ==  channel.id}.first
+    channel_access ? channel_access.is_active : false
+  end
+
+  def self.from_query(query)
+    like = "#{query}%"
+    where([ "name LIKE ?", like ]) 
+  end
+
+  def self.query_by_user(user_id)
+    if user_id == ''
+      all
+    else
+      where(user_id: user_id)
+    end
+  end
+
+  def self.query_by_user_email(email)
+    if email && email != ""
+      return self.joins(:user).where('users.email' => email).group('users.email', 'name')
+    end
+    self.joins(:user).group('users.email', 'name')
+  end
+
+  def enabled_channels
+    self.channels.where('channel_accesses.is_active = ? && channels.is_enable = ?', true, true)
+  end
+
+  def is_time_appropiate? sms_time
+    working_minutes = sms_time.hour * 60 + sms_time.min
+    in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
+  end 
+
+  def in_minutes field
+    field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
+  end   
+
 end

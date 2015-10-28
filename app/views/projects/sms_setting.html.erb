@@ -1,0 +1,67 @@
+<% content_for(:title) { "SMS Settings"} %>
+<% breadcrumb_buffer([{ "Projects": projects_path},
+                      { "#{@project_with_role.object.name}": edit_project_path(@project_with_role.object)},
+                      { "SMS Settings": nil}]) %>
+
+<%= render 'shared/project_alert', 
+           project_tab: 3,
+           url_tab1: edit_project_path(@project_with_role.object),
+           url_tab2: project_alerts_path(@project_with_role.object),
+           url_tab3: sms_setting_project_path(@project_with_role.object)
+            %>
+<%= panel "SMS Settings" do %>
+  <%=form_for(@project_with_role.object, url: update_sms_setting_project_path, method: 'POST', html: { class: 'form-inline form'}) do |f| %>
+    <% input_attrs = @project_with_role.has_admin_role? ? {} : {disabled: 'disabled'} %>
+
+    <div class="form-group horizontal-group">
+      <label class="required"><abbr>*</abbr> SMS Channels</label>
+      <div class="checkbox-list">
+        <%= f.collection_check_boxes :channel_ids, @project_with_role.object.accessible_channels, :id, :name, include_hidden: false do |channel| %>
+          <div>
+          <%= channel.label do  %>
+            <% if @project_with_role.object.is_active_channel? channel.object %>
+              <%= channel.check_box({checked: true}) %>
+            <% else %>
+              <%= channel.check_box({checked: false}) %>
+            <% end -%>
+            
+            <%= channel.text %>
+          <% end -%>
+          </div>
+        <% end -%>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label required"><abbr>*</abbr> SMS alert time</label>
+      <div class="input-group">
+        <span class="input-group-addon">From</span>
+        <%= f.text_field :sms_alert_started_at, class: "form-control hour-picker", autocomplete: :off, placeholder: "00:00"%>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon">To</span>
+        <%= f.text_field :sms_alert_ended_at, class: "form-control hour-picker", autocomplete: :off,
+                       placeholder: "00:00"%>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label required"><abbr>*</abbr> SMS template</label>
+      <%= f.text_area :sms_alert_template, as: :text, class: 'form-control', rows: 6, cols: 40 %>
+    </div>
+
+    <div class='form-group'>
+      <label></label>
+      <%= sms_template_params_for(:project_sms_alert_template) %>
+    </div>
+
+
+    <% if @project_with_role.has_admin_role? %>
+      <div class='form-group form-action-group'>
+        <label></label>
+        <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+      </div>
+    <% end %>
+  <% end %>  
+<% end -%>         

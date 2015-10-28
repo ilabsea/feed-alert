@@ -5,6 +5,7 @@ class AlertResult
   end
 
   def run
+
     search_result = FeedEntry.search(Alert.search_options(@alerts, @date_range))
     delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
 
@@ -15,7 +16,7 @@ class AlertResult
 
         group.members.each do |member|
           emails_to << member.email if member.email_alert
-          smses_to  << member.phone if member.sms_alert && alert.channel && alert.channel.is_enable
+          smses_to  << member.phone if member.sms_alert && alert.project.enabled_channels
         end
 
         if emails_to.length > 0 && alert.total_match > 0
@@ -31,12 +32,14 @@ class AlertResult
         sms_time = Time.zone.now
 
         # alert.channel is duplicated but it offers clear
-        if smses_to.length > 0 && alert.total_match > 0 && alert.is_time_appropiate?(sms_time)
+        if smses_to.length > 0 && alert.total_match > 0 && alert.project.is_time_appropiate?(sms_time)
+          channel_suggested = ChannelSuggested.new(alert.project.enabled_channels)
           smses_to.each do |sms|
+            suggested_channel = channel_suggested.by_phone(sms)
             options = { from: ENV['APP_NAME'],
                         to: "sms://#{sms}",
                         body: alert.translate_message,
-                        suggested_channel: alert.channel.name
+                        suggested_channel: suggested_channel.name
                       }
 
             SmsAlertJob.set(wait: delay_time.minute).perform_later(options)

@@ -36,19 +36,19 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  # config.action_mailer.smtp_settings = {
-  #   :address   => "smtp.mandrillapp.com",
-  #   :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
+  config.action_mailer.smtp_settings = {
+    :address   => "localhost",
+    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
   #   :enable_starttls_auto => true, # detects and uses STARTTLS
   #   :user_name => ENV['MANDRILL_USERNAME'],
   #   :password  => ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
   #   :authentication => 'login', # Mandrill supports 'plain' or 'login'
-  #   :domain => ENV['HOST'], # your domain to identify your server when connecting
-  # }
+    :domain => ENV['HOST'], # your domain to identify your server when connecting
+  }
 
   # preview email /rails/mailers/your_mailer/action
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  # config.action_view.raise_on_missing_translations = true  
 end

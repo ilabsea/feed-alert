@@ -3,7 +3,20 @@
     <div id="nav-menu">
       <ul class='main-menu'>
         <% app_menu.each do |item| %>
-          <li class='<%=item[:class]%>'><%= link_to item[:text], item[:url] %></li>
+          <% if item[:sub] %>
+            <li class='<%=item[:class]%> dropdown'>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <%= item[:text] %> <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <% item[:sub].each do |sub| %>
+                  <li><%= link_to sub[:text], sub[:url] %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% else %>
+            <li class="<%=item[:class]%>"><%= link_to item[:text], item[:url] %></li>
+          <% end %>
         <% end %>
       </ul>
 

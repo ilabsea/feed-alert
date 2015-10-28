@@ -7,6 +7,7 @@
 <%= render 'shared/project_alert',
             url_tab1: edit_project_path(@project_with_role.object),
             url_tab2: project_alerts_path(@project_with_role.object),
+            url_tab3: sms_setting_project_path(@project_with_role.object),
             project_tab: 2 %>
 
 
@@ -49,7 +50,7 @@
             <% if alert.channel %>
             <p class="sub-text">
               <span>Sms alert </span> <%= alert_time(alert) %>
-                using channel <b> <%= alert.channel.name %></b>
+                using channel <b><%= build_channel_list alert.project.channels %></b>
             </p>
             <% end %>
             <% if alert.error_message %>

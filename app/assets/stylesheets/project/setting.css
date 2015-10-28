@@ -1,0 +1,12 @@
+.horizontal-group > label{
+  vertical-align: top;
+}
+
+.checkbox-list{
+	display: inline-block;
+}
+
+
+.checkbox-list > span{
+  display: block;
+} 

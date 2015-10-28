@@ -55,9 +55,45 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def sms_setting
+    @project_with_role = current_user.accessible_project(params[:id])
+  end
+
+  def update_sms_setting
+    @project_with_role = current_user.accessible_project(params[:id])
+    if valid_params?
+      @project_with_role.object.update_attributes(filter_params.except("channel_ids"))
+      channel_ids = filter_params[:channel_ids]
+      channel_accesses = @project_with_role.object.channel_accesses
+      #reset channel_accesses
+      channel_accesses.update_all(is_active: false)
+      channel_ids.each do |c_id|
+        channel_access = channel_accesses.select { |c| c.channel_id == c_id.to_i }.first
+        if channel_access
+          channel_access.update_attributes(is_active: true)
+        else
+          ChannelAccess.create(project_id: @project_with_role.object.id, channel_id: c_id, is_active: true)
+        end
+      end
+      redirect_to projects_path, notice: 'Project updated'
+    else
+      redirect_to sms_setting_project_path, :flash => { :alert => "Please enter all required fields." }
+    end
+  end
+
+  def list
+    @projects = Project.query_by_user(params[:user_id])
+    @projects = @projects.from_query(params[:project_name])
+    render json: @projects
+  end
+
   private
 
   def filter_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :sms_alert_started_at, :sms_alert_ended_at, :sms_alert_template, channel_ids: [])
+  end
+
+  def valid_params?
+    filter_params[:channel_ids].present? && filter_params[:sms_alert_started_at].present? && filter_params[:sms_alert_ended_at].present? && filter_params[:sms_alert_template].present?
   end
 end
