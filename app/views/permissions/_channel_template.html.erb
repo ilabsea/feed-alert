@@ -17,30 +17,12 @@
           </div>
           
           <div class="role-type">
-            <input type='radio'
-                   class='permission-role'
-                   name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
-                   data-channel-id='{%=o.channels[i].id%}'
-                   data-user-id='{%=o.user.id%}'
-                   data-role='<%=User::PERMISSION_ROLE_NONE%>'
-                   data-url='<%=channel_permissions_url()%>'
 
-                   {%= permissionRoleMatchChannelPermission(o.user, o.channels[i].id, '<%=User::PERMISSION_ROLE_NONE%>') %}
-                   />
 
           </div>
 
           <div class="role-type">
-            <input type='radio'
-                   class='permission-role'
-                   name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
-                   data-channel-id='{%=o.channels[i].id%}'
-                   data-user-id='{%=o.user.id%}'
-                   data-role='<%=User::PERMISSION_ROLE_NORMAL%>'
-                   data-url='<%=channel_permissions_url()%>'
 
-                   {%= permissionRoleMatchChannelPermission(o.user, o.channels[i].id, '<%=User::PERMISSION_ROLE_NORMAL%>') %}
-                   />
           </div>
 
           <div class="role-type">
