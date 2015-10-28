@@ -1,8 +1,39 @@
 $(function(){
   collasableSetupFlowForm()
   switchChannelStatus()
-
+  channelWizardView('new-channel-wizard')
+  // updateLocalGatewaySelectionPath()
 })
+
+function createChannel(){
+  form = $('#form-create-channel');
+  $.ajax({
+    type: "POST",
+    url: '/channels',
+    data: form.serialize(),
+    success: function(data) {
+      channelWizardView('end-wizard');      
+    },
+    error: function(data){
+      $('.error-field').text(data["responseText"]);
+    }
+  });  
+}
+
+function channelWizardView(view){
+  $('.channel-wizard').hide();
+  $("#"+view).show();
+}
+
+function updateLocalGatewaySelectionPath(){
+  if ($('input[name=localGateway]:radio:checked').val() == 'android') {
+    gateway = 'download_android_local_gateway';
+  } else {
+    gateway = 'download_desktop_local_gateway';
+  }
+  gateway = 'download_android_local_gateway';
+  $('#next').attr('href', ($('#next').attr('href').replace("download_local_gateway", gateway)));
+};
 
 function collasableSetupFlowForm(){
   $(".setup-flow").on('click', function(){

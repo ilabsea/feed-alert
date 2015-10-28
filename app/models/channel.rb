@@ -25,8 +25,8 @@ class Channel < ActiveRecord::Base
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'
 
-  validates :name, presence: true
-  validates :name, length: { minimum: 3, maximum: 30}
+  # validates :name, presence: true
+  # validates :name, length: { minimum: 3, maximum: 30}
   validates :name, uniqueness: { scope: :user_id}
   validates :password, presence: true, length: {minimum: 4, maximum: 6}, if: ->(u) { u.advanced_setup? }
 
