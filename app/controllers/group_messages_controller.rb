@@ -14,7 +14,7 @@ class GroupMessagesController < ApplicationController
     if @group_message.send_ao
       redirect_to new_group_message_path, notice: 'Group message has been send'
     else
-      flash.now[:alert] = "Failed to create group message"
+      flash.now[:alert] = "Failed to send group message"
       render :new
     end
   end

@@ -181,9 +181,9 @@ class User < ActiveRecord::Base
 
   def accessible_channels
     admin_project_ids = self.project_with_admin_permission.pluck(:id)
-    project_channels = ChannelAccess.where(project_id: admin_project_ids)
+    project_channels = ChannelAccess.where(project_id: admin_project_ids, is_active: true)
     channel_ids = self.my_channels.pluck(:id) + self.channel_permissions.pluck(:channel_id) + project_channels.pluck(:channel_id)
-    Channel.where(id: channel_ids)
+    Channel.where(id: channel_ids, is_enable: true)
   end
 
 
