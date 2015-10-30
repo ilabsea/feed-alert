@@ -33,16 +33,20 @@ class AlertResult
 
         # alert.channel is duplicated but it offers clear
         if smses_to.length > 0 && alert.total_match > 0 && alert.project.is_time_appropiate?(sms_time)
-          channel_suggested = ChannelSuggested.new(alert.project.enabled_channels)
+          # channel_suggested = ChannelSuggested.new(alert.project.enabled_channels)
+          active_channels = ChannelNuntium.active_channels(alert.project.enabled_channels)
+          channel_suggested = ChannelSuggested.new(active_channels)
           smses_to.each do |sms|
             suggested_channel = channel_suggested.by_phone(sms)
-            options = { from: ENV['APP_NAME'],
-                        to: "sms://#{sms}",
-                        body: alert.translate_message,
-                        suggested_channel: suggested_channel.name
-                      }
+            if suggested_channel
+              options = { from: ENV['APP_NAME'],
+                          to: "sms://#{sms}",
+                          body: alert.translate_message,
+                          suggested_channel: suggested_channel.name
+                        }
 
-            SmsAlertJob.set(wait: delay_time.minute).perform_later(options)
+              SmsAlertJob.set(wait: delay_time.minute).perform_later(options)
+            end
           end
         end
       end

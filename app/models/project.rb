@@ -74,6 +74,18 @@ class Project < ActiveRecord::Base
     self.joins(:user).group('users.email', 'name')
   end
 
+  def remove_national_gateway_channel_access
+    national_gateway_ids = Channel.national_gateway.pluck(:id)
+    self.channel_accesses.where(channel_id: national_gateway_ids).destroy_all
+  end
+
+  def reset_national_gateway_channel_access channel_ids
+    national_gateway_ids = Channel.national_gateway.pluck(:id)
+    channel_accesses = self.channel_accesses.where(channel_id: national_gateway_ids)   
+    channel_accesses.where.not(channel_id: channel_ids)
+    # .destroy_all    
+  end
+
   def enabled_channels
     self.channels.where('channel_accesses.is_active = ? && channels.is_enable = ?', true, true)
   end

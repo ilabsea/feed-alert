@@ -136,8 +136,8 @@ RSpec.describe User, :type => :model do
   describe User, '.accessible_channels' do
     let(:user) { create(:user, role: nil) }
     before{
-      @channel1 = create(:channel, user_id: user.id)
-      @channel2 = create(:channel, user_id: user.id)
+      @channel1 = create(:channel, user_id: user.id, is_enable: true)
+      @channel2 = create(:channel, user_id: user.id, is_enable: true)
     }
     context 'with the channels' do
       it "return the channels" do
@@ -148,7 +148,7 @@ RSpec.describe User, :type => :model do
 
     context 'with the shared channels' do
       before{
-        @channel3 = create(:channel)
+        @channel3 = create(:channel, is_enable: true)
         create(:channel_permission, user_id: user.id, channel_id: @channel3.id)
       }
       it "return the channels and the shared_channels" do
@@ -160,8 +160,8 @@ RSpec.describe User, :type => :model do
     context 'with the channel access of the project' do
       before{
         @project = create(:project, user_id: user.id)
-        @channel4 = create(:national_channel)
-        create(:channel_access, project_id: @project.id, channel_id: @channel4.id)
+        @channel4 = create(:national_channel, is_enable: true)
+        create(:channel_access, project_id: @project.id, channel_id: @channel4.id, is_active: true)
       }
       context 'with the projects' do
         it "return the user channels and the project's channels" do
@@ -171,8 +171,8 @@ RSpec.describe User, :type => :model do
       context 'with the shared project' do
         before{
           @shared_project = create(:project)
-          @channel5 = create(:basic_channel)
-          create(:channel_access, project_id: @shared_project.id, channel_id: @channel5.id)
+          @channel5 = create(:basic_channel, is_enable: true)
+          create(:channel_access, project_id: @shared_project.id, channel_id: @channel5.id, is_active: true)
           create(:project_permission, user_id: user.id, project_id: @shared_project.id, role: User::PERMISSION_ROLE_ADMIN)
         }
         it "return the user, the project, and the shared project's channels " do

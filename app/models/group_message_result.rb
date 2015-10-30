@@ -22,12 +22,15 @@ class GroupMessageResult
       if smses_to.length > 0
         smses_to.each do |sms|
           suggested_channel = channel_suggested.by_phone sms
-          options = { from: ENV['APP_NAME'],
-                      to: "sms://#{sms}",
-                      body: @group_message.message,
-                      suggested_channel: suggested_channel.name
-                    }
-          messages = messages.push options
+          if suggested_channel
+            options = { from: ENV['APP_NAME'],
+                        to: "sms://#{sms}",
+                        body: @group_message.message,
+                        suggested_channel: suggested_channel.name
+                      }
+            messages = messages.push options
+          end
+
         end
       end
     end

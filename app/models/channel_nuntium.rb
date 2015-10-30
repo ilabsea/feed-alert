@@ -135,4 +135,14 @@ class ChannelNuntium
     nuntium_info['connected'] rescue nil
   end
 
+  def self.active_channels(channels)
+    active_channels = []
+    channels.each do |channel|
+      if channel.is_enable && ChannelNuntium.new(channel).client_connected
+        active_channels.push channel
+      end
+    end
+    return active_channels    
+  end
+
 end

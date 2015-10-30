@@ -22,7 +22,11 @@ Rails.application.routes.draw do
 
   resources :group_messages
 
-  resources :channel_accesses
+  resources :channel_accesses do
+    collection do
+      post 'national_gateway'
+    end
+  end
 
   resources :channels do
     member do
