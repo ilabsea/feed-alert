@@ -1,4 +1,4 @@
-<%=simple_form_for(@channel_access, html: { class: 'form-inline form'}) do |f| %>
+<%=simple_form_for(@channel_access, url: national_gateway_channel_accesses_path(@channel_access), html: { class: 'form-inline form'}) do |f| %>
 
   <div class="form-group">
     <label class="control-label" style="margin-right: 0.2em;">User</label>
@@ -14,7 +14,7 @@
   
 
   <div class="form-group horizontal-group">
-    <label> ProjectSMS Channels</label>
+    <label> National gateway</label>
     <div class="checkbox-list">
       <%= f.collection_check_boxes :channel_id, national_gateway_channels, :id, :name, include_hidden: false do |channel| %>
         <div>

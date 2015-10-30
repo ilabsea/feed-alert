@@ -16,17 +16,12 @@
             <span> {%= o.channels[i].name %} </span>
           </div>
           
-          <div class="role-type">
+          <div class="role-type"></div>
 
-
-          </div>
-
-          <div class="role-type">
-
-          </div>
+          <div class="role-type"></div>
 
           <div class="role-type">
-            <input type='radio'
+            <input type='checkbox'
                    class='permission-role'
                    name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
                    data-channel-id='{%=o.channels[i].id%}'

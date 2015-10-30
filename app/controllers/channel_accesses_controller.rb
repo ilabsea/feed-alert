@@ -37,15 +37,9 @@ class ChannelAccessesController < ApplicationController
 
   def national_gateway
     if valid_params? filter_params
-      channel_ids = filter_params[:channel_id]
+      channel_ids = filter_params[:channel_id] 
       @project = Project.find(filter_params[:project_id])
-      
-      channel_ids.each do |channel_id|
-        @project.reset_national_gateway_channel_access
-
-        # channel_access = @project.channel_accesses.build(channel_id: channel_id)
-        # channel_access.save
-      end
+      @project.build_national_gateway_channel_access channel_ids
     else
       redirect_to new_channel_access_path, :flash => { :alert => "Please enter the require fields" }
       return

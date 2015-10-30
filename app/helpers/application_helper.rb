@@ -190,7 +190,7 @@ module ApplicationHelper
               {text: 'Send SMS', url: new_group_message_path}
             ]
            },
-           { controller: :permissions, text: 'Permissions' ,url: permissions_path, class: '' }
+           { controller: :permissions, text: 'User Permission' ,url: permissions_path, class: '' }
     ]
     
     menu = menu + app_menu_admin if user_admin?

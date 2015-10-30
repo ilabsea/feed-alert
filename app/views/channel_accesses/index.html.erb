@@ -32,7 +32,7 @@
       <tr>
         <td><%= row[0].email %></td>
         <td><%= row[1].name %></td>
-        <%= form_for @channel_access do |f| %>
+        <%= form_for @channel_access, url: national_gateway_channel_accesses_path(@channel_access) do |f| %>
           <%= f.hidden_field :project_id, value: row[1].id %>          
           <% (row.size - 2).times.each do |i| %>
             <td>
