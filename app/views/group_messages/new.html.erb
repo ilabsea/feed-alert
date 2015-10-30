@@ -5,7 +5,7 @@
   <%=simple_form_for(@group_message, html: { class: 'form-inline form'}) do |f| %>
 
     <div class="form-group horizontal-group">
-      <label class="required" style="vertical-align: top"><abbr>*</abbr>Groups</label>
+      <label class="required" style="vertical-align: top"><abbr>*</abbr> To Groups </label>
       <div class="checkbox-list ">
         <%= f.collection_check_boxes :receiver_groups, current_user.groups, :id, :name, include_hidden: false do |group| %>
           <%= group.label do  %>
@@ -31,7 +31,7 @@
 
     <div class='form-group form-action-group'>
       <label></label>
-      <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+      <%=f.submit 'Send', label: false, class: 'btn btn-primary btn-app' %>
     </div>
 
   <% end %>  
