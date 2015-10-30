@@ -1,7 +1,7 @@
 $(function(){
   collasableSetupFlowForm()
   switchChannelStatus()
-  channelWizardView('new-channel-wizard')
+  channelWizardView('download-android-local-gateway-wizard')
 })
 
 function createChannel(){

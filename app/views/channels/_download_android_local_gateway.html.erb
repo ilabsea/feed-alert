@@ -1,14 +1,8 @@
 <div id="download-android-local-gateway-wizard" class="channel-wizard">
   <div class="box plain grey wizardSteps">
     <div class="steps-line">
-      <div class="steps-container s4">
+      <div class="steps-container s3">
         <span class="circle first green">
-          <span class="inner">
-            <span class="step-name">Choose</span>
-          </span>
-        </span>
-        <span class="line-fill green"></span>
-        <span class="circle green">
           <span class="inner">
             <span class="step-name">Install</span>
           </span>
@@ -35,7 +29,12 @@
   <!-- #box plain grey
   -->
   <div class="ChannelWizard">
-    <h1 class="orange">Go to Android Market and install Nuntium Local Gateway</h1>
+
+    <div class="left AndroidLogo"></div>
+    <h1 class="orange">Android Local Gateway</h1>
+    <p class="w30 grey">If you have an Android powered mobile phone, just download the application, enter your text messages, and set your delivery schedule, Feed Alert handles the rest.</p>
+
+    <p style="color:#ff6600; font-size: 16px">Go to Google Play and install Nuntium Local Gateway</p>
     <p class="w30 grey">
       Use the following QR code to access the app or use the search engine with the keyword
       <span class="box plain grey">Nuntium</span>
@@ -43,13 +42,13 @@
     <br/>
     <div class="AndroidQR"></div>
     <br/>
-    <a href="http://market.android.com/details?id=org.instedd.geochat.lgw" target="_blank">http://market.android.com/details?id=org.instedd.geochat.lgw</a>
+    <a href="https://play.google.com/store/apps/details?id=org.instedd.geochat.lgw" target="_blank">https://play.google.com/store/apps/details?id=org.instedd.geochat.lgw</a>
     <br/>
     <br/>
   </div>
   <hr/>
   <div class="ChannelWizardNavigation">
-    <%= link_to ('Back'), new_channel_path, :remote => true, :onclick => "channelWizardView('new-channel-wizard');", :class => 'btn btn-default' %>
+    <%= link_to ('Back'), channels_path, :class => 'btn btn-default' %>
     <%= link_to ('Next'), new_channel_path, remote: true,:class => 'btn btn-primary', :onclick => "channelWizardView('new-android-channel-wizard');", :id => "next" %>
   </div>
   

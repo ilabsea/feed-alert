@@ -1,14 +1,8 @@
 <div id="new-android-channel-wizard" class="channel-wizard">
   <div class="box plain grey wizardSteps">
     <div class="steps-line">
-      <div class="steps-container s4">
+      <div class="steps-container s3">
         <span class="circle first green">
-          <span class="inner">
-            <span class="step-name">Choose</span>
-          </span>
-        </span>
-        <span class="line-fill green"></span>
-        <span class="circle green">
           <span class="inner">
             <span class="step-name">Install</span>
           </span>
@@ -37,7 +31,7 @@
       <br/>
       <br/>
       <div class="left AndroidChannelCreation col-sm-6">
-        <p class="w30">Copy the code for automated setup from the Nuntium Local Gateway in here to bind your local gateway to your reminders.</p>
+        <p class="w30">Copy the code for automated setup from the Nuntium Local Gateway in here to bind your local gateway to your Feed Alert.</p>
         <%= f.text_field :ticket_code, :placeholder => ('Enter gateway code'), class: 'form-control', :size => 19 %>
         <br/>
         <%= error_for(@channel, :ticket_code) %>
