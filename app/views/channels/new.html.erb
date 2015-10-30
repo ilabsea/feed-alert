@@ -1,8 +1,6 @@
 <% content_for(:title) { "New SMS Channel"} %>
 <% breadcrumb_buffer([{ "Channels": channels_path}, {"New SMS Channel": nil}]) %>
-<%#= render 'form' %>
 
-<%= render 'new_channel' %>
 <%= render 'download_android_local_gateway' %>
 <%= render 'new_android_channel' %>
 <%= render 'end_wizard' %>
