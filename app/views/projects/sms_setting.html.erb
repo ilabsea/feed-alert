@@ -7,7 +7,8 @@
            project_tab: 3,
            url_tab1: edit_project_path(@project_with_role.object),
            url_tab2: project_alerts_path(@project_with_role.object),
-           url_tab3: sms_setting_project_path(@project_with_role.object)
+           url_tab3: sms_setting_project_path(@project_with_role.object),
+           is_enable_alert_and_sms_tab: ''
             %>
 <%= panel "SMS Settings" do %>
   <%=form_for(@project_with_role.object, url: update_sms_setting_project_path, method: 'POST', html: { class: 'form-inline form'}) do |f| %>

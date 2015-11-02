@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   def create
     @project_with_role = ObjectWithRole.new(current_user.my_projects.build(filter_params))
     if @project_with_role.save
-      redirect_to projects_path, notice: 'Project has been created'
+      redirect_to edit_project_path(@project_with_role.object), notice: 'Project has been created'
     else
       flash.now[:alert] = "Failed to create project"
       render :new

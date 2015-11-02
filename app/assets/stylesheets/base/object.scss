@@ -245,3 +245,13 @@ em.highlight {
 .checkbox-list span{
   display: block;
 }
+
+
+.nav-tabs .disabled{
+  background-color: #F5F5F5;
+  opacity: 0.5;
+}
+
+.nav-tabs .disabled a{
+  pointer-events: none;
+}

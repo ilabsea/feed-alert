@@ -8,7 +8,8 @@
             url_tab1: edit_project_path(@project_with_role.object),
             url_tab2: project_alerts_path(@project_with_role.object),
             url_tab3: sms_setting_project_path(@project_with_role.object),
-            project_tab: 2 %>
+            project_tab: 2,
+            is_enable_alert_and_sms_tab: '' %>
 
 <div class='form-wrapper'>
   <%= panel "Edit Alert" do %>

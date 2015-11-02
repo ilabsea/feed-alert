@@ -4,11 +4,11 @@
     <%= link_to "Overview", url_tab1 %>
   </li>
 
-  <li role="presentation" class="<%= active_tab_for_index(2, project_tab) %>">
+  <li role="presentation" class="<%= active_tab_for_index(2, project_tab)%> <%= is_enable_alert_and_sms_tab %>">
     <%= link_to "Alerts", url_tab2 %>
   </li>
 
-  <li role="presentation" class="<%= active_tab_for_index(3, project_tab) %>">
+  <li role="presentation" class="<%= active_tab_for_index(3, project_tab) %> <%= is_enable_alert_and_sms_tab %>">
     <%= link_to "SMS Setting", url_tab3 %>
   </li>
 
