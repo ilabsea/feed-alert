@@ -33,17 +33,22 @@
       </div>
     </div>
 
-    <div class='form-group'>
+
+<!-- <p id="timeOnlyExample">
+    <input type="text" class="time start" /> to
+    <input type="text" class="time end" />
+</p> -->
+
+    <div class='form-group' id="sms-alert-time">
       <label class="control-label required"><abbr>*</abbr> SMS alert time</label>
       <div class="input-group">
         <span class="input-group-addon">From</span>
-        <%= f.text_field :sms_alert_started_at, class: "form-control hour-picker", autocomplete: :off, placeholder: "00:00"%>
+        <%= f.text_field :sms_alert_started_at, class: "form-control time start", autocomplete: :off %>
       </div>
-
+      
       <div class="input-group">
         <span class="input-group-addon">To</span>
-        <%= f.text_field :sms_alert_ended_at, class: "form-control hour-picker", autocomplete: :off,
-                       placeholder: "00:00"%>
+        <%= f.text_field :sms_alert_ended_at, class: "form-control time end", autocomplete: :off %>
       </div>
     </div>
 

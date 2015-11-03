@@ -13,11 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require bin/jquery_ui
+//= require bin/jquery.datepair
+//= require bin/datepair
 
 //= require jquery.fieldSelection
 //= require tmpl
 
-//= require bootstrap-timepicker
 //= require bootstrap-sprockets
 //= require bootstrap-switch
 //= require twitter/typeahead
@@ -29,6 +30,7 @@
 //= require shared/hour-picker
 //= require shared/content-url-modal
 //= require shared/switch
+//= require shared/jquery.timepicker
 
 //= require group/member
 
@@ -46,6 +48,8 @@
 
 //= require channel_access/form
 //= require channel_access/user
+
+//= require project/sms_setting
 
 
 
