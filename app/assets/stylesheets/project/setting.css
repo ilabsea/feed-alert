@@ -10,3 +10,7 @@
 .checkbox-list > span{
   display: block;
 } 
+
+.ui-timepicker-wrapper{
+  width: 12.2em;
+}
