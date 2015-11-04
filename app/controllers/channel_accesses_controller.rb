@@ -11,7 +11,7 @@ class ChannelAccessesController < ApplicationController
     channel_accesses = ChannelAccess.where(project_id: project_ids)
     
     @projects.each_with_index do |project, i|
-      if project.channels.size > 0
+      if project.is_accessible_to_national_gateway?
         row = []
         row << project.user
         row << project

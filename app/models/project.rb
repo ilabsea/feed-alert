@@ -106,6 +106,16 @@ class Project < ActiveRecord::Base
 
   def in_minutes field
     field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
-  end   
+  end
+
+  def is_accessible_to_national_gateway?
+    national_channel_ids = Channel.national_gateway.pluck(:id)
+    project_national_channels = self.channels.where(id: national_channel_ids)
+    if project_national_channels.length > 0
+      true
+    else
+      false
+    end
+  end
 
 end
