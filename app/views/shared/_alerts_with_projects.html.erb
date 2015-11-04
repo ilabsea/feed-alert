@@ -10,8 +10,8 @@
     <tbody>
       <% alerts.each do |alert| %>
         <tr>
-          <td><%= alert.name %></td>
           <td><%= alert.project.name %></td>
+          <td><%= alert.name %></td>
         </tr>
       <% end %>
     </tbody>
