@@ -48,7 +48,7 @@
   </div>
   <hr/>
   <div class="ChannelWizardNavigation">
-    <%= link_to ('Back'), channels_path, :class => 'btn btn-default' %>
+    <%= link_to ('Back'), new_channel_path, :class => 'btn btn-default' %>
     <%= link_to ('Next'), new_channel_path, remote: true,:class => 'btn btn-primary', :onclick => "channelWizardView('new-android-channel-wizard');", :id => "next" %>
   </div>
   

@@ -14,16 +14,18 @@ class ChannelsController < ApplicationController
 
   def create
     @channel = current_user.channels.build(filter_params)
-    @channel.name = @channel.ticket_code
+    #set the ticket_code only for android local gateway channel
+    @channel.name = @channel.ticket_code if @channel.basic_setup?
     @channel.is_enable = true
 
     channel_nuntium = ChannelNuntium.new(@channel)
     if channel_nuntium.create
       current_user.channels.disable_other(@channel.id)
-      render json: channel_nuntium, status: 200
+      redirect_to channels_path, notice: 'Channel has been created'
     else
       render json: channel_nuntium.error_message, status: 400, :layout => false
     end
+
   end
 
   def destroy
