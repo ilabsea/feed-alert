@@ -69,7 +69,21 @@ ul.main-menu {
       }
     }
   }
+  .dropdown-menu{
+    padding-left: 3px;
+    li{
+      border: none ;
+      padding-right: 8px;
+      background:none;
+      width: 100%;
+      height: auto;
+    }
+  }  
 }
+
+
+
+
 
 #right-menu {
   margin: 0;

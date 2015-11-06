@@ -1,0 +1,35 @@
+<%=simple_form_for(@channel_access, url: national_gateway_channel_accesses_path(@channel_access), html: { class: 'form-inline form'}) do |f| %>
+
+  <div class="form-group">
+    <label class="control-label" style="margin-right: 0.2em;">User</label>
+    <%= text_field_tag 'user_email', nil, class: 'form-control', data: {url: list_users_path} %>
+    <%= hidden_field_tag 'user_id', nil, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label required" style="margin-right: 0.2em;"><abbr>*</abbr> Project</label>
+    <%= text_field_tag 'project_name', nil, class: 'form-control', data: {url: list_projects_path} %>
+    <%=f.input :project_id, as: :hidden %>
+  </div>  
+  
+
+  <div class="form-group horizontal-group">
+    <label> National gateway</label>
+    <div class="checkbox-list">
+      <%= f.collection_check_boxes :channel_id, national_gateway_channels, :id, :name, include_hidden: false do |channel| %>
+        <div>
+        <%= channel.label do  %>
+          <%= channel.check_box %>
+          <%= channel.text %>
+        <% end -%>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+  
+  <div class='form-group form-action-group'>
+    <label></label>
+    <%=f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+  </div>
+
+<% end %>

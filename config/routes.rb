@@ -19,6 +19,15 @@ Rails.application.routes.draw do
   get 'confirm' => 'registrations#confirm'
   get 'welcome' => 'registrations#welcome'
 
+
+  resources :group_messages
+
+  resources :channel_accesses do
+    collection do
+      post 'national_gateway'
+    end
+  end
+
   resources :channels do
     member do
       put 'state'
@@ -39,10 +48,15 @@ Rails.application.routes.draw do
   resources :project_permissions
   resources :channel_permissions
 
-
   resources :projects do
     member do
       get 'share'
+      get 'sms_setting'
+      post 'update_sms_setting'
+    end
+
+    collection do
+      get 'list'
     end
 
     resources :alerts do

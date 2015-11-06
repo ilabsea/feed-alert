@@ -3,7 +3,8 @@
 <%= render 'shared/project_alert', 
            project_tab: 1,
            url_tab1: share_project_path(@project),
-           url_tab2: share_project_alerts_path(@project)
+           url_tab2: share_project_alerts_path(@project),
+           is_enable_alert_and_sms_tab: ''
             %>
 
 <%=simple_form_for(@project, html: { class: 'form-inline form'}) do |f| %>

@@ -171,7 +171,11 @@ module ApplicationHelper
   def app_menu_default
     [ {controller: '', text: '', url: root_path, class: 'before'},
       {controller: :home, text: 'Home', url: root_path, class: 'active'},
-      {controller: '', text: '', url: root_path, class: 'after'}]
+      {controller: :sessions, text: 'Log in', url: sign_in_path, class: 'after'}]
+  end
+
+  def app_menu_admin
+    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
   end
 
   # user_signed_in?
@@ -179,10 +183,17 @@ module ApplicationHelper
     menu = [
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: [:projects, :alerts], text: 'Projects', url: projects_path, class: '' },
-           { controller: [:groups, :members], text: 'Recipient Groups', url: groups_path, class: '' },
-           { controller: [:channels], text: 'SMS Channels', url: channels_path, class: '' },
-           { controller: :permissions, text: 'Permissions' ,url: permissions_path, class: '' }
+           { controller: [:groups, :members], text: 'Groups & Recipients', url: groups_path, class: '' },
+           { controller: [:channels, :group_messages], text: 'SMS', url: channels_path, class: 'dropdown', 
+            sub: [
+              {text: 'SMS Setting', url: channels_path},
+              {text: 'Send SMS', url: new_group_message_path}
+            ]
+           },
+           { controller: :permissions, text: 'User Permission' ,url: permissions_path, class: '' }
     ]
+    
+    menu = menu + app_menu_admin if user_admin?
 
     index_first = 0
     index_last = menu.size - 1
@@ -260,6 +271,18 @@ module ApplicationHelper
       meta_tag
     end
 
+  end
+
+  def build_channel_list channels
+    list = ""
+    channels.each_with_index do |channel, i|
+      if i == channels.length - 1
+        list = list + channel.name
+      else
+        list = list + channel.name + ", "
+      end
+    end
+    list
   end
 
 end

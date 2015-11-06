@@ -18,6 +18,10 @@ label.required abbr{
   font-weight: bold;
 }
 
+label.required abbr[title]{
+  border: none;
+}
+
 form {
   // max-width: 800px;
   label {
@@ -233,4 +237,21 @@ em.highlight {
 }
 .error {
   color: $color-danger;
+}
+
+.checkbox-list{
+  display: inline-block;
+}
+.checkbox-list span{
+  display: block;
+}
+
+
+.nav-tabs .disabled{
+  background-color: #F5F5F5;
+  opacity: 0.5;
+}
+
+.nav-tabs .disabled a{
+  pointer-events: none;
 }

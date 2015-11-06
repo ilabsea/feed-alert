@@ -10,7 +10,8 @@ function buildAlertKeywordTypeahead(){
   var sources = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: { url: urlSearch + '?q=%QUERY', cache: false }
+    remote: { url: urlSearch + '?q=%QUERY', cache: false },
+    limit: 10
   });
 
   // initialize the bloodhound suggestion engine
@@ -19,9 +20,19 @@ function buildAlertKeywordTypeahead(){
   var $alertKeywordValue = $("#alert-keyword-value")
 
   // instantiate the typeahead UI
-  $typeAheadInput.typeahead({ hint: true, highlight: true, minLength: 1 }, {
+  $typeAheadInput.typeahead({ hint: false, highlight: true, minLength: 0 }, {
     displayKey: 'name',
     source: sources.ttAdapter()
+  }).
+  on('typeahead:selected', function(event, data){
+    $alertKeywordValue.val(data.id)
+  }).
+  on('typeahead:autocompleted', function(e, data){
+    $alertKeywordValue.val(data.id)
+  }).
+  on( 'focus', function() {
+    if($(this).val() === '') // you can also check for minLength
+      $(this).data().ttTypeahead.input.trigger('queryChanged', '');
   })
 }
 
