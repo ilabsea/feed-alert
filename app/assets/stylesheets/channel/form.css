@@ -319,8 +319,12 @@
 }
 
 .ChannelWizard .ChannelConfigured{
-    background: image-url('finish.png');
-    background-repeat: no-repeat;
-    width: 461px;
-    height: 302px;
+  background: image-url('finish.png');
+  background-repeat: no-repeat;
+  width: 461px;
+  height: 302px;
+}
+
+.channel-wizard{
+  display: none;
 }
