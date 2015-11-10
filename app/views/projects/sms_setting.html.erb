@@ -21,9 +21,9 @@
           <div>
           <%= channel.label do  %>
             <% if @project_with_role.object.is_active_channel? channel.object %>
-              <%= channel.check_box({checked: true}) %>
+              <%= channel.check_box({checked: true}.merge(input_attrs)) %>
             <% else %>
-              <%= channel.check_box({checked: false}) %>
+              <%= channel.check_box({checked: false}.merge(input_attrs)) %>
             <% end -%>
             
             <%= channel.text %>
@@ -37,18 +37,18 @@
       <label class="control-label required"><abbr>*</abbr> SMS alert time</label>
       <div class="input-group">
         <span class="input-group-addon">From</span>
-        <%= f.text_field :sms_alert_started_at, class: "form-control time start", autocomplete: :off, placeholder: 'hh:mm' %>
+        <%= f.text_field :sms_alert_started_at, class: "form-control time start", autocomplete: :off, placeholder: 'hh:mm',disabled: input_attrs[:disabled] %>
       </div>
       
       <div class="input-group">
         <span class="input-group-addon">To</span>
-        <%= f.text_field :sms_alert_ended_at, class: "form-control time end", autocomplete: :off, placeholder: 'hh:mm' %>
+        <%= f.text_field :sms_alert_ended_at, class: "form-control time end", autocomplete: :off, placeholder: 'hh:mm', disabled: input_attrs[:disabled] %>
       </div>
     </div>
 
     <div class='form-group'>
       <label class="control-label required"><abbr>*</abbr> SMS template</label>
-      <%= f.text_area :sms_alert_template, as: :text, class: 'form-control', rows: 6, cols: 40 %>
+      <%= f.text_area :sms_alert_template, as: :text, class: 'form-control', rows: 6, cols: 40, disabled: input_attrs[:disabled] %>
     </div>
 
     <div class='form-group'>
