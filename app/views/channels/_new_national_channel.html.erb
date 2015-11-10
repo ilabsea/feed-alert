@@ -1,20 +1,23 @@
-<div id="new-national-channel-wizard" class="channel-wizard">
-  <%=form_for @channel, html: { class: 'form form-inline'} do |f| %>
-    <p class="sub-text">
-      In a limited number of countries we have a gateway provided by a local phone company that can be used to send and recieve system messages.
-      Please select the list below
-    </p>
-    <div class="control-inline">
-      <%= f.label :getway, 'SMS Gateway' %>
-      <%= f.select :name, options_for_select(ChannelNuntium.global_sms_channel), {}, class: 'form-control' %>
-    </div>
+<div class="panel panel-info channel-wizard" id="new-national-channel-wizard" >
+  <div class="panel-heading">New National Gateway</div>
+  <div class="panel-body">
+    <%=form_for @channel, html: { class: 'form form-inline'} do |f| %>
+      <p class="sub-text">
+        In a limited number of countries we have a gateway provided by a local phone company that can be used to send and recieve system messages.
+        Please select the list below
+      </p>
+      <div class="control-inline">
+        <%= f.label :getway, 'SMS Gateway' %>
+        <%= f.select :name, options_for_select(ChannelNuntium.global_sms_channel), {}, class: 'form-control' %>
+      </div>
 
-    <div class='form-group form-action-group'>
-      <label> </label>
-      <%= link_to ('Back'), new_channel_path, :class => 'btn btn-default' %>&nbsp;
-      <%= f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
-    </div>
-    <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_GLOBAL %>
+      <div class='form-group form-action-group'>
+        <label> </label>
+        <%= link_to ('Back'), new_channel_path, :class => 'btn btn-default' %>&nbsp;
+        <%= f.submit 'Save', label: false, class: 'btn btn-primary btn-app' %>
+      </div>
+      <%= hidden_field_tag "channel[setup_flow]", Channel::SETUP_FLOW_GLOBAL %>
 
-  <% end %>
+    <% end %>
+  </div>
 </div>
