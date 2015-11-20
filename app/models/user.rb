@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :shared_groups, class_name: "Group", through: :group_permissions, source: :group
 
   has_many :channels
+  has_many :group_messages
 
   # password must be present within 6..72
   validates :password, presence: true, on: :create
@@ -133,6 +134,8 @@ class User < ActiveRecord::Base
   end
 
   def accessible_project(project_id)
+    return ObjectWithRole.new(Project.find(project_id)) if is_admin?
+    
     project = self.my_projects.where(id: project_id).first
     return ObjectWithRole.new(project) if project
 
@@ -164,9 +167,24 @@ class User < ActiveRecord::Base
     self.group_permissions.group(:group_id).select("group_permissions.*").where("(group_id, order_number) in (#{group_permission_sub.to_sql}) ")
   end
 
-  def accessible_channels
-    channel_ids = self.my_channels.pluck(:id) + self.channel_permissions.pluck(:channel_id)
-    Channel.where(id: channel_ids)
+  # def accessible_channels
+  #   channel_ids = self.my_channels.pluck(:id) + self.channel_permissions.pluck(:channel_id)
+  #   Channel.where(id: channel_ids)
+  # end
+
+  def project_with_admin_permission
+    shared_project_ids = self.shared_projects.pluck(:project_id)
+    admin_shared_project_ids = self.project_permissions.where(project_id: shared_project_ids, role: PERMISSION_ROLE_ADMIN).pluck(:project_id)
+    project_ids = my_projects.pluck(:id) + admin_shared_project_ids
+    Project.where(id: project_ids)
   end
+
+  def accessible_channels
+    admin_project_ids = self.project_with_admin_permission.pluck(:id)
+    project_channels = ChannelAccess.where(project_id: admin_project_ids, is_active: true)
+    channel_ids = self.my_channels.pluck(:id) + self.channel_permissions.pluck(:channel_id) + project_channels.pluck(:channel_id)
+    Channel.where(id: channel_ids, is_enable: true)
+  end
+
 
 end

@@ -8,13 +8,17 @@
 @import "base/reset";
 @import "base/object";
 
-@import "bootstrap-timepicker";
 @import "bootstrap-switch";
-@import "bootstrap-timepicker-responsive";
 
 @import "shared/nav_menu";
-@import "shared/time_picker";
+@import "shared/jquery.timepicker";
 
 @import "sign_in/layout";
 @import "channel/form";
 @import "application/layout";
+
+@import "group_messages/form";
+
+@import "project/setting";
+
+@import "channel_access/form";

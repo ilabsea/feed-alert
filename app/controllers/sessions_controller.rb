@@ -11,7 +11,11 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.authenticate(params[:email], params[:password])
-      redirect_to sign_in_and_redirect_for(user), notice: "Signed in successfully"
+      if user.confirmed_at
+        redirect_to sign_in_and_redirect_for(user), notice: "Signed in successfully"
+      else
+        redirect_to root_path, alert: "You have to confirm your account before continuing."
+      end
     else
       flash.now[:alert] = "Invalid email/password"
       render :new

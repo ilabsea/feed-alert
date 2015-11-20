@@ -1,0 +1,16 @@
+.horizontal-group > label{
+  vertical-align: top;
+}
+
+.checkbox-list{
+	display: inline-block;
+}
+
+
+.checkbox-list > span{
+  display: block;
+} 
+
+.ui-timepicker-wrapper{
+  width: 12.2em;
+}

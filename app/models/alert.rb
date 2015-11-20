@@ -51,10 +51,6 @@ class Alert < ActiveRecord::Base
   validates :url, presence: true
   validates :url, url: true
 
-  validates :from_time, :to_time, presence: true
-  validates :from_time, numericality: {message: "must be less than To field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
-  validates :to_time, numericality: {message: "must be greater than From field"}, if: ->(u) { u.in_minutes(u.from_time) > u.in_minutes(u.to_time)}
-
   attr_accessor :total_match
 
   def reset_error
@@ -96,7 +92,7 @@ class Alert < ActiveRecord::Base
       keywords: self.keywords.map(&:name).join(", ")
     }
 
-    StringSearch.instance.set_source(self.sms_template).translate(translate_options)
+    StringSearch.instance.set_source(self.project.sms_alert_template).translate(translate_options)
   end
 
   def self.search_options alerts, date_range
@@ -120,5 +116,29 @@ class Alert < ActiveRecord::Base
     self.invalid_url = self.invalid_url + 1
     self.error_message = message
     self.save(validate: false)
+  end
+
+  def self.migrate_channel
+    Alert.transaction do
+      Alert.find_each(batch_size: 100) do |alert|
+        channel = alert.channel
+        project = alert.project
+        
+        unless project.sms_alert_started_at && project.sms_alert_ended_at
+          if alert.from_time && alert.to_time
+            project.sms_alert_started_at = alert.from_time
+            project.sms_alert_ended_at = alert.to_time
+            project.sms_alert_template = alert.sms_template
+            project.save!
+          end
+        end
+
+        channel_access = project.channel_accesses.select { |c| c.channel_id == channel.id }.first
+        if !channel_access && channel
+          project.channel_accesses.new(channel_id: channel.id, is_active: true)
+          project.save!
+        end
+      end
+    end    
   end
 end

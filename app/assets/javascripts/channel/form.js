@@ -1,8 +1,28 @@
 $(function(){
   collasableSetupFlowForm()
   switchChannelStatus()
-
+  channelWizardView('channel-types-list')
 })
+
+function createChannel(){
+  form = $('#form-create-channel');
+  $.ajax({
+    type: "POST",
+    url: '/channels',
+    data: form.serialize(),
+    success: function(data) {
+      channelWizardView('end-wizard');      
+    },
+    error: function(data){
+      $('.error-field').text(data["responseText"]);
+    }
+  });  
+}
+
+function channelWizardView(view){
+  $('.channel-wizard').hide();
+  $("#"+view).show();
+}
 
 function collasableSetupFlowForm(){
   $(".setup-flow").on('click', function(){

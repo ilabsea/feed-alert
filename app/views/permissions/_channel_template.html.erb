@@ -4,7 +4,7 @@
         <span style='padding-left: 10px; font-weight:bold;'>
           <i class='glyphicon glyphicon-triangle-right'> </i>
           <i class='glyphicon glyphicon-triangle-bottom' style='display: none'> </i>
-          Channels
+          SMS Channels
         </span>
       </div>
 
@@ -16,35 +16,12 @@
             <span> {%= o.channels[i].name %} </span>
           </div>
           
-          <div class="role-type">
-            <input type='radio'
-                   class='permission-role'
-                   name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
-                   data-channel-id='{%=o.channels[i].id%}'
-                   data-user-id='{%=o.user.id%}'
-                   data-role='<%=User::PERMISSION_ROLE_NONE%>'
-                   data-url='<%=channel_permissions_url()%>'
+          <div class="role-type"></div>
 
-                   {%= permissionRoleMatchChannelPermission(o.user, o.channels[i].id, '<%=User::PERMISSION_ROLE_NONE%>') %}
-                   />
-
-          </div>
+          <div class="role-type"></div>
 
           <div class="role-type">
-            <input type='radio'
-                   class='permission-role'
-                   name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
-                   data-channel-id='{%=o.channels[i].id%}'
-                   data-user-id='{%=o.user.id%}'
-                   data-role='<%=User::PERMISSION_ROLE_NORMAL%>'
-                   data-url='<%=channel_permissions_url()%>'
-
-                   {%= permissionRoleMatchChannelPermission(o.user, o.channels[i].id, '<%=User::PERMISSION_ROLE_NORMAL%>') %}
-                   />
-          </div>
-
-          <div class="role-type">
-            <input type='radio'
+            <input type='checkbox'
                    class='permission-role'
                    name='channel-permission-{%=o.channels[i].id%}-{%=o.user.id%}'
                    data-channel-id='{%=o.channels[i].id%}'
