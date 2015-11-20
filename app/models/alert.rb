@@ -123,8 +123,18 @@ class Alert < ActiveRecord::Base
       Alert.find_each(batch_size: 100) do |alert|
         channel = alert.channel
         project = alert.project
+        
+        unless project.sms_alert_started_at && project.sms_alert_ended_at
+          if alert.from_time && alert.to_time
+            project.sms_alert_started_at = alert.from_time
+            project.sms_alert_ended_at = alert.to_time
+            project.sms_alert_template = alert.sms_template
+            project.save!
+          end
+        end
+
         channel_access = project.channel_accesses.select { |c| c.channel_id == channel.id }.first
-        if !channel_access
+        if !channel_access && channel
           project.channel_accesses.new(channel_id: channel.id, is_active: true)
           project.save!
         end
