@@ -132,11 +132,12 @@ class Alert < ActiveRecord::Base
             project.save!
           end
         end
-
-        channel_access = project.channel_accesses.select { |c| c.channel_id == channel.id }.first
-        if !channel_access && channel
-          project.channel_accesses.new(channel_id: channel.id, is_active: true)
-          project.save!
+        if channel
+          channel_access = project.channel_accesses.select { |c| c.channel_id == channel.id }.first
+          if !channel_access && channel
+            project.channel_accesses.new(channel_id: channel.id, is_active: true)
+            project.save!
+          end
         end
       end
     end    
