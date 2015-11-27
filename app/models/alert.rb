@@ -67,7 +67,7 @@ class Alert < ActiveRecord::Base
   end
 
   def self.apply_search date_range
-    Alert.includes(:keywords).find_in_batches(batch_size: 5) do |alerts|
+    Alert.includes(:keywords).where("alert_keywords_count > ?", 0).find_in_batches(batch_size: 5) do |alerts|
       AlertResult.new(alerts, date_range).run
     end
   end
