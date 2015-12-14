@@ -21,6 +21,6 @@ class GroupMessagesController < ApplicationController
 
   private
   def filter_params
-    params.require(:group_message).permit(:message, receiver_groups: [])
+    params.require(:group_message).permit(:message, :email_alert, :sms_alert, receiver_groups: [])
   end
 end

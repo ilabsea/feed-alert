@@ -1,18 +1,26 @@
-<% content_for(:title) { "Send SMS"} %>
-<% breadcrumb_buffer([{ "Send SMS": nil}]) %>
+<% content_for(:title) { "Send Group Message"} %>
+<% breadcrumb_buffer([{ "Send Group Message": nil}]) %>
 
-<%= panel "Send SMS" do %>
+<%= panel "Send Group Message" do %>
   <%=simple_form_for(@group_message, html: { class: 'form-inline form'}) do |f| %>
 
     <div class="form-group horizontal-group">
       <label class="required" style="vertical-align: top"><abbr>*</abbr> To Groups </label>
-      <div class="checkbox-list ">
+      <div class="checkbox-list">
         <%= f.collection_check_boxes :receiver_groups, current_user.groups, :id, :name, include_hidden: false do |group| %>
           <%= group.label do  %>
             <%= group.check_box({checked: false}) %>
             <%= group.text %>
           <% end -%>
         <% end -%>
+      </div>
+    </div>
+
+    <div class="form-group horizontal-group">
+      <label style="vertical-align: top">Message By</label>
+      <div class="checkbox-list">
+        <span style="height: 30px;"><%= f.check_box :email_alert %> Email</span>
+        <span style="height: 30px;"><%= f.check_box :sms_alert %> SMS</span>
       </div>
     </div>
 

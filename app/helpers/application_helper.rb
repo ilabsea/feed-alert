@@ -187,7 +187,7 @@ module ApplicationHelper
            { controller: [:channels, :group_messages], text: 'SMS', url: channels_path, class: 'dropdown', 
             sub: [
               {text: 'SMS Setting', url: channels_path},
-              {text: 'Send SMS', url: new_group_message_path}
+              {text: 'Send Group Message', url: new_group_message_path}
             ]
            },
            { controller: :permissions, text: 'User Permission' ,url: permissions_path, class: '' }

@@ -9,4 +9,9 @@ class AlertMailer < ApplicationMailer
 
     roadie_mail(to: emails_to, subject: "Keywords matched your #{@alert.name}")
   end
+
+  def notify_group_message(group_message, emails_to)
+  	@group_message = group_message
+  	roadie_mail(to: emails_to, subject: "Group Message")
+  end
 end
