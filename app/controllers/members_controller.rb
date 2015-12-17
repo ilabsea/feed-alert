@@ -30,6 +30,7 @@ class MembersController < ApplicationController
     if @member.save
       redirect_to edit_member_path(@member), notice: 'Recipient has been created'
     else
+      p @member.errors
       flash.now[:alert] = 'Failed to create recipient'
       render :new
     end
