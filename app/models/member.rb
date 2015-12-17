@@ -20,8 +20,10 @@ class Member < ActiveRecord::Base
   belongs_to :user
 
   validates :full_name, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
-  validates :phone, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, email: true
+  validates :phone, presence: true
+
+  validates :email, email: {message: 'invalid format'}
 
   def self.excludes(members)
     where([" id not in (?)", members])
