@@ -21,6 +21,7 @@ class GroupMessageResult
     channel_suggested = ChannelSuggested.new(@channels)
     
     groups.each do |group|
+      smses_to = []
       group.members.each do |member|
         emails_to << member.email
         smses_to  << member.phone
