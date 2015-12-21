@@ -66,6 +66,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-passenger' #using gem passenger 4.0.58
   gem 'thin'
+  gem 'benchmark-ips'
 end
 
 group :development, :test do

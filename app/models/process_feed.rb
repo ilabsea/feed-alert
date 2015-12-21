@@ -2,7 +2,6 @@ class ProcessFeed
   def self.start(alert)
     begin
       feed_jira = Feedjira::Feed.fetch_and_parse(alert.url)
-
       if feed_jira.class.to_s.include?("Feedjira::Parser::")
 
         feed_attrs = {
@@ -14,7 +13,7 @@ class ProcessFeed
 
         feed = Feed.process_with(feed_attrs)
 
-        feed_jira.entries.each do |reader_entry|
+        feed_jira.entries.each_with_index do |reader_entry, i|
           entry_attrs = {
             title: reader_entry.title,
             url: reader_entry.url,
@@ -23,7 +22,16 @@ class ProcessFeed
             alert_id: alert.id,
             feed_id: feed.id
           }
-          FeedEntry.process_with(entry_attrs)
+
+          feed_entry = FeedEntry.where(title: entry_attrs[:title]).first_or_initialize 
+          # # prevent reindexing for feed entry with same title and url 
+          # # if url is still the same -> old content thus do nothing
+          next if feed_entry.persisted? && feed_entry.url == entry_attrs[:url]
+
+          entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
+          entry_attrs[:keywords] = alert.keywords.map(&:name)
+          feed_entry.update_attributes(entry_attrs)
+          sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
         end
       else
         Rails.logger.debug { "alert: #{alert.name} with url: #{alert.url} could not be read with error: #{feed_jira.class}" }

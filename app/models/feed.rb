@@ -17,7 +17,7 @@ class Feed < ActiveRecord::Base
   has_many :feed_entries, dependent: :destroy
 
   def self.process_with options
-    feed = Feed.where(options).first_or_initialize
+    feed = Feed.where(alert_id: options[:alert_id]).first_or_initialize
     feed.update_attributes(options)
     feed
   end

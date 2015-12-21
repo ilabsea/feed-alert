@@ -30,7 +30,7 @@ class FeedEntry < ActiveRecord::Base
   validates :fingerprint, uniqueness: true
 
   before_save :invoke_fingerprint
-  after_create :process_url
+  # after_create :process_url
 
   def self.matched
     where(matched: true)
@@ -45,23 +45,17 @@ class FeedEntry < ActiveRecord::Base
     self.fingerprint = Digest::MD5.hexdigest(uniqueness_attribute)
   end
 
-  def self.process_with options
-    feed_entries = FeedEntry.where(title: options[:title])
 
+  def self.fetch_and_save options
+    feed_entry = FeedEntry.where(title: options[:title]).first_or_initialize
     # prevent reindexing for feed entry with same title and url 
-    if feed_entries.length > 0
-      # if url is still the same -> old content thus do nothing
-      feed_entries.each do |feed_entry|
-        return false if feed_entry.url == options[:url]
-      end
-      Rails.logger.debug {"Update entry: #{options}"}
-      feed_entry = feed_entries.first
-      feed_entry.update_attributes(options)
-    else
-      Rails.logger.debug {"Duplicate entry: #{options}"}
-      feed_entry = FeedEntry.new(options)
-      feed_entry.save
-    end
+    # if url is still the same -> old content thus do nothing
+    return false if feed_entry.persisted? && feed_entry.url == options[:url]
+ 
+          
+    options[:content] = FetchPage.instance.run(feed_entry.url)
+    options[:keywords] = feed_entry.alert.keywords.map(&:name)
+    feed_entry.update_attributes(options)
   end
 
   def process_url
