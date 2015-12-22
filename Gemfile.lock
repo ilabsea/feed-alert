@@ -69,7 +69,6 @@ GEM
       execjs
       json
     bcrypt (3.1.10)
-    benchmark-ips (2.3.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-kaminari-views (0.0.5)
@@ -428,7 +427,6 @@ DEPENDENCIES
   active_model_serializers
   annotate
   bcrypt (~> 3.1.7)
-  benchmark-ips
   bootstrap-kaminari-views
   bootstrap-sass (~> 3.3.3)
   byebug

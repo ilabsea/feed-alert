@@ -4,4 +4,4 @@ class FeedReader
       ProcessFeedJob.perform(alert.id)
     end
   end
-en
+end

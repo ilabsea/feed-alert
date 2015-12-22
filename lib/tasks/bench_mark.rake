@@ -1,8 +1,9 @@
 require 'benchmark'
+# require 'ruby-prof'
 
 namespace :feed do
   
-  desc 'Recreate Index and Mapping for search structure'
+  desc 'Benchmark for one alert'
   task benchmark: :environment do
     option = {
       url: "http://feeds.reuters.com/reuters/globalmarketsNews",
@@ -17,9 +18,19 @@ namespace :feed do
       alert_keyword.save
     end
 
+    # RubyProf.start
     time = Benchmark.realtime do |x|
       ProcessFeed.start(alert)  
     end
-    p time
+    p "Benchmark for one alert : #{time}"
+  end
+
+
+  desc "Benchmark all alert"
+  task benchmark_all: :environment do
+    time = Benchmark.realtime do |x|
+      FeedReader.from_alert
+    end
+    p "Benchmark for all alert : #{time}"
   end
 end
