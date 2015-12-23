@@ -22,20 +22,6 @@ class AlertsController < ApplicationController
     render json: keywords
   end
 
-  def matched
-
-    from = params[:from] || Time.zone.now-7.days
-    to   = params[:to] || Time.zone.now
-    @date_range = DateRange.new(from, to)
-    alerts_for_options = Alert.includes(:keywords).all
-
-    project_with_role
-
-    search_options = Alert.search_options(alerts_for_options, @date_range)
-    search_highlight = FeedEntry.search(search_options)
-    @alerts = search_highlight.alerts
-  end
-
   def index
     @alerts = project_with_role.object.alerts
                                       .includes(:keywords, groups: :alert_groups)

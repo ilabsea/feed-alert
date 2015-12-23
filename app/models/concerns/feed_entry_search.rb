@@ -9,6 +9,7 @@ module FeedEntrySearch
 
     settings index: { number_of_shards: 5 } do
       mappings do
+        indexes :alerted
         indexes :title, analyzer: 'english', index_options: 'offsets'
         indexes :summary, analyzer: 'english', index_options: 'offsets'
         indexes :content, type: 'attachment', fields: { 
@@ -66,7 +67,7 @@ module FeedEntrySearch
       self.__elasticsearch__.refresh_index!
     end
 
-    def alert_criterias alert_options
+    def alert_criterias alert_options 
       keywords = alert_options[:keywords]
       alert_id = alert_options[:id]
       criterias = []
@@ -106,21 +107,17 @@ module FeedEntrySearch
           }
       }
 
-      if options[:from].present? && options[:to].present?
-        dsl[:filter] = {
-                  range: {
-                      created_at: {
-                        gte: options[:from],
-                        lte: options[:to]
-                      }
-                  }
+      
+      dsl[:filter] = {
+                term: {
+                  alerted: options[:alerted]
                 }
-
-        dsl = { query: {
-                         filtered: dsl
-                       }
               }
-      end
+
+      dsl = { query: {
+                       filtered: dsl
+                     }
+            }
 
       highlight_options = { 
                             fragment_size: 180, 

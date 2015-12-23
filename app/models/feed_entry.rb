@@ -58,6 +58,14 @@ class FeedEntry < ActiveRecord::Base
     feed_entry.update_attributes(options)
   end
 
+  def self.mark_as_alerted(ids)
+    #trigger feed_entry update with elastic
+    FeedEntry.where(id: ids).each do |feed_entry|
+      feed_entry.alerted = true
+      feed_entry.save
+    end
+  end
+
   def process_url
     ProcessFeedEntryJob.perform_later(self.id)
   end

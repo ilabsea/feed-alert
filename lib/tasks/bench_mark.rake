@@ -9,18 +9,18 @@ namespace :feed do
       url: "http://feeds.reuters.com/reuters/globalmarketsNews",
       name: "Reuter"
     }
-    keywords = [ "bussines", "technology", "social", "art", "culture", "gloabl", "news"]
+    keywords = [ "bussines", "technology", "social", "art", "culture", "gloabl", "news", "deal", "attempt", "sweet"]
     alert = Alert.where(option).first_or_create
     
     keywords.each do |item|
       keyword = Keyword.where(name: item).first_or_create
-      alert_keyword = alert.alert_keywords.build(keyword: keyword)
-      alert_keyword.save
+      AlertKeyword.where(alert_id: alert.id, keyword_id: keyword.id).first_or_create
     end
-
     # RubyProf.start
     time = Benchmark.realtime do |x|
-      ProcessFeed.start(alert)  
+      1.times.each do
+        ProcessFeed.start(alert)
+      end 
     end
     p "Benchmark for one alert : #{time}"
   end

@@ -63,9 +63,8 @@ class AlertMailerPreview < ActionMailer::Preview
     group_name = 'Department of Help'
 
     emails_to = ['channa.info@gmail.com', 'channa.info+1@gmail.com']
-    date_range = DateRange.new(Time.zone.now - 7.days, Time.zone.now)
 
-    AlertMailer.notify_matched(search_highligh, alert.id, group_name, emails_to, date_range)
+    AlertMailer.notify_matched(search_highligh, alert.id, group_name, emails_to)
   end
 
 
