@@ -66,14 +66,14 @@ class Alert < ActiveRecord::Base
     self.invalid_url >= ENV['MAX_ERROR_NUMBER'].to_i
   end
 
-  def self.apply_search date_range
+  def self.apply_search
     Alert.includes(:keywords).where("alert_keywords_count > ?", 0).find_in_batches(batch_size: 5) do |alerts|
-      AlertResult.new(alerts, date_range).run
+      AlertResult.new(alerts).run
     end
   end
 
-  def apply_search date_range
-    AlertResult.new([self], date_range).run
+  def apply_search
+    AlertResult.new([self]).run
   end
 
   def in_minutes field
