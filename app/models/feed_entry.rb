@@ -22,6 +22,7 @@ class FeedEntry < ActiveRecord::Base
   serialize :keywords, JSON
 
   include FeedEntrySearch
+  include SearchQuery
 
   belongs_to :alert
   belongs_to :feed

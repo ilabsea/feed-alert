@@ -21,6 +21,7 @@ require 'elasticsearch/persistence/model'
 
 class Entry
   include Elasticsearch::Persistence::Model
+  include SearchQuery
   # index_name "feed_entry-#{Rails.env}"
   # document_type "entry"
 
@@ -41,26 +42,69 @@ class Entry
                                                                    term_vector: "with_positions_offsets"
                                                                 }
                                                       }
-
                                 }
 
-
-  
-
-
  
+  def self.recreate_index
+    mappings = {
+                # "mappings": {
+                  "entry": {
+                    "properties": {
+                      "alerted": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "analyzer": "english",
+                        "index_options": "offsets",
+                        "type": "string"
+                      },
+                      "summary": {
+                        "analyzer": "english",
+                        "index_options": "offsets",
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "attachment",
+                        "fields": {
+                          "author": {
+                            "index": "no"
+                          },
+                          "date": {
+                            "index": "no"
+                          },
+                          "content": {
+                            "store": "yes",
+                            "type": "string",
+                            "term_vector": "with_positions_offsets"
+                          }
+                        }
+                      }
+                    }
+                  }
+                # }
+              }
+    options = {
+      index: "entries",
+      body: { 
+              mappings: mappings
+            }
+    }
+    self.gateway.client.indices.delete(index: "entries") rescue nil
+    self.gateway.client.indices.create(options)   
+  end
 
 
   def to_hash(options={})
     hash = self.as_json
-    hash["content"] = {
-      "_detect_language": false,
-      "_language": "en",
-      "_indexed_chars": -1 ,
-      "_content_type": "text/html",
-      "_content": Base64.encode64(self.content)
-    }
-    hash
+    map_attachment(hash)
+    # hash["content"] = {
+    #   "_detect_language": false,
+    #   "_language": "en",
+    #   "_indexed_chars": -1 ,
+    #   "_content_type": "text/html",
+    #   "_content": Base64.encode64(self.content)
+    # }
+    # hash
   end
 
 
