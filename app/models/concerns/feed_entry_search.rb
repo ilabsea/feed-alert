@@ -77,7 +77,7 @@ module FeedEntrySearch
                             multi_match: {
                               query: keyword,
                               type: "phrase",
-                              fields: ['title', 'summary', 'content']
+                              fields: ['content']
                             }
                         },
                         filter: {
@@ -108,11 +108,11 @@ module FeedEntrySearch
       }
 
       
-      dsl[:filter] = {
-                term: {
-                  alerted: options[:alerted]
-                }
-              }
+      # dsl[:filter] = {
+      #           term: {
+      #             alerted: options[:alerted]
+      #           }
+      #         }
 
       dsl = { query: {
                        filtered: dsl
@@ -156,6 +156,8 @@ module FeedEntrySearch
 
     def search(options={})
       criteria = build_criterias(options)
+      p "?????????????????????????????????????????????"
+      p criteria
       # __elasticsearch__.search(criteria)
       # use raw version since elasticsearch-model does not support facet query
       results = self.__elasticsearch__.client.search(index: self.index_name, body: criteria)

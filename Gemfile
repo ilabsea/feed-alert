@@ -49,6 +49,7 @@ gem 'nuntium_api', github: 'channainfo/nuntium-api-ruby', branch: 'encode_uri'
 
 gem 'whenever', :require => false
 
+gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
@@ -58,6 +59,7 @@ gem 'foreman'
 gem 'newrelic_rpm'
 
 gem 'open_uri_redirections'
+
 
 group :development do
   gem 'capistrano', '3.4.0'

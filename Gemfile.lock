@@ -68,6 +68,10 @@ GEM
     autoprefixer-rails (6.0.2)
       execjs
       json
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -139,6 +143,8 @@ GEM
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -153,6 +159,8 @@ GEM
     daemons (1.2.3)
     database_cleaner (1.5.0)
     debug_inspector (0.0.2)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.25)
@@ -162,9 +170,17 @@ GEM
       activesupport (> 3)
       elasticsearch (> 0.4)
       hashie
+    elasticsearch-persistence (0.1.8)
+      activemodel (> 3)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      elasticsearch-model (>= 0.1)
+      hashie
+      virtus
     elasticsearch-rails (0.1.7)
     email_validator (1.6.0)
       activemodel
+    equalizer (0.0.11)
     erubis (2.7.0)
     eventmachine (1.0.8)
     execjs (2.6.0)
@@ -208,6 +224,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
+    ice_nine (0.11.1)
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -412,6 +429,11 @@ GEM
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     web-console (2.2.1)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -440,6 +462,7 @@ DEPENDENCIES
   database_cleaner
   elasticsearch!
   elasticsearch-model
+  elasticsearch-persistence
   elasticsearch-rails
   email_validator
   factory_girl_rails
