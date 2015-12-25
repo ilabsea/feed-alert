@@ -4,7 +4,7 @@ class AlertResult
   end
 
   def run
-    search_result = FeedEntry.search(SearchOption.for_new_feed_entries(@alerts))
+    search_result = FeedEntry.result(SearchOption.for_new_feed_entries(@alerts))
     FeedEntry.mark_as_alerted(search_result.feed_entries)
 
     delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i

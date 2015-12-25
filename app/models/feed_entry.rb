@@ -17,58 +17,137 @@
 #  keywords     :text(65535)
 #  matched      :boolean          default(FALSE)
 #
+require 'elasticsearch/persistence/model'
 
-class FeedEntry < ActiveRecord::Base
-  serialize :keywords, JSON
-
-  include FeedEntrySearch
+class FeedEntry
+  include Elasticsearch::Persistence::Model
   include SearchQuery
 
-  belongs_to :alert
-  belongs_to :feed
+  ELASTIC_INDEX_NAME = "feed_entries"
+  ELASTIC_TYPE_NAME = "feed_entry"
 
-  validates :title, uniqueness: { scope: :url }
-  validates :fingerprint, uniqueness: true
+  attribute :alert_id, Integer
+  attribute :title, String, mapping: { analyzer: 'english' }
+  attribute :url, String, mapping: { analyzer: 'english' }
+  attribute :summary, String, mapping: { analyzer: 'english' }
+  attribute :alerted, Boolean, default: false, mapping: { analyzer: 'english' }
+  attribute :fingerprint, String, mapping: { analyzer: 'english' }
+  attribute :feed_id, Integer
+  attribute :keywords
 
-  before_save :invoke_fingerprint
-  # after_create :process_url
+  attribute :content, nil, mapping: { type: 'attachment', fields: { 
+                                                        author: { index: "no"},
+                                                        date: { index: "no"},
+                                                        content: { store: "yes",
+                                                                   type: "string",
+                                                                   term_vector: "with_positions_offsets"
+                                                                }
+                                                      }
+                                }
 
-  def self.matched
-    where(matched: true)
+  def self.recreate_index
+    mappings = {}
+    mappings[FeedEntry::ELASTIC_TYPE_NAME]= {
+
+                    "properties": {
+                      "alerted": {
+                        "type": "boolean"
+                      },
+                      "title": {
+                        #for exact match
+                        "index": "not_analyzed",
+                        "type": "string"
+                      },
+                      "url": {
+                        "index": "not_analyzed",
+                        "type": "string"
+                      },                      
+                      "summary": {
+                        "analyzer": "english",
+                        "index_options": "offsets",
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "attachment",
+                        "fields": {
+                          "author": {
+                            "index": "no"
+                          },
+                          "date": {
+                            "index": "no"
+                          },
+                          "content": {
+                            "store": "yes",
+                            "type": "string",
+                            "term_vector": "with_positions_offsets"
+                          }
+                        }
+                      }
+                    }
+              }
+    options = {
+      index: FeedEntry::ELASTIC_INDEX_NAME,
+    }
+    self.gateway.client.indices.delete(options) rescue nil
+    self.gateway.client.indices.create(options.merge( body: { mappings: mappings}))   
   end
 
-  def self.between date_range
-    where(['feed_entries.created_at BETWEEN ? AND ?', date_range.from, date_range.to])
-  end
-
-  def invoke_fingerprint
-    uniqueness_attribute = self.title + self.url
-    self.fingerprint = Digest::MD5.hexdigest(uniqueness_attribute)
-  end
+  def self.result(options={})
+    criteria = build_criterias(options)
+    # use raw version since elasticsearch-model does not support facet query
+    results = self.gateway.client.search(index: self.index_name, body: criteria)
+    FeedEntrySearchResultPresenter.new(results)
+  end  
 
 
-  def self.fetch_and_save options
-    feed_entry = FeedEntry.where(title: options[:title]).first_or_initialize
-    # prevent reindexing for feed entry with same title and url 
-    # if url is still the same -> old content thus do nothing
-    return false if feed_entry.persisted? && feed_entry.url == options[:url]
- 
-          
-    options[:content] = FetchPage.instance.run(feed_entry.url)
-    options[:keywords] = feed_entry.alert.keywords.map(&:name)
-    feed_entry.update_attributes(options)
+  def to_hash(options={})
+    hash = self.as_json
+    map_attachment(hash) if !self.alerted
+    hash
   end
 
   def self.mark_as_alerted(ids)
     #trigger feed_entry update with elastic
-    FeedEntry.where(id: ids).each do |feed_entry|
+    feed_entries = FeedEntry.find(ids)
+    feed_entries.each do |feed_entry|
       feed_entry.alerted = true
       feed_entry.save
     end
   end
 
-  def process_url
-    ProcessFeedEntryJob.perform_later(self.id)
+  def self.query_builder(options={})
+    bool_filter = {must: [] }
+    terms = []
+    options.each do |key,value|
+      term = {term: {}}
+      term[:term][key] = value
+      terms << term
+    end
+
+    bool_filter[:must] = terms
+
+    filter = {
+      bool: bool_filter
+    }
+
+    criterias = {
+      query: {
+        filtered: {
+          query: {
+            match_all: {
+
+            }
+          },
+          filter: filter 
+        },
+        
+      }
+    }
+
+  end
+
+  def self.where(options={})
+    self.search(self.query_builder(options))
   end
 
 end

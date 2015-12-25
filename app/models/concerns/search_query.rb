@@ -24,7 +24,7 @@ module SearchQuery
                             multi_match: {
                               query: keyword,
                               type: "phrase",
-                              fields: ['content']
+                              fields: ['title', 'summary', 'content']
                             }
                         },
                         filter: {
@@ -99,13 +99,6 @@ module SearchQuery
       dsl
     end
 
-    def result(options={})
-      criteria = build_criterias(options)
-      # __elasticsearch__.search(criteria)
-      # use raw version since elasticsearch-model does not support facet query
-      results = self.__elasticsearch__.client.search(index: self.index_name, body: criteria)
-      FeedEntrySearchResultPresenter.new(results)
-    end
   end
 
 end

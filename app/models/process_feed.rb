@@ -23,14 +23,19 @@ class ProcessFeed
             feed_id: feed.id
           }
 
-          feed_entry = FeedEntry.where(title: entry_attrs[:title]).first_or_initialize 
-          # # prevent reindexing for feed entry with same title and url 
-          # # if url is still the same -> old content thus do nothing
-          next if feed_entry.persisted? && feed_entry.url == entry_attrs[:url]
+          feed_entry = FeedEntry.where(title: entry_attrs[:title]).first
+          if feed_entry && feed_entry.url != entry_attrs[:url]
+            entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
+            entry_attrs[:keywords] = alert.keywords.map(&:name)
+            feed_entry.update_attributes(entry_attrs)
+          else
+            entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
+            entry_attrs[:keywords] = alert.keywords.map(&:name)            
+            feed_entry = FeedEntry.create(entry_attrs)
+          end
+          
+          
 
-          entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
-          entry_attrs[:keywords] = alert.keywords.map(&:name)
-          feed_entry.update_attributes(entry_attrs)
           sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
         end
       else

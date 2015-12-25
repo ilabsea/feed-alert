@@ -68,6 +68,14 @@ module FeedEntrySearch
       self.__elasticsearch__.refresh_index!
     end
 
+    def result(options={})
+      criteria = build_criterias(options)
+      # __elasticsearch__.search(criteria)
+      # use raw version since elasticsearch-model does not support facet query
+      results = self.__elasticsearch__.client.search(index: self.index_name, body: criteria)
+      FeedEntrySearchResultPresenter.new(results)
+    end
+
   end
 
 end

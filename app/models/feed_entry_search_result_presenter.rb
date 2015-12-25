@@ -83,7 +83,7 @@ class FeedEntrySearchResultPresenter
 
   def feed_entries
     @response["hits"]["hits"].map do |hit|
-      hit["_source"]["id"]
+      hit["_id"]
     end
   end
 
