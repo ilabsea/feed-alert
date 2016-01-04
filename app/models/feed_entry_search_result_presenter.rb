@@ -57,11 +57,7 @@ class FeedEntrySearchResultPresenter
 
   def results
     return @results if @results
-
-    @results = @response["hits"]["hits"].map do |hit|
-      hit.slice("_source", "highlight") 
-    end
-    @results
+    @results = @response["hits"]["hits"]
   end
 
   def results_by_alert(alert_id)

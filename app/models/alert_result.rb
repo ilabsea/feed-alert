@@ -1,15 +1,14 @@
 class AlertResult
   def initialize(alerts)
     @alerts = alerts
+    @search_result = nil
   end
 
   def run
-    search_result = FeedEntry.result(SearchOption.for_new_feed_entries(@alerts))
-    FeedEntry.mark_as_alerted(search_result.feed_entries)
+    @search_result = FeedEntry.result(SearchOption.for_new_feed_entries(@alerts))
+    FeedEntry.mark_as_alerted(@search_result.feed_entries)
 
-    delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
-
-    search_result.alerts.each do |alert|
+    @search_result.alerts.each do |alert|
       alert_email(alert)
       alert_sms(alert)
     end
@@ -29,7 +28,7 @@ class AlertResult
       if emails_to.length > 0 && alert.total_match > 0
 
         # delay, delay_for, delay_unitl
-        AlertMailer.delay_for(delay_time.minute).notify_matched(search_result.results_by_alert(alert.id),
+        AlertMailer.delay_for(delay_time.minute).notify_matched(@search_result.results_by_alert(alert.id),
                                    alert.id,
                                    group.name,
                                    emails_to)
@@ -66,6 +65,10 @@ class AlertResult
         SmsAlertJob.set(wait: delay_time.minute).perform_later(message_options) if !message_options.empty?
       end
     end
+  end
+
+  def delay_time
+    ENV['DELAY_DELIVER_IN_MINUTES'].to_i
   end
 
 end

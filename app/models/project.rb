@@ -100,8 +100,11 @@ class Project < ActiveRecord::Base
   end
 
   def is_time_appropiate? sms_time
-    working_minutes = sms_time.hour * 60 + sms_time.min
-    in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
+    if self.sms_alert_started_at && self.sms_alert_ended_at
+      working_minutes = sms_time.hour * 60 + sms_time.min
+      return in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
+    end
+    return true
   end 
 
   def in_minutes field

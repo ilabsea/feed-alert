@@ -4,7 +4,7 @@ class FeedEntryHighlight
   end
 
   def id
-    @search_highlight["_source"]["id"]
+    @search_highlight["_id"]
   end
 
   def url
