@@ -6,7 +6,7 @@ module SearchQuery
         "_detect_language": false,
         "_language": "en",
         "_indexed_chars": -1 ,
-        # "_content_type": "text/html",
+        "_content_type": "text/html",
         "_content": Base64.encode64(self.content)
       }
       hash

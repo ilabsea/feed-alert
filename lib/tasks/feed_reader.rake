@@ -28,4 +28,9 @@ namespace :feed do
     MigrationUser.start(user)
   end
 
+  desc 'Remove unmatched feed'
+  task remove_unmatched: :environment do
+    FeedEntry.remove_unmatched_for(2.days.ago)
+  end
+
 end

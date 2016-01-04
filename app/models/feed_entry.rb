@@ -5,17 +5,14 @@
 #  id           :integer          not null, primary key
 #  title        :string(255)
 #  url          :string(255)
-#  published_at :datetime
 #  summary      :text(65535)
 #  content      :text(4294967295)
 #  alerted      :boolean          default(FALSE)
-#  fingerprint  :string(255)
 #  alert_id     :integer
 #  feed_id      :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  keywords     :text(65535)
-#  matched      :boolean          default(FALSE)
 #
 require 'elasticsearch/persistence/model'
 
@@ -31,9 +28,8 @@ class FeedEntry
   attribute :url, String, mapping: { analyzer: 'english' }
   attribute :summary, String, mapping: { analyzer: 'english' }
   attribute :alerted, Boolean, default: false, mapping: { analyzer: 'english' }
-  attribute :fingerprint, String, mapping: { analyzer: 'english' }
   attribute :feed_id, Integer
-  attribute :keywords
+  attribute :keywords #denormalize keywords from alerts
 
   attribute :content, nil, mapping: { type: 'attachment', fields: { 
                                                         author: { index: "no"},
@@ -52,6 +48,9 @@ class FeedEntry
                     "properties": {
                       "alerted": {
                         "type": "boolean"
+                      },
+                      "alert_id": {
+                        "type": "integer"
                       },
                       "title": {
                         "analyzer": "english",
@@ -147,13 +146,53 @@ class FeedEntry
           filter: filter 
         },
         
-      }
+      },
+      size: 0
     }
 
   end
 
   def self.where(options={})
     self.search(self.query_builder(options))
+  end
+
+  def self.remove(options={})
+    query = self.query_builder(options)
+    self.bulk_remove(query)
+  end
+
+  def self.bulk_remove(query)
+    feed_entries = self.search(query)
+    feed_entries.each do |feed_entry|
+      feed_entry.destroy
+    end
+  end
+
+  def self.remove_unmatched_for(date_time)
+    must = []
+    must << { range: {updated_at: {lte: "#{date_time}"}} }
+    must << { term: {alerted: false} }
+
+    query = {
+      query: {
+        filtered: {
+          query: {
+            match_all: {
+
+            }
+          },
+          filter: {
+            bool: {
+              must: must
+            }
+          } 
+        },
+        
+      },
+      size: 500
+    }
+
+    result = self.bulk_remove(query)
   end
 
 end

@@ -13,7 +13,7 @@ schedules = {
 
   'Remove old feed entries for a month' => {
     'class' => 'FeedEntryCleanUpCron',
-    'cron'  => '0 0 1 * *',
+    'cron'  => '0 0 */2 * *',
     'queue' => 'default'
   }
 }

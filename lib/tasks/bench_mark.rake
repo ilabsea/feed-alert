@@ -41,6 +41,5 @@ namespace :feed do
     option = SearchOption.for_new_feed_entries([alert])
     result = FeedEntry.result(option)
     feed_entries = result.feed_entries
-    p feed_entries    
   end
 end
