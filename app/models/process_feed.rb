@@ -23,7 +23,7 @@ class ProcessFeed
             feed_id: feed.id
           }
 
-          feed_entry = FeedEntry.where(title: entry_attrs[:title]).first
+          feed_entry = FeedEntry.where(title_not_analyzed: entry_attrs[:title]).first
           if feed_entry && feed_entry.url != entry_attrs[:url]
             entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
             entry_attrs[:keywords] = alert.keywords.map(&:name)

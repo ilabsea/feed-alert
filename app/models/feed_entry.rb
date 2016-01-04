@@ -45,7 +45,7 @@ class FeedEntry
                                                       }
                                 }
 
-  def self.recreate_index
+  def self.recreate_index!
     mappings = {}
     mappings[FeedEntry::ELASTIC_TYPE_NAME]= {
 
@@ -54,14 +54,19 @@ class FeedEntry
                         "type": "boolean"
                       },
                       "title": {
+                        "analyzer": "english",
+                        "type": "string"
+                      },
+                      "title_not_analyzed": {
                         #for exact match
                         "index": "not_analyzed",
                         "type": "string"
                       },
+
                       "url": {
-                        "index": "not_analyzed",
+                        "analyzer": "english",
                         "type": "string"
-                      },                      
+                      },
                       "summary": {
                         "analyzer": "english",
                         "index_options": "offsets",
@@ -103,6 +108,7 @@ class FeedEntry
   def to_hash(options={})
     hash = self.as_json
     map_attachment(hash) if !self.alerted
+    hash[:title_not_analyzed] = hash[:title]
     hash
   end
 
