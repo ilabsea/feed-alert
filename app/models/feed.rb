@@ -23,7 +23,6 @@ class Feed < ActiveRecord::Base
   end
 
   def destroy_feed_entries
-    p 'destroy_feed_entries'
     FeedEntry.remove(feed_id: self.id)
   end
 

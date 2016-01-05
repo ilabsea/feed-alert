@@ -148,7 +148,7 @@ class FeedEntry
         },
         
       },
-      size: 0
+      size: 500
     }
 
   end
