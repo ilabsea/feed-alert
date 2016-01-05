@@ -9,7 +9,7 @@ namespace :feed do
       url: "http://feeds.reuters.com/reuters/globalmarketsNews",
       name: "Reuter"
     }
-    keywords = ["HTC", "Mountain", "vanishingly", "British", "pound"]
+    keywords = ["HTC", "Mountain", "vanishingly", "British"]
     alert = Alert.where(option).first_or_create
     
     keywords.each do |item|

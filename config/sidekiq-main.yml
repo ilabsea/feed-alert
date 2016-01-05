@@ -11,4 +11,5 @@ production:
   - mailers
   - default
   - indexer
+  - alert_result
 

@@ -9,7 +9,6 @@ production:
   :concurrency: 10
 
 :queues:
-  - alert_result
   - process_feed
   - process_feed_entry
   - cron

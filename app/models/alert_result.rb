@@ -6,7 +6,8 @@ class AlertResult
 
   def run
     @search_result = FeedEntry.result(SearchOption.for_new_feed_entries(@alerts))
-    FeedEntry.mark_as_alerted(@search_result.feed_entries)
+    feed_entries = @search_result.feed_entries
+    FeedEntry.mark_as_alerted(feed_entries) if !feed_entries.empty?
 
     @search_result.alerts.each do |alert|
       alert_email(alert)
