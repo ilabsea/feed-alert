@@ -2,21 +2,17 @@ class ProcessFeedJob < ActiveJob::Base
   queue_as :process_feed
 
   after_perform do |job|
-    p "&&&&&&&&&&&&&&&&&&after_perform&&&&&&&&&&&&&&&&"
-    p ActiveJob
     alert_id = job.arguments.first
     alert = Alert.find(alert_id)
-    AlertResult.new([alert]).run
-    p "&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    AlertResultJob.set(wait: 10.minutes).perform_later(alert)
+    ProcessFeedJob.set(wait: 20.minutes).perform_later(alert)
   end
 
-  def perform(alert_id)
-    p 'performing'
-    alert = Alert.find(alert_id)
+  def perform(alert)
     if alert
       ProcessFeed.start(alert)
     else
-      Rails.logger.debug { "could not find any alert with id: #{alert_id}" }
+      Rails.logger.debug { "could not find any alert with id: #{alert.id}" }
     end
   end
 end
