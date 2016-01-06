@@ -1,6 +1,6 @@
 class HtmlSearch
   def initialize(content)
-    @doc = Nokogiri::HTML(content)
+    @doc = Nokogiri::HTML(Base64.decode64(content["_content"]))
   end
 
   def highlight(keywords, &block)
