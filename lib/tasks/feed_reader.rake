@@ -6,12 +6,12 @@ namespace :feed do
   end
 
   desc 'Read Feed From Alert source'
-  task read_data: :environment do
+  task alert: :environment do
     FeedReader.from_alert
   end
 
   desc 'Alert Match feed entries'
-  task alert: :environment do
+  task apply_search: :environment do
     ApplySearch.run
   end
 

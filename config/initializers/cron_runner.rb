@@ -18,4 +18,4 @@ schedules = {
   }
 }
 
-Sidekiq::Cron::Job.load_from_hash schedules
+# Sidekiq::Cron::Job.load_from_hash schedules
