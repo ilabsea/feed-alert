@@ -3,7 +3,11 @@ class AlertResultJob < ActiveJob::Base
 
   def perform(alert_id)
     alert = Alert.find(alert_id)
-    AlertResult.new([alert]).run
+    if alert
+      AlertResult.new([alert]).run
+    else
+      Rails.logger.debug { "could not find any alert with id: #{alert.id}" }
+    end
   end
 
 end
