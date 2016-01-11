@@ -86,6 +86,7 @@ class Alert < ActiveRecord::Base
   end
 
   def translate_message
+    return "" unless self.project.sms_alert_template
     translate_options = {
       alert_name: self.name,
       total_match: self.total_match,
