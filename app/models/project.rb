@@ -104,7 +104,7 @@ class Project < ActiveRecord::Base
       working_minutes = sms_time.hour * 60 + sms_time.min
       return in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
     end
-    return true
+    return false
   end 
 
   def in_minutes field
