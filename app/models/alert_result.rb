@@ -10,7 +10,7 @@ class AlertResult
     FeedEntry.mark_as_alerted(feed_entries) if !feed_entries.empty?
 
     @search_result.alerts.each do |alert|
-      if !alert_highlight.empty?
+      if !alert_highlight(alert.id).empty?
         alert_email(alert)
         alert_sms(alert)
       end
@@ -31,7 +31,7 @@ class AlertResult
       if emails_to.length > 0 && alert.total_match > 0
 
         # delay, delay_for, delay_unitl
-        AlertMailer.delay_for(delay_time.minute).notify_matched(alert_highlight,
+        AlertMailer.delay_for(delay_time.minute).notify_matched(alert_highlight(alert.id),
                                    alert.id,
                                    group.name,
                                    emails_to)
