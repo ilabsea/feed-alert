@@ -10,8 +10,10 @@ class AlertResult
     FeedEntry.mark_as_alerted(feed_entries) if !feed_entries.empty?
 
     @search_result.alerts.each do |alert|
-      alert_email(alert)
-      alert_sms(alert)
+      if !alert_highlight.empty?
+        alert_email(alert)
+        alert_sms(alert)
+      end
     end
   end
 
@@ -29,7 +31,7 @@ class AlertResult
       if emails_to.length > 0 && alert.total_match > 0
 
         # delay, delay_for, delay_unitl
-        AlertMailer.delay_for(delay_time.minute).notify_matched(@search_result.results_by_alert(alert.id),
+        AlertMailer.delay_for(delay_time.minute).notify_matched(alert_highlight,
                                    alert.id,
                                    group.name,
                                    emails_to)
@@ -66,6 +68,10 @@ class AlertResult
         SmsAlertJob.set(wait: delay_time.minute).perform_later(message_options) if !message_options.empty?
       end
     end
+  end
+
+  def alert_highlight alert_id
+    @search_result.results_by_alert(alert.id)
   end
 
   def delay_time
