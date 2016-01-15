@@ -71,7 +71,7 @@ class AlertResult
   end
 
   def alert_highlight alert_id
-    @search_result.results_by_alert(alert.id)
+    @search_result.results_by_alert(alert_id)
   end
 
   def delay_time
