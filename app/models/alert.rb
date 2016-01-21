@@ -59,7 +59,7 @@ class Alert < ActiveRecord::Base
   end
 
   def valid
-    invalid_url < 0 && alert_keywords_count > 0
+    invalid_url < 3 && alert_keywords_count > 0
   end
 
   def self.valid
