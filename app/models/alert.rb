@@ -58,6 +58,14 @@ class Alert < ActiveRecord::Base
     self.error_message = nil
   end
 
+  def valid
+    invalid_url < 0 && alert_keywords_count > 0
+  end
+
+  def self.valid
+    where("invalid_url < ? AND alert_keywords_count > ?", ENV['MAX_ERROR_NUMBER'].to_i, 0)
+  end
+
   def self.valid_url
     where("invalid_url < ? ", ENV['MAX_ERROR_NUMBER'].to_i)
   end

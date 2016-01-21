@@ -3,8 +3,9 @@ class ProcessFeedJob < ActiveJob::Base
 
   after_perform do |job|
     alert_id = job.arguments.first
+    alert = Alert.find(alert_id)
     AlertResultJob.set(wait: 10.minutes).perform_later(alert_id)
-    ProcessFeedJob.set(wait: 20.minutes).perform_later(alert_id)
+    ProcessFeedJob.set(wait: 20.minutes).perform_later(alert_id) if alert.valid
   end
 
   def perform(alert_id)
