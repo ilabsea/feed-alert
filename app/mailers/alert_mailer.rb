@@ -9,7 +9,7 @@ class AlertMailer < ApplicationMailer
   end
 
   def notify_group_message(group_message, emails_to)
-    group_message = group_message
+    @group_message = group_message
     roadie_mail(to: emails_to, subject: "Group Message")
   end
 end

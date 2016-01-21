@@ -35,7 +35,7 @@ class ProcessFeed
             entry_attrs[:keywords] = alert.keywords.map(&:name)            
             feed_entry = FeedEntry.create(entry_attrs)
           end
-          p "*****finish fetching url: #{feed_entry.url}****"
+          # p "*****finish fetching url: #{feed_entry.url}****"
 
           sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
         end
