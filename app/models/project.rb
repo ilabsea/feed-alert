@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
 
   validates :name, presence: true
 
-  has_many :alerts
+  has_many :alerts, dependent: :destroy
   has_many :channel_accesses, dependent: :destroy
   has_many :channels, through: :channel_accesses
 

@@ -13,7 +13,7 @@
       <%= link_edit " ", edit_project_path(project_with_role.object) %>
       <%= link_destroy " ", project_path(project_with_role.object),
                             method: :delete,
-                            data: { confirm: 'Are you sure to delete this project ?' } %>
+                            data: { confirm: 'Are you sure to delete this project ?', 'confirm-explain' => "All alerts under this project will also be deleted." } %>
     <% end %>
   </td>
 </tr>
