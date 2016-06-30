@@ -59,7 +59,7 @@ class Alert < ActiveRecord::Base
   end
 
   def valid
-    invalid_url < 3 && alert_keywords_count > 0
+    invalid_url < ENV['MAX_ERROR_NUMBER'].to_i && alert_keywords_count > 0
   end
 
   def self.valid
@@ -124,7 +124,7 @@ class Alert < ActiveRecord::Base
       Alert.find_each(batch_size: 100) do |alert|
         channel = alert.channel
         project = alert.project
-        
+
         unless project.sms_alert_started_at && project.sms_alert_ended_at
           if alert.from_time && alert.to_time
             project.sms_alert_started_at = alert.from_time
@@ -141,6 +141,6 @@ class Alert < ActiveRecord::Base
           end
         end
       end
-    end    
+    end
   end
 end
