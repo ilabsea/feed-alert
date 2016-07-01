@@ -47,6 +47,7 @@ class ProcessFeed
     rescue NoMethodError => e
       alert.mark_error("Invalid feed url")
     rescue Exception => e
+      Rails.logger.debug { "Unexpected error : #{e.message},  alert: #{alert.name} with url: #{alert.url}" }
       alert.mark_error("Unexpected error")
     end
 
