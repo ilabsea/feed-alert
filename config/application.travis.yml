@@ -14,7 +14,7 @@ default: &default
   HOST: "http://localhost:3000"
   ASSET_HOST_URL: "http://localhost:3000"
 
-  CODECLIMATE_REPO_TOKEN: '85edc625930f1de285c86060f710932603b6c92f9d8538f5440d6728dc62baf9'
+  CODECLIMATE_REPO_TOKEN: 'a225f07862617f4592fdcd75260bae259fdb6a6c57f7a4ee6df64b18fa38837b'
 
   NUNTIUM_URL: 'http://nuntium.instedd.org'
   NUNTIUM_ACCOUNT: 'png' # Endpoint http://nuntium.instedd.org/png/qst
