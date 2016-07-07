@@ -59,7 +59,7 @@ gem 'foreman'
 gem 'newrelic_rpm'
 
 gem 'open_uri_redirections'
-
+gem "ruby-readability", :require => 'readability'
 
 group :development do
   gem 'capistrano', '3.4.0'
@@ -105,4 +105,3 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
 end
-

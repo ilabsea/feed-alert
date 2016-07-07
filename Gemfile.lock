@@ -219,6 +219,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guess_html_encoding (0.0.11)
     hashie (3.4.2)
     hitimes (1.2.3)
     http-cookie (1.0.2)
@@ -349,6 +350,9 @@ GEM
       rspec-mocks (~> 3.3.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
+    ruby-readability (0.7.0)
+      guess_html_encoding (>= 0.0.4)
+      nokogiri (>= 1.6.0)
     rufus-scheduler (3.1.4)
     sass (3.4.18)
     sass-rails (5.0.4)
@@ -485,6 +489,7 @@ DEPENDENCIES
   rake
   roadie-rails
   rspec-rails
+  ruby-readability
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
