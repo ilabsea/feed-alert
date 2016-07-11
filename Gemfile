@@ -84,7 +84,7 @@ group :development, :test do
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
-
+  gem 'faker'
   gem 'ffaker'
   gem 'rspec-rails'
   gem 'guard-rspec'
