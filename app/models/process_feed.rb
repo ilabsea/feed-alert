@@ -31,7 +31,6 @@ class ProcessFeed
               feed_entry.update_attributes(entry_attrs)
             end
           else
-            # entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
             entry_attrs[:content] = ExtractContent.instance.run(entry_attrs[:url])
             entry_attrs[:keywords] = alert.keywords.map(&:name)
             feed_entry = FeedEntry.create(entry_attrs)

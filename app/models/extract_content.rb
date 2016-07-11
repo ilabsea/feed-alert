@@ -8,7 +8,7 @@ class ExtractContent
 
   def run(url)
     source = FetchPage.instance.run(url)
-    Readability::Document.new(source)
+    Readability::Document.new(source).content
   end
 
 end
