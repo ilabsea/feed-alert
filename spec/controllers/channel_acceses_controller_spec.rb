@@ -23,24 +23,36 @@ RSpec.describe ChannelAccessesController do
     end
   end
 
-  describe 'POST #create' do
+  describe 'POST #national_gateway' do
     let!(:user) { FactoryGirl.create(:admin_user) }
     let!(:project) { FactoryGirl.create(:project) }
+    let!(:channel) { FactoryGirl.create(:national_channel) }
     before {
      subject.stub(current_user: user, authenticate_user!: true)
     }
-    context "with valid params" do
+    context "with channel_id" do
       before(:each) do
-        post :create, {project: {id: project.id, is_enabled_national_gateway: "1"} }
+        post :national_gateway, {channel_access: {project_id: project.id, channel_id: [channel.id] }}
       end
 
-      it "update is_enabled_national_gateway in @project" do
-        expect(Project.find(project.id).is_enabled_national_gateway).to equal(true)
+      it "create the channel_access" do
+        expect(ChannelAccess.find_by(project_id: project.id)).not_to be_nil
       end
 
-      it { is_expected.to redirect_to new_channel_accesses_path }
+      it { is_expected.to redirect_to channel_accesses_path }
     end
 
+    context "without channel_id" do
+      before(:each) do
+        post :national_gateway, {channel_access: {project_id: project.id, channel_id: [] }}
+      end
+
+      it "destroy the channel accesses that related to the project_id" do
+        expect(ChannelAccess.find_by(project_id: project.id)).to be_nil
+      end
+
+      it { is_expected.to redirect_to channel_accesses_path }
+    end
   end
 
 end
