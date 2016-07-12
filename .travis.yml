@@ -3,6 +3,7 @@ cache: bundler
 
 services:
   - redis-server
+  - elasticsearch
 
 addons:
   code_climate:
