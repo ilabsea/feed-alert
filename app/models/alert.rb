@@ -40,11 +40,6 @@ class Alert < ActiveRecord::Base
   belongs_to :project
   belongs_to :channel
 
-  INTERVAL_UNIT_HOUR = "Hour"
-  INTERVAL_UNIT_DAY  = "Day"
-
-  INTERVAL_UNITS = [INTERVAL_UNIT_HOUR, INTERVAL_UNIT_DAY]
-
   validates :name, presence: true
   validates :url, presence: true
   validates :url, url: true
@@ -76,22 +71,6 @@ class Alert < ActiveRecord::Base
     Alert.includes(:keywords).where("alert_keywords_count > ?", 0).find_in_batches(batch_size: 5) do |alerts|
       AlertResult.new(alerts).run
     end
-  end
-
-  def apply_search
-    AlertResult.new([self]).run
-  end
-
-
-  def translate_message
-    return "" unless self.project.sms_alert_template
-    translate_options = {
-      alert_name: self.name,
-      total_match: self.total_match,
-      keywords: self.keywords.map(&:name).join(", ")
-    }
-
-    StringSearch.instance.set_source(self.project.sms_alert_template).translate(translate_options)
   end
 
   def self.from_member(member_id)
