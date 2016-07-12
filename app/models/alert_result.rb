@@ -21,11 +21,9 @@ class AlertResult
   def alert_email alert
     alert.groups.each do |group|
       emails_to = []
-      smses_to  = []
 
       group.members.each do |member|
         emails_to << member.email if member.email_alert
-        smses_to  << member.phone if member.sms_alert && alert.project.enabled_channels
       end
 
       if emails_to.length > 0 && alert.total_match > 0

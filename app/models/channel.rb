@@ -28,8 +28,6 @@ class Channel < ActiveRecord::Base
   SETUP_FLOW_ADVANCED = 'Advanced'
   SETUP_FLOW_GLOBAL = 'National'
 
-  # validates :name, presence: true
-  # validates :name, length: { minimum: 3, maximum: 30}
   validates :name, uniqueness: { scope: :user_id}
   validates :password, presence: true, length: {minimum: 4, maximum: 6}, if: ->(u) { u.advanced_setup? }
 
@@ -72,25 +70,5 @@ class Channel < ActiveRecord::Base
   def self.national_gateway
     where(:setup_flow => Channel::SETUP_FLOW_GLOBAL)
   end
-
-  def self.suggested_by_phone(channels,phone)
-    phone_carrier = Tel.new(phone).carrier
-    if phone_carrier
-      channels.each do |channel|
-        return channel if channel["name"] == phone_carrier
-      end
-    end
-    return channels.first
-  end
-
-  # def self.active_channels(channels)
-  #   active_channels = []
-  #   channels.each do |channel|
-  #     if channel.is_enable && ChannelNuntium.new(channel).client_connected
-  #       active_channels.push channel
-  #     end
-  #   end
-  #   return active_channels    
-  # end
 
 end
