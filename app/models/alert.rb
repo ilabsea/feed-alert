@@ -40,8 +40,6 @@ class Alert < ActiveRecord::Base
   belongs_to :project
   belongs_to :channel
 
-  # accepts_nested_attributes_for :alert_places, allow_destroy: true
-
   INTERVAL_UNIT_HOUR = "Hour"
   INTERVAL_UNIT_DAY  = "Day"
 
@@ -84,14 +82,6 @@ class Alert < ActiveRecord::Base
     AlertResult.new([self]).run
   end
 
-  def in_minutes field
-    field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
-  end
-
-  def is_time_appropiate? sms_time
-    working_minutes = sms_time.hour * 60 + sms_time.min
-    in_minutes(self.from_time) <= working_minutes && working_minutes <= in_minutes(self.to_time)
-  end
 
   def translate_message
     return "" unless self.project.sms_alert_template

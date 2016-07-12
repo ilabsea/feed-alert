@@ -31,7 +31,7 @@ class FeedEntry
   attribute :feed_id, Integer
   attribute :keywords #denormalize keywords from alerts
 
-  attribute :content, nil, mapping: { type: 'attachment', fields: { 
+  attribute :content, nil, mapping: { type: 'attachment', fields: {
                                                         author: { index: "no"},
                                                         date: { index: "no"},
                                                         content: { store: "yes",
@@ -93,7 +93,7 @@ class FeedEntry
       index: FeedEntry::ELASTIC_INDEX_NAME,
     }
     self.gateway.client.indices.delete(options) rescue nil
-    self.gateway.client.indices.create(options.merge( body: { mappings: mappings}))   
+    self.gateway.client.indices.create(options.merge( body: { mappings: mappings}))
   end
 
   def self.result(options={})
@@ -101,7 +101,7 @@ class FeedEntry
     # use raw version since elasticsearch-model does not support facet query
     results = self.gateway.client.search(index: self.index_name, body: criteria)
     FeedEntrySearchResultPresenter.new(results)
-  end  
+  end
 
 
   def to_hash(options={})
@@ -143,9 +143,9 @@ class FeedEntry
 
             }
           },
-          filter: filter 
+          filter: filter
         },
-        
+
       },
       size: 500
     }
@@ -185,9 +185,9 @@ class FeedEntry
             bool: {
               must: must
             }
-          } 
+          }
         },
-        
+
       },
       size: 500
     }

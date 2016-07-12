@@ -4,22 +4,15 @@ class GroupMessageResult
     @channels = channels
   end
 
-  # def run
-  #   delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
-  #   messages = parse
-  #   SmsAlertJob.set(wait: delay_time.minute).perform_later(messages)
-  # end
-
-
   def run
     delay_time = ENV['DELAY_DELIVER_IN_MINUTES'].to_i
     messages = []
     smses_to = []
-    emails_to = [] 
-       
+    emails_to = []
+
     groups = Group.where(id: @group_message.receiver_groups)
     channel_suggested = ChannelSuggested.new(@channels)
-    
+
     groups.each do |group|
       smses_to = []
       group.members.each do |member|
@@ -71,7 +64,7 @@ class GroupMessageResult
         end
       end
     end
-    messages    
+    messages
   end
 
 end

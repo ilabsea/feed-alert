@@ -12,7 +12,6 @@ class PerformChannelPermission
         channel_permission.role = attrs[:role]
         channel_permission.save!
       end
-
     end
   end
 
