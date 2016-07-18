@@ -9,7 +9,7 @@ class ChannelNuntium
 
   def create
     if @channel.valid?
-      begin 
+      begin
         register_nuntium_channel if !@channel.global_setup?
         if !@channel.save
           @error_message = "Failed to save channel"
@@ -74,19 +74,16 @@ class ChannelNuntium
       :enabled => true,
       :restrictions => '',
       :priority => 50,
-      :configuration => { 
+      :configuration => {
         :password => @channel.gen_password,
         :friendly_name => @channel.name
       }
     }
-    
+
     basic_options = { ticket_code: @channel.ticket_code,
                       ticket_message: "This phone will be used for as SMS gateway for #{ENV['APP_NAME']}." }
 
-
     config.merge!(basic_options) if @channel.basic_setup?
-    p "config: "
-    p config
     response = @nuntium.create_channel(config)
     handle_nuntium_channel_response response
   end
@@ -95,7 +92,7 @@ class ChannelNuntium
     config_options = { name: @channel.name,
                        enabled: true,
                        restrictions: '',
-                       configuration: { 
+                       configuration: {
                         friendly_name: @channel.name,
                         password: @channel.password
                        }
@@ -133,16 +130,6 @@ class ChannelNuntium
 
   def client_connected
     nuntium_info['connected'] rescue nil
-  end
-
-  def self.active_channels(channels)
-    active_channels = []
-    channels.each do |channel|
-      if channel.is_enable && ChannelNuntium.new(channel).client_connected
-        active_channels.push channel
-      end
-    end
-    return active_channels    
   end
 
 end

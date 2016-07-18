@@ -99,8 +99,8 @@ class Project < ActiveRecord::Base
     self.channels.where('channel_accesses.is_active = ? && channels.is_enable = ?', true, true)
   end
 
-  def is_time_appropiate? sms_time
-    if self.sms_alert_started_at && self.sms_alert_ended_at
+  def time_appropiate? sms_time
+    if has_sms_alert_started_at? && has_sms_alert_ended_at?
       working_minutes = sms_time.hour * 60 + sms_time.min
       return in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
     end
@@ -119,6 +119,14 @@ class Project < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def has_sms_alert_started_at?
+    sms_alert_started_at
+  end
+
+  def has_sms_alert_ended_at?
+    sms_alert_ended_at
   end
 
 end

@@ -73,6 +73,17 @@ class Alert < ActiveRecord::Base
     end
   end
 
+  def translate_message
+    return "" unless self.project.sms_alert_template
+    translate_options = {
+      alert_name: self.name,
+      total_match: self.total_match,
+      keywords: self.keywords.map(&:name).join(", ")
+    }
+
+    StringSearch.instance.set_source(self.project.sms_alert_template).translate(translate_options)
+  end
+
   def self.from_member(member_id)
     group_sql = Group.select('groups.id').joins('INNER JOIN memberships ON memberships.group_id = groups.id ')
                      .where([ 'memberships.member_id=?', member_id]).to_sql
@@ -111,5 +122,9 @@ class Alert < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def has_match?
+    total_match > 0
   end
 end
