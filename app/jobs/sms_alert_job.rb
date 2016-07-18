@@ -4,4 +4,5 @@ class SmsAlertJob < ActiveJob::Base
   def perform(message_options)
     Sms.instance().send(message_options)
   end
+
 end

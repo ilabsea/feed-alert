@@ -104,4 +104,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'launchy'
   gem 'simplecov', require: false
+  gem 'timecop'
 end

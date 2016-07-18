@@ -11,7 +11,8 @@ class ChannelSuggested
         return channel if channel["name"] == phone_carrier
       end
     end
-    return @channels.first    
+    
+    return @channels.first
   end
 
 end
