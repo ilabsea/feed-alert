@@ -16,13 +16,14 @@ default: &default
 
   CODECLIMATE_REPO_TOKEN: 'a225f07862617f4592fdcd75260bae259fdb6a6c57f7a4ee6df64b18fa38837b'
 
+  IS_NUNTIUM_ADMIN: 'false'
   NUNTIUM_URL: 'http://nuntium.instedd.org'
-  NUNTIUM_ACCOUNT: 'png' # Endpoint http://nuntium.instedd.org/png/qst
-  NUNTIUM_APP: 'FeedAlert' # Name
-  NUNTIUM_APP_PWD: "123456" # Password
+  NUNTIUM_ACCOUNT: '' # Endpoint http://nuntium.instedd.org/png/qst
+  NUNTIUM_APP: '' # Name
+  NUNTIUM_APP_PWD: "" # Password
 
-  NUNTIUM_INCOMING_USER: 'nuntium'
-  NUNTIUM_INCOMING_PWD: '123456'
+  NUNTIUM_INCOMING_USER: ''
+  NUNTIUM_INCOMING_PWD: ''
 
   ELASTICSEARCH_URL: 'http://localhost:9200'
   STREAM_ALERT_DATABASE_PASSWORD: ''
