@@ -16,8 +16,9 @@ default: &default
 
   CODECLIMATE_REPO_TOKEN: ''
 
-  NUNTIUM_URL: ''
-  NUNTIUM_ACCOUNT: 'png' # Endpoint http://nuntium.instedd.org/png/qst
+  IS_NUNTIUM_ADMIN: false
+  NUNTIUM_URL: 'http://nuntium.instedd.org'
+  NUNTIUM_ACCOUNT: '' # Endpoint http://nuntium.instedd.org/png/qst
   NUNTIUM_APP: '' # Name
   NUNTIUM_APP_PWD: "" # Password
 
