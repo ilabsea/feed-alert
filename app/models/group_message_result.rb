@@ -9,7 +9,7 @@ class GroupMessageResult
     messages = []
     emails_to = []
 
-    groups = Group.where(id: @group_message.receiver_groups)
+    groups = Group.where(id: @group_message.receiver_groups).includes(:members)
 
     groups.each do |group|
       smses_to = []
