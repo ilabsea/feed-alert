@@ -14,11 +14,15 @@ rvm:
 
 # uncomment this line if your project needs to run something other than `rake`:
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:migrate --trace RAILS_ENV=test
   - bundle exec rake db:test:prepare
+  - bundle exec rake feed:recreate_index --trace RAILS_ENV=test
   - bundle exec rspec spec
 
 before_script:
 # - rm Gemfile.lock
+  - /usr/share/elasticsearch/bin/elasticsearch -v
+  - sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.4.3
+  - sudo service elasticsearch restart
   - cp config/application.travis.yml config/application.yml
   - mysql -e 'create database stream_alert_test'
