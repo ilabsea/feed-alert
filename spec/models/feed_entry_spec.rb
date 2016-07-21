@@ -24,4 +24,21 @@ RSpec.describe FeedEntry, type: :model do
     end
   end
 
+
+  describe ".result" do
+    let!(:alert) { create(:alert, url: 'http://foo.bar') }
+    let(:result) {
+      {
+        q: [{ id: alert.id, keywords: ['foo', 'bar']}],
+        alerted: false
+      }
+    }
+
+    before(:each) do
+      allow(SearchOption).to receive(:for_new_feed_entries).with([alert]).and_return(result)
+    end
+
+    it { expect(FeedEntry.result(result)).to be_a_kind_of(FeedEntrySearchResultPresenter) }
+  end
+
 end

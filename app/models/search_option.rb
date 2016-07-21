@@ -8,7 +8,7 @@ class SearchOption
     self.for(alerts, true)
   end
 
-  def self.for(alerts, alerted )
+  def self.for(alerts, alerted)
     options = {}
     options[:q] = alerts.map {|alert| { id: alert.id, keywords: alert.keywords.map(&:name) } }
     options[:alerted] = alerted
