@@ -1,9 +1,9 @@
 class GroupMessagesController < ApplicationController
 
   def index
-    
+
   end
-  
+
   def new
     @group_message = GroupMessage.new
   end
@@ -11,9 +11,11 @@ class GroupMessagesController < ApplicationController
   def create
     @group_message = GroupMessage.new(filter_params)
     @group_message.user_id = current_user.id
-    if @group_message.send_ao
+
+    begin
+      @group_message.send_ao!
       redirect_to new_group_message_path, notice: 'Group message has been send'
-    else
+    rescue Exception => e
       flash.now[:alert] = @group_message.errors.messages[:base]? @group_message.errors.messages[:base].first : "Failed to send group message"
       render :new
     end

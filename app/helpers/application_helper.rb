@@ -10,17 +10,17 @@ module ApplicationHelper
     offset_page = page > 1 ? page - 1 : 0
     index + Kaminari.config.default_per_page * offset_page
   end
-  
+
   def page_title(title)
     content_for(:title) { title + " - " + ENV['APP_NAME'] }
   end
-  
+
   def paginate_for(records, options={})
     content_tag :div, paginate(records, {theme: 'twitter-bootstrap-3'}.merge(options)), class: 'paginate-nav pull-right'
   end
 
   def errors_for(record)
-    content_tag :ul, class: 'record-error' do 
+    content_tag :ul, class: 'record-error' do
       result = ""
       record.errors.full_messages.each do |message|
         result += content_tag('li', message, class: 'record-error-field')
@@ -78,7 +78,7 @@ module ApplicationHelper
 
   def page_header title, options={},  &block
      content_tag :div,:class => "list-header clearfix" do
-        if block_given? 
+        if block_given?
             content_title = content_tag :div, :class => "left" do
               content_tag(:h3, title, :class => "header-title")
             end
@@ -87,10 +87,10 @@ module ApplicationHelper
             content_link = content_tag(:div, output, {:class => " right"})
             content_title + content_link
         else
-            content_tag :div , :class => "" do 
+            content_tag :div , :class => "" do
                content_tag(:h3, title, :class => "header-title")
             end
-        end 
+        end
      end
   end
 
@@ -175,7 +175,7 @@ module ApplicationHelper
   end
 
   def app_menu_admin
-    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]    
+    [{ controller: :channel_accesses, text: 'National Gateway ' ,url: channel_accesses_path, class: '' }]
   end
 
   # user_signed_in?
@@ -184,7 +184,7 @@ module ApplicationHelper
            {controller: :home, text: 'Home', url: root_path, class: ''},
            { controller: [:projects, :alerts], text: 'Projects', url: projects_path, class: '' },
            { controller: [:groups, :members], text: 'Groups & Recipients', url: groups_path, class: '' },
-           { controller: [:channels, :group_messages], text: 'SMS', url: channels_path, class: 'dropdown', 
+           { controller: [:channels, :group_messages], text: 'SMS', url: channels_path, class: 'dropdown',
             sub: [
               {text: 'SMS Setting', url: channels_path},
               {text: 'Send Group Message', url: new_group_message_path}
@@ -192,7 +192,7 @@ module ApplicationHelper
            },
            { controller: :permissions, text: 'User Permission' ,url: permissions_path, class: '' }
     ]
-    
+
     menu = menu + app_menu_admin if user_admin?
 
     index_first = 0
@@ -254,10 +254,10 @@ module ApplicationHelper
     content_for(:meta_tag) do
 
       meta_tag  = tag(:meta, name: 'description', content: options[:description])
-      meta_tag += tag(:meta, name: 'keywords', content: options[:keyword]) 
+      meta_tag += tag(:meta, name: 'keywords', content: options[:keyword])
       #open graph
       meta_tag += tag(:meta, property: 'og:type', content: 'article')
-      meta_tag += tag(:meta, property: 'og:title', content: options[:title]) 
+      meta_tag += tag(:meta, property: 'og:title', content: options[:title])
       meta_tag += tag(:meta, property: 'og:image', content: image_url(options[:image]))
       meta_tag += tag(:meta, property: 'og:description', content: options[:description])
       meta_tag += tag(:meta, property: 'og:url', content: options[:url])

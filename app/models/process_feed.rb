@@ -24,7 +24,7 @@ class ProcessFeed
           }
 
           feed_entry = FeedEntry.where(title_not_analyzed: entry_attrs[:title], alert_id: alert.id).first
-          if feed_entry 
+          if feed_entry
             if feed_entry.url != entry_attrs[:url]
               entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
               entry_attrs[:keywords] = alert.keywords.map(&:name)
@@ -32,7 +32,7 @@ class ProcessFeed
             end
           else
             entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
-            entry_attrs[:keywords] = alert.keywords.map(&:name)            
+            entry_attrs[:keywords] = alert.keywords.map(&:name)
             feed_entry = FeedEntry.create(entry_attrs)
           end
           # p "*****finish fetching url: #{feed_entry.url}****"

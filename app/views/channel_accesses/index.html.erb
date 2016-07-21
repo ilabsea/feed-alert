@@ -10,7 +10,7 @@
   </div>
   <div class="pull-right">
     <%= link_new 'Assign new project to national gateway', new_channel_access_path %>
-  </div>  
+  </div>
 </div>
 
 <%= render 'search_user' %>
@@ -24,30 +24,31 @@
         <td>Project</td>
         <% national_gateway_channels.each do |channel| %>
         <td><%= channel.name %></td>
-        <% end %>       
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <% @rows.each do |row| %>
-      <tr>
-        <td><%= row[0].email %></td>
-        <td><%= row[1].name %></td>
-        <%= form_for @channel_access, url: national_gateway_channel_accesses_path(@channel_access) do |f| %>
-          <%= f.hidden_field :project_id, value: row[1].id %>          
-          <% (row.size - 2).times.each do |i| %>
-            <td>
-              <% if row[i+2] %>
-                <%= f.check_box(:channel_id, { :multiple => true, :checked => true, :onclick => "javascript:submit();"}, national_gateway_channels[i].id, nil) %>
-              <% else %>
-                <%= f.check_box(:channel_id, { :multiple => true, :onclick => "javascript:submit();" }, national_gateway_channels[i].id, nil) %>
-              <% end -%>
-            </td>
+        <tr>
+          <td><%= row[0].email %></td>
+          <td><%= row[1].name %></td>
+          <% if Setting.nuntium_admin? %>
+            <%= form_for @channel_access, url: national_gateway_channel_accesses_path(@channel_access) do |f| %>
+              <%= f.hidden_field :project_id, value: row[1].id %>
+              <% (row.size - 2).times.each do |i| %>
+                <td>
+                  <% if row[i+2] %>
+                    <%= f.check_box(:channel_id, { :multiple => true, :checked => true, :onclick => "javascript:submit();"}, national_gateway_channels[i].id, nil) %>
+                  <% else %>
+                    <%= f.check_box(:channel_id, { :multiple => true, :onclick => "javascript:submit();" }, national_gateway_channels[i].id, nil) %>
+                  <% end -%>
+                </td>
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      </tr>
+        </tr>
       <% end %>
     </tbody>
-
   </table>
 </div>
 

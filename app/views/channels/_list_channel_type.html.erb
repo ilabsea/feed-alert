@@ -14,7 +14,7 @@
       </div>
     </div>
 
-  <% if user_admin? %>
+  <% if user_admin? && Setting.nuntium_admin? %>
     <div class="panel panel-info">
       <div class="panel-heading setup-flow clearfix" style='cursor:pointer;' onclick="channelWizardView('new-national-channel-wizard');">
         <div class="pull-left" style='width: 60px; font-size: 40px; margin-top: 10px;'>
@@ -30,4 +30,3 @@
   <% end %>
 
 </div>
-

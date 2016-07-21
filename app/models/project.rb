@@ -48,7 +48,7 @@ class Project < ActiveRecord::Base
     raise ActiveRecord::RecordNotFound
 
   end
- 
+
   def is_active_channel? channel
     channel_access = self.channel_accesses.select { |c| c.channel_id ==  channel.id}.first
     channel_access ? channel_access.is_active : false
@@ -56,7 +56,7 @@ class Project < ActiveRecord::Base
 
   def self.from_query(query)
     like = "#{query}%"
-    where([ "name LIKE ?", like ]) 
+    where([ "name LIKE ?", like ])
   end
 
   def self.query_by_user(user_id)
@@ -76,7 +76,7 @@ class Project < ActiveRecord::Base
 
   def reset_national_gateway_channel_access channel_ids
     national_gateway_ids = Channel.national_gateway.pluck(:id)
-    channel_accesses = self.channel_accesses.where(channel_id: national_gateway_ids)   
+    channel_accesses = self.channel_accesses.where(channel_id: national_gateway_ids)
     channel_accesses.where.not(channel_id: channel_ids).destroy_all
   end
 
@@ -93,19 +93,19 @@ class Project < ActiveRecord::Base
         end
       end
     end
-  end  
+  end
 
   def enabled_channels
     self.channels.where('channel_accesses.is_active = ? && channels.is_enable = ?', true, true)
   end
 
-  def is_time_appropiate? sms_time
-    if self.sms_alert_started_at && self.sms_alert_ended_at
+  def time_appropiate? sms_time
+    if has_sms_alert_started_at? && has_sms_alert_ended_at?
       working_minutes = sms_time.hour * 60 + sms_time.min
       return in_minutes(self.sms_alert_started_at) <= working_minutes && working_minutes <= in_minutes(self.sms_alert_ended_at)
     end
     return false
-  end 
+  end
 
   def in_minutes field
     field.split(":")[0].to_i * 60 + field.split(":")[1].to_i
@@ -119,6 +119,14 @@ class Project < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def has_sms_alert_started_at?
+    sms_alert_started_at
+  end
+
+  def has_sms_alert_ended_at?
+    sms_alert_ended_at
   end
 
 end

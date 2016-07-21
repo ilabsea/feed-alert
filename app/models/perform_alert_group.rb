@@ -4,7 +4,7 @@ class PerformAlertGroup
     @options = options
   end
 
-  def create()
+  def create
     alert = Alert.includes(project: [:project_permissions]).find(@options[:alert_id])
     alert_group = alert.alert_groups.build(group_id: @options[:group_id])
     if alert_group.save
@@ -32,7 +32,5 @@ class PerformAlertGroup
     group_permissions.destroy_all
 
   end
-
-  private
 
 end
