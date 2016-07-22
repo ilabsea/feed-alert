@@ -16,7 +16,7 @@ default: &default
 
   CODECLIMATE_REPO_TOKEN: ''
 
-  IS_NUNTIUM_ADMIN: false
+  IS_NUNTIUM_ADMIN: 'false'
   NUNTIUM_URL: 'http://nuntium.instedd.org'
   NUNTIUM_ACCOUNT: '' # Endpoint http://nuntium.instedd.org/png/qst
   NUNTIUM_APP: '' # Name
@@ -29,7 +29,7 @@ default: &default
   STREAM_ALERT_DATABASE_PASSWORD: ''
 
   PROCESS_TIME_IN_MINUTES: '30'
-  DELAY_DELIVER_IN_MINUTES: '10'
+  DELAY_DELIVER_IN_MINUTES: '1'
   SLEEP_BETWEEN_REQUEST_IN_SECOND: '0'
 
   MAX_ERROR_NUMBER: '3'

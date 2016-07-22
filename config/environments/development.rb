@@ -35,7 +35,7 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.smtp_settings = {
     :address   => "localhost",
     :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
@@ -50,5 +50,5 @@ Rails.application.configure do
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true  
+  # config.action_view.raise_on_missing_translations = true
 end

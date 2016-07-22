@@ -26,17 +26,15 @@ class ProcessFeed
           feed_entry = FeedEntry.where(title_not_analyzed: entry_attrs[:title], alert_id: alert.id).first
           if feed_entry
             if feed_entry.url != entry_attrs[:url]
-              entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
+              entry_attrs[:content] = ExtractContent.instance.fetch(entry_attrs[:url])
               entry_attrs[:keywords] = alert.keywords.map(&:name)
               feed_entry.update_attributes(entry_attrs)
             end
           else
-            entry_attrs[:content] = FetchPage.instance.run(entry_attrs[:url])
+            entry_attrs[:content] = ExtractContent.instance.fetch(entry_attrs[:url])
             entry_attrs[:keywords] = alert.keywords.map(&:name)
             feed_entry = FeedEntry.create(entry_attrs)
           end
-          # p "*****finish fetching url: #{feed_entry.url}****"
-
           sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
         end
       else
@@ -49,10 +47,10 @@ class ProcessFeed
     rescue NoMethodError => e
       alert.mark_error("Invalid feed url")
     rescue Exception => e
+      Rails.logger.debug { "Unexpected error : #{e.message},  alert: #{alert.name} with url: #{alert.url}" }
       alert.mark_error("Unexpected error")
     end
 
   end
-
 
 end
