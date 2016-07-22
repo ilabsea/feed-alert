@@ -4,26 +4,24 @@
 <div class='feed-summary'>
   <h4 class='feed-title'>
     <%= link_to alert_feed_entry_path(@alert, @feed_entry) do %>
-      <%= StringSearch.instance.set_source(@feed_entry.title).highlight_keywords(@feed_entry.keywords) do |keyword| 
-        highlight_search(keyword) 
+      <%= StringSearch.instance.set_source(@feed_entry.title).highlight_keywords(@feed_entry.keywords) do |keyword|
+        highlight_search(keyword)
       end.html_safe
       %>
     <% end %>
   </h4>
 
   <p style='color:gray; font-size: 100%; font-style:italic;'>
-   <%= @feed_entry.keywords.join(", ")%> <%=link_to 'Original source', @feed_entry.url %> 
+   <%= @feed_entry.keywords.join(", ")%> <%=link_to 'Original source', @feed_entry.url %>
   </p>
 </div>
 
 
 <hr class='page-viewer-border' />
-
 <%
    highlight = HtmlSearch.new(@feed_entry.content).highlight(@feed_entry.keywords) do |keyword|
      highlight_search(keyword)
    end
 %>
 
-<%#= content_tag :iframe, nil, src: data_as_url(highlight), style: 'border: none; width: 100%; min-height: 500px;' %>
-<%= content_tag :iframe, nil, style: 'border: none; width: 120%; margin-left: -10%; min-height: 500px;', srcdoc: highlight  %>
+<%= content_tag :iframe, nil, style: 'border: none; width: 100%; min-height: 500px;', srcdoc: highlight  %>
