@@ -1,6 +1,6 @@
 class HtmlSearch
   def initialize(content)
-    @doc = Nokogiri::HTML(Base64.decode64(content["_content"]))
+    @doc = Nokogiri::HTML(Base64.decode64(content["_content"]), nil, 'utf-8')
   end
 
   def highlight(keywords, &block)
@@ -22,9 +22,9 @@ class HtmlSearch
   end
 
   def search_highlight_text_node(node, &block)
-    return if node.text.blank?
-
     text = node.text
+    return if text.blank?
+
     new_text = StringSearch.instance.set_source(text).replace_keywords(@keywords, &block)
     new_node = @doc.create_element "span"
     new_node.inner_html = new_text
