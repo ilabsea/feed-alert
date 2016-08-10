@@ -14,3 +14,4 @@
 /coverage
 /config/application.yml
 /public/assets/*
+/spec/vcr/*
