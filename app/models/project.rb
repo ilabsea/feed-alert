@@ -24,6 +24,8 @@ class Project < ActiveRecord::Base
   has_many :channel_accesses, dependent: :destroy
   has_many :channels, through: :channel_accesses
 
+  strip_attributes only: [:name]
+
   def access_role=(role)
     @access_role = role
     self

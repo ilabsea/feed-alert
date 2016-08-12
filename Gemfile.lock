@@ -408,6 +408,8 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    strip_attributes (1.8.0)
+      activemodel (>= 3.0, < 6.0)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -511,6 +513,7 @@ DEPENDENCIES
   sinatra
   spring
   spring-commands-rspec
+  strip_attributes
   thin
   timecop
   turbolinks

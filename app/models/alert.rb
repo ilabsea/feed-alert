@@ -46,6 +46,8 @@ class Alert < ActiveRecord::Base
 
   attr_accessor :total_match
 
+  strip_attributes only: [:name, :url]
+
   def reset_error
     self.invalid_url = 0
     self.error_message = nil

@@ -15,6 +15,8 @@ class Keyword < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  strip_attributes only: [:name]
+
   def self.excludes(collections)
     where([" id not in (?)", collections])
   end

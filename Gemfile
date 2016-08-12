@@ -61,6 +61,8 @@ gem 'newrelic_rpm'
 gem 'open_uri_redirections'
 gem "ruby-readability", :require => 'readability'
 
+gem "strip_attributes"
+
 group :development do
   gem 'capistrano', '3.4.0'
   gem 'capistrano-rails'

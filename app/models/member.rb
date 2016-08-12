@@ -25,6 +25,8 @@ class Member < ActiveRecord::Base
 
   validates :email, email: {message: 'invalid format'}
 
+  strip_attributes only: [:full_name, :email, :phone]
+
   def self.excludes(members)
     where([" id not in (?)", members])
   end

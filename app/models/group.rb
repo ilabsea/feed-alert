@@ -25,6 +25,8 @@ class Group < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  strip_attributes only: [:name]
+
   def self.excludes(groups)
     where([" id not in (?)", groups])
   end
