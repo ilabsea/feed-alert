@@ -3,7 +3,7 @@
 # sudo adduser ilab sudo
 # su ilab
 
-#### with sudo task for deployment user -ie ilab 
+#### with sudo task for deployment user -ie ilab
 #### sudo visudo and add this line ilab ALL=(ALL) NOPASSWD: ALL to skip password task
 #### visudo will override .bashrc so better put rbenv init config in rbenv installation to .bash_profile instead of .bashrc
 
@@ -26,7 +26,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 set :application, 'feed_alert'
-set :repo_url, 'https://channainfo@bitbucket.org/ilab/feed-alert.git'
+set :repo_url, 'https://github.com/ilabsea/feed-alert.git'
 set :branch, :develop
 
 # set :pty, true
@@ -54,10 +54,10 @@ namespace :sidekiq do
     on roles(:app) do
       # Horrible hack to get PID without having to use terrible PID files
       puts "Killing sidekiq-upstart process "
-      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-main | grep /running | awk '{print $NF}') || :") 
+      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-main | grep /running | awk '{print $NF}') || :")
       puts capture("sudo initctl stop sidekiq-upstart-main")
 
-      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-cron | grep /running | awk '{print $NF}') || :") 
+      puts capture("kill -USR1 $(sudo initctl status sidekiq-upstart-cron | grep /running | awk '{print $NF}') || :")
       puts capture("sudo initctl stop sidekiq-upstart-cron")
 
     end
@@ -125,4 +125,3 @@ set :linked_files, %w{config/database.yml config/application.yml}
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-
