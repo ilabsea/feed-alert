@@ -92,14 +92,12 @@ RSpec.describe AlertResult, type: :model do
   describe "#receivers_of" do
     it "return a list of phone number" do
       receivers = alert_result.receivers_of(group, :sms)
-      expect(receivers).to include('85510000000')
-      expect(receivers).to include('85520000000')
+      expect(receivers).to contain_exactly('85510000000', '85520000000')
     end
 
     it "return a list of email" do
       receivers = alert_result.receivers_of(group, :email)
-      expect(receivers).to include('foo@example.com')
-      expect(receivers).to include('bar@example.com')
+      expect(receivers).to contain_exactly('foo@example.com', 'bar@example.com')
     end
   end
 

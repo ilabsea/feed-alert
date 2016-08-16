@@ -13,7 +13,7 @@ describe GroupMessageResult, :type => :model do
   let!(:membership1) { create(:membership, member: member1, group: group) }
   let!(:membership2) {create(:membership, member: member2, group: group)}
 
-  let(:group_message){ build(:group_message, user: user, receiver_groups: [group.id], message: "I am sending the group message for testing", email_alert: true, sms_alert: true)}
+  let(:group_message){ build(:group_message, user: user, receiver_groups: [group.id], message: "I am sending the group message for testing", alert_type: ["email", "phone"])}
   let(:group_message_result){ GroupMessageResult.new(group_message)}
 
   describe "#run" do

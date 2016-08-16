@@ -5,5 +5,6 @@ FactoryGirl.define do
   	message "MyString"
     email_alert false
     sms_alert false
+    alert_type []
   end
 end

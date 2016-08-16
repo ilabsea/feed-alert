@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223083315) do
+ActiveRecord::Schema.define(version: 20160816025440) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -132,10 +132,11 @@ ActiveRecord::Schema.define(version: 20151223083315) do
     t.text     "receiver_groups", limit: 65535
     t.text     "message",         limit: 65535
     t.integer  "user_id",         limit: 4
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.boolean  "email_alert",     limit: 1,     default: false
     t.boolean  "sms_alert",       limit: 1,     default: false
+    t.string   "alert_type",      limit: 255,   default: "--- []\n"
   end
 
   add_index "group_messages", ["user_id"], name: "fk_rails_eb295b84ae", using: :btree
