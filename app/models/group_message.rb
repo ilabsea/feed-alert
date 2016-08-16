@@ -31,6 +31,17 @@ class GroupMessage < ActiveRecord::Base
     alert_by?(type) ? recipients(type) : []
   end
 
+  def self.migrate_alert_type
+    GroupMessage.transaction do
+      GroupMessage.find_each(batch_size: 100) do |group_message|
+        alert_type = []
+        alert_type << "email" if group_message.email_alert
+        alert_type << "phone" if group_message.sms_alert
+        group_message.update_attributes(alert_type: alert_type)
+      end
+    end
+  end
+
   private
   def recipients(type)
     results = []
