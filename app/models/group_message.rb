@@ -8,10 +8,13 @@ class GroupMessage < ActiveRecord::Base
   validates_presence_of :alert_type, message: "Email or SMS is required"
   validates_presence_of :message, message: 'Message cannot be blank'
 
-  ALERT_TYPE = {email: "Email", phone: "SMS"}
+  SMS = "phone"
+  EMAIL = "email"
+
+  ALERT_TYPE = {GroupMessage::EMAIL => "Email", GroupMessage::SMS => "SMS"}
 
   def send_ao!
-    if sms_alert
+    if has_alert?(GroupMessage::SMS)
       active_channels = Channels::Accessible::UserChannelAccessible.new(self.user).list
       if active_channels.empty?
         errors.add(:base, "No sms channel found, please make sure you have the accessible channel before sending the sms")
@@ -23,12 +26,12 @@ class GroupMessage < ActiveRecord::Base
     GroupMessageResult.new(self).run
   end
 
-  def alert_by?(type)
+  def has_alert?(type)
     alert_type.include?(type)
   end
 
   def recipients_by(type)
-    alert_by?(type) ? recipients(type) : []
+    has_alert?(type) ? recipients(type) : []
   end
 
   def self.migrate_alert_type
