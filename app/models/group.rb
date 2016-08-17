@@ -40,4 +40,8 @@ class Group < ActiveRecord::Base
     Member.joins(:memberships).where([" memberships.group_id  in (?)", groups]).uniq
   end
 
+  def recipients(type)
+    return members.pluck(type)
+  end
+
 end
