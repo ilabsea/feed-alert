@@ -20,9 +20,9 @@ RSpec.describe GroupMessage, type: :model do
 
   describe '#alert_type?' do
     it {
-      expect(group_message.alert_by?('email')).to be true
-      expect(group_message.alert_by?('phone')).to be true
-      expect(group_message.alert_by?('sms')).to be false
+      expect(group_message.has_alert?('email')).to be true
+      expect(group_message.has_alert?('phone')).to be true
+      expect(group_message.has_alert?('sms')).to be false
     }
   end
 
