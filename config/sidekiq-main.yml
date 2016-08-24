@@ -5,11 +5,10 @@ development:
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-main.pid
   :logfile: ../../shared/log/sidekiq-main.log
-  :concurrency: 10
+  :concurrency: 25
 
 :queues:
   - mailers
   - default
   - indexer
   - alert_result
-
