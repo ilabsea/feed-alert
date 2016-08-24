@@ -38,7 +38,7 @@ class ProcessFeed
           sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
         end
       else
-        Rails.logger.debug { "alert: #{alert.name} with url: #{alert.url} could not be read with error: #{feed_jira.class}" }
+        Rails.logger.info "alert: #{alert.name} with url: #{alert.url} could not be read with error: #{feed_jira.class}"
       end
     rescue Feedjira::FetchFailure => e
       alert.mark_error("Fetching feed with failure")
@@ -47,7 +47,7 @@ class ProcessFeed
     rescue NoMethodError => e
       alert.mark_error("Invalid feed url")
     rescue Exception => e
-      Rails.logger.debug { "Unexpected error : #{e.message},  alert: #{alert.name} with url: #{alert.url}" }
+      Rails.logger.info "Unexpected error : #{e.message},  alert: #{alert.name} with url: #{alert.url}"
       alert.mark_error("Unexpected error")
     end
 
