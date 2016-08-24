@@ -91,8 +91,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'spring-commands-rspec'
-  gem 'vcr', '~> 2.4.0'
-  gem 'webmock'
 end
 
 group :production do
@@ -108,4 +106,6 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'vcr', '~> 2.4.0'
+  gem 'webmock'
 end
