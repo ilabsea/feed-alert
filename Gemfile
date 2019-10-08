@@ -28,7 +28,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers'
 gem 'unicorn'
 
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 gem 'email_validator'
 gem "validate_url"
