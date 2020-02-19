@@ -1,0 +1,53 @@
+version: '3'
+
+volumes:
+  bundle:
+  elastic:
+
+services:
+  db:
+    image: mysql:5.5.62
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD='true'
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+
+  web: &rails
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    tmpfs: /app/tmp
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000"
+
+  redis:
+    image: redis:2.8.23
+
+  sidekiq_main:
+    <<: *rails
+    command: bundle exec sidekiq -C config/sidekiq-main.yml
+    ports: []
+
+  sidekiq_cron:
+    <<: *rails
+    command: bundle exec sidekiq -C config/sidekiq-cron.yml
+    ports: []
+
+  elasticsearch:
+    image: elasticsearch:1.4.5
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"

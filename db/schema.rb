@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 20160816025440) do
     t.string   "alert_type",      limit: 255,   default: "--- []\n"
   end
 
-  add_index "group_messages", ["user_id"], name: "fk_rails_eb295b84ae", using: :btree
+  add_index "group_messages", ["user_id"], name: "fk_rails_a0850dc711", using: :btree
 
   create_table "group_permissions", force: :cascade do |t|
     t.integer  "user_id",      limit: 4

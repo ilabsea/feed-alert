@@ -39,6 +39,7 @@ default: &default
   SIDEKIQ_USERNAME: ''
   SIDEKIQ_PASSWORD: ''
   NEW_RELIC_KEY: ''
+  REDIS_URL: 'redis://redis:6379'
 
 development:
   <<: *default

@@ -1,6 +1,6 @@
 :concurrency: 25
 development:
-  :pidfile: tmp/pids/sidekiq-cron.pid
+  # :pidfile: tmp/pids/sidekiq-cron.pid
 
 
 production:

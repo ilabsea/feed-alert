@@ -1,0 +1,18 @@
+FROM ruby:2.2.10
+
+LABEL maintainer="Borey <borey@instedd.org>"
+
+RUN curl -sL https://deb.nodesource.com/setup_0.10 | bash - && \
+  apt-get update -qq && \
+  apt-get install -y vim nodejs mysql-client libmysqlclient-dev && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock /app/
+
+RUN bundle install --jobs 10
+
+COPY . /app
