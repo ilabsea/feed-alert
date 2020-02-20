@@ -10,7 +10,7 @@
 <%= stylesheet_link_tag    "mailer" %>
 
 </head>
- 
+
 <body bgcolor="#FFFFFF">
 
 <!-- HEADER -->
@@ -18,7 +18,7 @@
   <tr>
     <td></td>
     <td class="header container" >
-        
+
         <div class="content">
         <table bgcolor="#eee">
           <tr>
@@ -28,7 +28,7 @@
           </tr>
         </table>
         </div>
-        
+
     </td>
     <td></td>
   </tr>
@@ -46,22 +46,17 @@
         <tr>
           <td>
             <%= yield(:mailer_header) %>
-          
+
             <%= yield %>
 
-            <!-- Callout Panel -->
-            <p class="callout" style='margin-top: 60px;' >
-              This email is from <b><%=ENV['APP_NAME']%></b>
-            </p><!-- /Callout Panel -->         
-                        
             <!-- social & contact -->
             <%= render 'layouts/mailer/contact' %>
-            
+
           </td>
         </tr>
       </table>
       </div><!-- /content -->
-                  
+
     </td>
     <td></td>
   </tr>
@@ -72,7 +67,7 @@
   <tr>
     <td></td>
     <td class="container">
-      
+
         <!-- content -->
         <div class="content">
         <table>
@@ -85,7 +80,7 @@
         </tr>
       </table>
         </div><!-- /content -->
-        
+
     </td>
     <td></td>
   </tr>
