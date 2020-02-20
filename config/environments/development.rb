@@ -35,14 +35,14 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address   => "localhost",
-    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
-  #   :enable_starttls_auto => true, # detects and uses STARTTLS
-  #   :user_name => ENV['MANDRILL_USERNAME'],
-  #   :password  => ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
-  #   :authentication => 'login', # Mandrill supports 'plain' or 'login'
+    :address   => ENV['SMTP_ADDRESS'],
+    :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
+    :enable_starttls_auto => true, # detects and uses STARTTLS
+    :user_name => ENV['MANDRILL_USERNAME'],
+    :password  => ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
+    :authentication => :plain,
     :domain => ENV['HOST'], # your domain to identify your server when connecting
   }
 
@@ -51,4 +51,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.web_console.whitelisted_ips = '172.21.0.0/8'
 end
