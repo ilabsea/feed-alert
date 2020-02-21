@@ -3,6 +3,7 @@ version: '3'
 volumes:
   bundle:
   elastic:
+  db:
 
 services:
   db:
@@ -10,7 +11,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD='true'
     volumes:
-      - ./tmp/db:/var/lib/mysql
+      - db:/var/lib/mysql
 
   web: &rails
     build:
