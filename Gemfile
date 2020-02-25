@@ -66,6 +66,8 @@ gem "ruby-readability", :require => 'readability'
 
 gem "strip_attributes"
 
+gem 'haml-rails', '~> 1.0'
+
 group :development do
   gem 'capistrano', '3.4.0'
   gem 'capistrano-rails'

@@ -5,6 +5,12 @@ schedules = {
     'queue' => 'cron'
   },
 
+  'Send alert email digest' => {
+    'class' => 'FeedDigestMailerCron',
+    'cron' => '30 * * * *',
+    'queue' => 'cron'
+  },
+
   'Remove old feed entries for a month' => {
     'class' => 'FeedEntryCleanUpCron',
     'cron'  => '0 0 */2 * *',
