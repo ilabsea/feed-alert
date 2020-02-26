@@ -12,20 +12,8 @@ class AlertResult
     @search_result.alerts.each do |alert|
       result = alert_highlight(alert.id)
       if !result.empty?
-        alert_email(alert)
         alert_sms(alert)
       end
-    end
-  end
-
-  def alert_email alert
-    alert.groups.each do |group|
-      emails_to = receivers_of(group, :email)
-      # delay, delay_for, delay_unitl
-      AlertMailer.delay_for(delay_time.minute).notify_matched(alert_highlight(alert.id),
-                                   alert.id,
-                                   group.name,
-                                   emails_to) if emails_to.length > 0 && alert.has_match?
     end
   end
 

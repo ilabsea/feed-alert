@@ -1,9 +1,11 @@
 class AlertDigestJob < ActiveJob::Base
   queue_as :alert_result
 
-  def perform(email, alert_ids)
-    return if email.nil? || alert_ids.empty?
+  def perform(receiver)
+    return if receiver.nil?
 
-    AlertDigest.new(email, alert_ids).run
+    receiver.each do |email, alert_ids|
+      AlertDigest.new(email, alert_ids).run
+    end
   end
 end

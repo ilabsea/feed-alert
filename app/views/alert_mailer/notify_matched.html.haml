@@ -1,6 +1,6 @@
 - @snapshots.each_with_index do |snapshot, index|
   - alert = Alert.find(snapshot[:alert_id])
-  - search_highlight = snapshot[:snapshot]
+  - search_highlight = snapshot[:snapshots]
 
   = content_for(:mailer_header) do
     %h3

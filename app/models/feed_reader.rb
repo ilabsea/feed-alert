@@ -10,6 +10,7 @@ class FeedReader
     def digest_feed
       feeds = FeedEntry.where(email_alerted: false)
       receiver = generate_alert_emails(feeds)
+      AlertDigestJob.set(wait: 10.seconds).perform_later(receiver)
     end
 
     private
@@ -19,9 +20,9 @@ class FeedReader
 
         receiver = {};
         alerts.each do |alert|
-          memebers = alert.members.where(email_alert: true)
+          members = alert.members.where(email_alert: true)
           members.each do |member|
-            receiver[member.email] = [] if receiver[member.email].nil
+            receiver[member.email] = [] if receiver[member.email].nil?
             receiver[member.email] << alert.id
           end
         end

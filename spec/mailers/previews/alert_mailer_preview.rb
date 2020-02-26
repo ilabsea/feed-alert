@@ -3,7 +3,7 @@ class AlertMailerPreview < ActionMailer::Preview
     search_highligh = [
       {
         alert_id: 1,
-        snapshot: [[
+        snapshots: [[
           {
             "_source"=>
             {"id"=>1489,
@@ -77,7 +77,7 @@ class AlertMailerPreview < ActionMailer::Preview
       },
       {
         alert_id: 2,
-        snapshot: [[
+        snapshots: [[
           {
             "_source"=>
             {"id"=>1489,
