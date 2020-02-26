@@ -53,19 +53,19 @@ RSpec.describe AlertResult, type: :model do
       allow(alert).to receive(:has_match?).and_return(true)
     end
 
-    context "email" do
-      before(:each) do
-        allow(alert_result).to receive(:delay_time).and_return(1)
-        allow(alert_result).to receive(:alert_highlight).with(alert.id).and_return({})
-      end
+    # context "email" do
+    #   before(:each) do
+    #     allow(alert_result).to receive(:delay_time).and_return(1)
+    #     allow(alert_result).to receive(:alert_highlight).with(alert.id).and_return({})
+    #   end
 
-      it "Add email for every user to queue" do
-        expect(AlertMailer).to receive(:delay_for).with(1.minute).and_return(AlertMailer)
-        expect(AlertMailer).to receive(:notify_matched).with({}, alert.id, group.name, ["foo@example.com", "bar@example.com"]).once
+    #   it "Add email for every user to queue" do
+    #     expect(AlertMailer).to receive(:delay_for).with(1.minute).and_return(AlertMailer)
+    #     expect(AlertMailer).to receive(:notify_matched).with({}, alert.id, group.name, ["foo@example.com", "bar@example.com"]).once
 
-        alert_result.alert_email(alert)
-      end
-    end
+    #     alert_result.alert_email(alert)
+    #   end
+    # end
 
     context "sms" do
       before(:each) do

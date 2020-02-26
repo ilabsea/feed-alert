@@ -43,7 +43,7 @@ class AlertDigest
   end
 
   def alert_email(email, snapshots)
-    AlertMailer.delay_for(delay_time.minute).notify_matched(email, snapshots) if snapshots.present?
+    AlertMailer.notify_matched(email, snapshots) if snapshots.present?
   end
 
   def delay_time

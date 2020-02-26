@@ -162,7 +162,4 @@ class AlertMailerPreview < ActionMailer::Preview
 
     AlertMailer.notify_matched(emails_to.first, search_highligh)
   end
-
-
-
 end
