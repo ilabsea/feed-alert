@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AlertDigest, type: :model do
+  include ActiveJob::TestHelper
   ActiveJob::Base.queue_adapter = :test
 
   let(:project) { create(:project) }
@@ -12,39 +13,40 @@ RSpec.describe AlertDigest, type: :model do
   let!(:alert_digest) { AlertDigest.new(email, [alert.id]) }
 
   describe "#run" do
-    before(:each) do
-      @alert_snapshot = {
-        alert_id: alert.id,
-        snapshots: [
-          {
-            "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
-            "_source"=>{
-              "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
-              "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
-              "alert_id"=>alert.id
+    context 'has matched feed' do
+      let(:alert_snapshot) {
+        {
+          alert_id: alert.id,
+          snapshots: [[
+            {
+              "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
+              "_source"=>{
+                "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
+                "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
+                "alert_id"=>alert.id
+              }
             }
-          }
-        ]
+          ]]
+        }
       }
 
-      allow(alert_digest).to receive(:get_alert_snapshot).and_return(@alert_snapshot)
-      allow_any_instance_of(FeedEntrySearchResultPresenter).to receive(:alerts).and_return([alert])
+      it "send digest mail" do
+        allow(alert_digest).to receive(:get_alert_snapshot).and_return(alert_snapshot)
+        expect(alert_digest).to receive(:alert_email).with(email, [alert_snapshot])
 
-      # text = "What would be really nice is #{keyword.name} to have a block-style expectation matcher"
-      # feed_entry = FeedEntry.create(title: FFaker::Name.name, url: alert.url, summary: text, content: text, alert_id: alert.id)
-      # feed_entry.save
+        alert_digest.run
+      end
     end
 
-    it "send digest mail" do
-      expect(::AlertMailer).to receive(:notify_matched).with(email, [@alert_snapshot])
-      alert_digest.run
+    context 'has no matched feed' do
+      it "send digest mail" do
+        expect(::AlertMailer).not_to receive(:notify_matched)
+        alert_digest.run
+      end
     end
   end
 
-  describe "#alert" do
-    before(:each) do
-      allow(alert).to receive(:has_match?).and_return(true)
-    end
+  describe "#get_alert_snapshot" do
 
     # context "email" do
     #   before(:each) do
@@ -60,6 +62,32 @@ RSpec.describe AlertDigest, type: :model do
     #   end
     # end
 
+  end
+
+  describe '#alert_email' do
+    let(:alert_snapshot) {
+      {
+        alert_id: alert.id,
+        snapshots: [[
+          {
+            "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
+            "_source"=>{
+              "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
+              "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
+              "alert_id"=>alert.id
+            }
+          }
+        ]]
+      }
+    }
+
+    let(:snapshots) { [alert_snapshot] }
+
+    it 'should send digest email' do
+      job = alert_digest.alert_email(email, snapshots)
+
+      expect(job.arguments).to eq(['AlertMailer', 'notify_matched', 'deliver_now', email, snapshots])
+    end
   end
 
 end

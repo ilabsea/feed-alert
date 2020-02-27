@@ -110,7 +110,7 @@ class FeedEntry
 
   def to_hash(options={})
     hash = self.as_json
-    map_attachment(hash) if !self.alerted
+    map_attachment(hash) if (!self.alerted && !self.email_alerted)
     hash[:title_not_analyzed] = hash[:title]
     hash
   end

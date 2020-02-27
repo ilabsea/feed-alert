@@ -42,7 +42,7 @@ gem 'rails4-autocomplete', '~> 1.1.1'
 gem 'feedjira'
 gem 'sinatra', :require => nil
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.5.4'
 gem "sidekiq-cron", "~> 0.3.0"
 
 gem 'roadie-rails'
@@ -80,7 +80,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'byebug', '~> 10.0.2'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -90,11 +90,10 @@ group :development, :test do
 
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'
-  gem 'pry-rails'
+  gem 'pry-rails', '~> 0.3.9'
   gem 'faker'
   gem 'ffaker'
-  gem 'rspec-rails'
-  gem 'guard-rspec'
+  gem 'rspec-rails', '~> 3.9.0'
   gem 'spring-commands-rspec'
 end
 

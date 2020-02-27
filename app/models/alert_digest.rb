@@ -22,8 +22,8 @@ class AlertDigest
 
     alerts = Alert.where(id: alert_id)
     @search_result = FeedEntry.result(SearchOption.for_new_email_feed_entries(alerts))
-    feed_entries = @search_result.feed_entries
-    FeedEntry.mark_as_email_alerted(feed_entries) if !feed_entries.empty?
+
+    mark_as_email_alerted(@search_result)
 
     @search_result.alerts.each do |alert|
       result = @search_result.results_by_alert(alert_id)
@@ -42,8 +42,13 @@ class AlertDigest
     alert_snapshot
   end
 
+  def mark_as_email_alerted(search_result)
+    feed_entries = search_result.feed_entries
+    FeedEntry.mark_as_email_alerted(feed_entries) if !feed_entries.empty?
+  end
+
   def alert_email(email, snapshots)
-    AlertMailer.notify_matched(email, snapshots) if snapshots.present?
+    AlertMailer.notify_matched(email, snapshots).deliver_later(wait: 10.seconds) if snapshots.present?
   end
 
   def delay_time
