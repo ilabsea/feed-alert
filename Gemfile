@@ -54,8 +54,6 @@ gem 'elasticsearch-persistence', '~> 0.1.9', require: 'elasticsearch/persistence
 gem 'elasticsearch-model', '~> 0.1.9'
 gem 'elasticsearch-rails', '~> 0.1.9'
 gem 'elasticsearch', '~> 1.1.3'
-# gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
-
 
 gem 'annotate'
 gem 'foreman'

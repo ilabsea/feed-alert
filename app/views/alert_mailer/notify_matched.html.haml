@@ -13,8 +13,6 @@
       %p{style: "color:gray; font-size: 90%; font-style:italic;"}
         %b= searches.size
         feed entries that matched the keywords criteria
-        -# %b= "#{@group_name}"
-        -# - byebug
       - searches.each do |search|
         - feed_entry_highlight = FeedEntryHighlight.new(search)
         %p
