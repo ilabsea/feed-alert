@@ -11,24 +11,24 @@ RSpec.describe AlertDigest, type: :model do
   let(:email) { 'foo@example.com' }
 
   let!(:alert_digest) { AlertDigest.new(email, [alert.id]) }
+  let(:alert_snapshot) {
+    {
+      alert_id: alert.id,
+      snapshots: [[
+        {
+          "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
+          "_source"=>{
+            "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
+            "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
+            "alert_id"=>alert.id
+          }
+        }
+      ]]
+    }
+  }
 
   describe "#run" do
     context 'has matched feed' do
-      let(:alert_snapshot) {
-        {
-          alert_id: alert.id,
-          snapshots: [[
-            {
-              "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
-              "_source"=>{
-                "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
-                "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
-                "alert_id"=>alert.id
-              }
-            }
-          ]]
-        }
-      }
 
       it "send digest mail" do
         allow(alert_digest).to receive(:get_alert_snapshot).and_return(alert_snapshot)
@@ -46,46 +46,11 @@ RSpec.describe AlertDigest, type: :model do
     end
   end
 
-  describe "#get_alert_snapshot" do
-
-    # context "email" do
-    #   before(:each) do
-    #     allow(alert_digest).to receive(:delay_time).and_return(1)
-    #     allow(alert_digest).to receive(:alert_highlight).with(alert.id).and_return({})
-    #   end
-
-    #   it "Add email for every user to queue" do
-    #     expect(AlertMailer).to receive(:delay_for).with(1.minute).and_return(AlertMailer)
-    #     expect(AlertMailer).to receive(:notify_matched).with({}, alert.id, group.name, ["foo@example.com", "bar@example.com"]).once
-
-    #     alert_digest.alert_email(alert)
-    #   end
-    # end
-
-  end
-
   describe '#alert_email' do
-    let(:alert_snapshot) {
-      {
-        alert_id: alert.id,
-        snapshots: [[
-          {
-            "_index"=>"feed_entries", "_type"=>"feed_entry", "_id"=>"foo", "_score"=>0.0922051,
-            "_source"=>{
-              "title"=>"Foo Bar", "keywords"=>["foo", "bar"],
-              "url"=>"http://www.cnn.com/2016/07/13/politics/boris-johnson-us-politicians/index.html",
-              "alert_id"=>alert.id
-            }
-          }
-        ]]
-      }
-    }
-
     let(:snapshots) { [alert_snapshot] }
 
     it 'should send digest email' do
       job = alert_digest.alert_email(email, snapshots)
-
       expect(job.arguments).to eq(['AlertMailer', 'notify_matched', 'deliver_now', email, snapshots])
     end
   end

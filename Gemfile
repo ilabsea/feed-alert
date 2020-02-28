@@ -110,6 +110,6 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'timecop'
-  gem 'vcr', '~> 2.4.0'
+  gem 'vcr', '~> 5.1.0'
   gem 'webmock'
 end
