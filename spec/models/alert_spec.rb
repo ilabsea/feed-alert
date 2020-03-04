@@ -22,6 +22,18 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Alert, type: :model do
+  it { should have_many(:groups).through(:alert_groups) }
+  it { should have_many(:alert_groups).dependent(:destroy) }
+  it { should have_many(:keyword_sets).through(:alert_keyword_sets) }
+  it { should have_many(:alert_keyword_sets).dependent(:destroy) }
+  it { should have_many(:places).through(:alert_places) }
+  it { should have_many(:alert_places).dependent(:destroy) }
+  it { should have_many(:feeds).dependent(:destroy) }
+  it { should have_many(:members).through(:groups) }
+  it { should belong_to(:project) }
+  it { should belong_to(:channel) }
 
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:url) }
 end

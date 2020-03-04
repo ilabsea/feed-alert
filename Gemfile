@@ -93,6 +93,7 @@ group :development, :test do
   gem 'ffaker'
   gem 'rspec-rails', '~> 3.9.0'
   gem 'spring-commands-rspec'
+  gem 'guard-rspec', require: false
 end
 
 group :production do
