@@ -10,14 +10,14 @@ class SearchOption
 
   def self.for_new_email_feed_entries(alerts)
     options = {}
-    options[:q] = alerts.map { |alert| { id: alert.id, keywords: alert.keywords.map(&:name) } }
+    options[:q] = alerts.map { |alert| { id: alert.id, keywords: alert.keyword_sets.map(&:keyword).join(",").split(",") } }
     options[:email_alerted] = false
     options
   end
 
   def self.for(alerts, alerted)
     options = {}
-    options[:q] = alerts.map {|alert| { id: alert.id, keywords: alert.keywords.map(&:name) } }
+    options[:q] = alerts.map {|alert| { id: alert.id, keywords: alert.keyword_sets.map(&:keyword).join(",").split(",") } }
     options[:alerted] = alerted
     options
   end
