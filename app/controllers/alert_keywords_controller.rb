@@ -1,7 +1,7 @@
 class AlertKeywordsController < ApplicationController
   def create
     @alert = Alert.find(params[:alert_id])
-    keyword = current_user.keyword_sets.find_by(name: params[:keyword].strip)
+    keyword = current_user.keyword_sets.find_by(name: params[:keyword].try(:strip))
 
     alert_keyword = AlertKeywordSet.new(keyword_set: keyword, alert: @alert)
 

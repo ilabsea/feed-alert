@@ -1,6 +1,7 @@
 class KeywordSet < ActiveRecord::Base
   has_many :alert_keyword_sets, dependent: :destroy
   has_many :alerts, through: :alert_keyword_sets
+  belongs_to :user
 
   validates :name, presence: true, uniqueness: true
   validates :user_id, presence: true
