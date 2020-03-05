@@ -1,4 +1,4 @@
-= simple_form_for @keyword_set, html: { class: 'form-inline form'} do |f|
+= simple_form_for @keyword_set, html: { class: 'form-inline form', id: "keyword_set_form"} do |f|
   = f.input :name, input_html: { class: 'form-control' }
   = f.input :keyword, input_html: { class: 'form-control' }
 

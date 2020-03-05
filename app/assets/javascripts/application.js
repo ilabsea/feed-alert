@@ -53,4 +53,4 @@
 
 //= require project/sms_setting
 
-//= reqire keyword_sets/form
+//= require keyword_sets/form

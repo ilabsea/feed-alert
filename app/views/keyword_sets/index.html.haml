@@ -20,7 +20,7 @@
           %td
             = keyword_set.name
           %td
-            = keyword_set.keyword
+            = keyword_set.keyword.split(",").join(", ")
           %td
             = link_edit " ", edit_keyword_set_path(keyword_set)
             = link_destroy " ", keyword_set_path(keyword_set), method: :delete, data: { confirm: 'Are you sure to delete this keyword set?' }
