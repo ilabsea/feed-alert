@@ -3,24 +3,26 @@
    <thead>
       <tr>
         <td>Name</td>
+        <td>Keyword</td>
         <% if admin %>
-        <td class='td-last'>Action</td>
+          <td class='td-last'>Action</td>
         <% end %>
       </tr>
     </thead>
-    <% if alert.alert_keywords.length > 0 %>
-    <tbody>
-      <% alert.alert_keywords.each do |alert_keyword| %>
-        <tr id='alert-keyword-<%=alert_keyword.id%>'>
-          <td><%= alert_keyword.keyword.name %></td>
-          <% if admin %>
-            <td>
-              <%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
-                            class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
+    <% if alert.alert_keyword_sets.length > 0 %>
+      <tbody>
+        <% alert.alert_keyword_sets.each do |alert_keyword| %>
+          <tr id='alert-keyword-<%=alert_keyword.id%>'>
+            <td><%= alert_keyword.keyword_set.name %></td>
+            <td><%= alert_keyword.keyword_set.keyword.split(",").join(", ") %></td>
+            <% if admin %>
+              <td>
+                <%= link_destroy ' ', alert_alert_keyword_path(alert, alert_keyword),
+                              class: 'remove-alert-keyword', data: {id: alert_keyword.id } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
     <% end %>
   </table>
 </div>
