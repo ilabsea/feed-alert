@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'keyword_sets/index'
+
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
 
@@ -9,10 +11,10 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   root 'home#index'
-  
+
   resources :sessions, only: [:new, :create, :destroy]
   get 'sign_in' => 'sessions#new'
-  
+
   get 'sign_up' => 'registrations#new'
 
   post 'sign_up' => 'registrations#create'
@@ -70,7 +72,7 @@ Rails.application.routes.draw do
         get 'new_groups'
         get 'new_keywords'
       end
-      
+
     end
   end
 
@@ -102,7 +104,7 @@ Rails.application.routes.draw do
   end
 
   resources :memberships
-  
+
   resources :members do
     member do
       get 'new_groups'
@@ -124,6 +126,8 @@ Rails.application.routes.draw do
       put 'reset'
     end
   end
+
+  resources :keyword_sets
 
   # resources :alerts do
   #   collection do

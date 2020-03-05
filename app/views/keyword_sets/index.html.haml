@@ -1,0 +1,28 @@
+- content_for(:title) { "Keyword Sets"}
+- breadcrumb_buffer([{ "Keyword Sets": nil}])
+
+.header-wrapper.clearfix
+  .pull-left
+    %h3.header-title List of Keyword Sets
+    -# = render 'shared/search_form', url: projects_path
+  .pull-right
+    = link_new 'New Keyword Set', new_keyword_set_path()
+.panel.panel-info
+  %table.table.table-responsive
+    %thead
+      %tr
+        %td{width: "250"} Name
+        %td Keywords
+        %td.td-last
+    %tbody
+      - @keyword_sets.each do |keyword_set|
+        %tr
+          %td
+            = keyword_set.name
+          %td
+            = keyword_set.keyword
+          %td
+            = link_edit " ", edit_keyword_set_path(keyword_set)
+            = link_destroy " ", keyword_set_path(keyword_set), method: :delete, data: { confirm: 'Are you sure to delete this keyword set?' }
+
+= paginate_for(@keyword_sets)
