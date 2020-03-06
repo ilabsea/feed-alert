@@ -18,6 +18,8 @@
 #  to_time              :string(255)
 #  project_id           :integer
 #  channel_id           :integer
+#  invalid_url          :integer          default(0)
+#  error_message        :string(255)
 #
 
 class Alert < ActiveRecord::Base

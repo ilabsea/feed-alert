@@ -55,7 +55,7 @@ gem 'elasticsearch-model', '~> 0.1.9'
 gem 'elasticsearch-rails', '~> 0.1.9'
 gem 'elasticsearch', '~> 1.1.3'
 
-gem 'annotate'
+gem 'annotate', '~> 2.7.0'
 gem 'foreman'
 gem 'newrelic_rpm'
 
