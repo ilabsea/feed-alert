@@ -1,6 +1,6 @@
 class KeywordSetsController < ApplicationController
   def index
-    @keyword_sets = current_user.keyword_sets.page(params[:page])
+    @keyword_sets = current_user.keyword_sets.order(updated_at: :desc).page(params[:page])
   end
 
   def new

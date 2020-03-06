@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200304095105) do
+ActiveRecord::Schema.define(version: 20200306032001) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4

@@ -9,11 +9,10 @@ class KeywordSet < ActiveRecord::Base
   strip_attributes only: [:name]
 
   def self.excludes(collections)
-    where([" id not in (?)", collections])
+    where.not(id: collections)
   end
 
   def self.from_query(query)
-    like = "#{query}%"
-    where([ "name LIKE ? ", like])
+    where([ "name LIKE ? ", "#{query}%"])
   end
 end
