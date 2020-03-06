@@ -14,7 +14,6 @@ function onsubmitKeywordSet() {
     if (keywords.length) {
       var transformValue = JSON.parse(keywords).map(x => x.value.trim());
       $('#keyword_set_keyword').val(transformValue.join(','));
-      debugger
     }
   });
 }
