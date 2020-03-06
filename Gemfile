@@ -45,7 +45,7 @@ gem 'sinatra', :require => nil
 gem 'sidekiq', '~> 3.5.4'
 gem "sidekiq-cron", "~> 0.3.0"
 
-gem 'roadie-rails'
+gem 'roadie-rails', '~> 1.1.0'
 gem 'nuntium_api', github: 'channainfo/nuntium-api-ruby', branch: 'encode_uri'
 
 gem 'whenever', :require => false
