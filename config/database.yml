@@ -19,7 +19,7 @@ default: &default
   pool: 50
   username: root
   password: <%= ENV['STREAM_ALERT_DATABASE_PASSWORD'] %>
-  host: localhost
+  host: <%= ENV.fetch('DB_HOST') { 'localhost' } %>
   database: stream_alert
 
 development:

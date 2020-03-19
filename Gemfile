@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -41,7 +42,7 @@ gem 'rails4-autocomplete', '~> 1.1.1'
 gem 'feedjira'
 gem 'sinatra', :require => nil
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.5.4'
 gem "sidekiq-cron", "~> 0.3.0"
 
 gem 'roadie-rails'
@@ -49,10 +50,10 @@ gem 'nuntium_api', github: 'channainfo/nuntium-api-ruby', branch: 'encode_uri'
 
 gem 'whenever', :require => false
 
-gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
-gem 'elasticsearch', github: 'channainfo/elasticsearch-ruby'
+gem 'elasticsearch-persistence', '~> 0.1.9', require: 'elasticsearch/persistence/model'
+gem 'elasticsearch-model', '~> 0.1.9'
+gem 'elasticsearch-rails', '~> 0.1.9'
+gem 'elasticsearch', '~> 1.1.3'
 
 gem 'annotate'
 gem 'foreman'
@@ -62,6 +63,8 @@ gem 'open_uri_redirections'
 gem "ruby-readability", :require => 'readability'
 
 gem "strip_attributes"
+
+gem 'haml-rails', '~> 1.0'
 
 group :development do
   gem 'capistrano', '3.4.0'
@@ -75,7 +78,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'byebug', '~> 10.0.2'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -85,11 +88,10 @@ group :development, :test do
 
   # gem 'dotenv-rails'
   gem 'factory_girl_rails'
-  gem 'pry-rails'
+  gem 'pry-rails', '~> 0.3.9'
   gem 'faker'
   gem 'ffaker'
-  gem 'rspec-rails'
-  gem 'guard-rspec'
+  gem 'rspec-rails', '~> 3.9.0'
   gem 'spring-commands-rspec'
 end
 
@@ -106,6 +108,6 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'timecop'
-  gem 'vcr', '~> 2.4.0'
+  gem 'vcr', '~> 5.1.0'
   gem 'webmock'
 end

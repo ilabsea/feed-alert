@@ -28,6 +28,7 @@ class FeedEntry
   attribute :url, String, mapping: { analyzer: 'english' }
   attribute :summary, String, mapping: { analyzer: 'english' }
   attribute :alerted, Boolean, default: false, mapping: { analyzer: 'english' }
+  attribute :email_alerted, Boolean, default: false, mapping: { analyzer: 'english' }
   attribute :feed_id, Integer
   attribute :keywords #denormalize keywords from alerts
 
@@ -47,6 +48,9 @@ class FeedEntry
 
                     "properties": {
                       "alerted": {
+                        "type": "boolean"
+                      },
+                      "email_alerted": {
                         "type": "boolean"
                       },
                       "alert_id": {
@@ -106,7 +110,7 @@ class FeedEntry
 
   def to_hash(options={})
     hash = self.as_json
-    map_attachment(hash) if !self.alerted
+    map_attachment(hash) if (!self.alerted && !self.email_alerted)
     hash[:title_not_analyzed] = hash[:title]
     hash
   end
@@ -116,6 +120,15 @@ class FeedEntry
     feed_entries = FeedEntry.find(ids)
     feed_entries.each do |feed_entry|
       feed_entry.alerted = true
+      feed_entry.save
+    end
+  end
+
+  def self.mark_as_email_alerted(ids)
+    #trigger feed_entry update with elastic
+    feed_entries = FeedEntry.find(ids)
+    feed_entries.each do |feed_entry|
+      feed_entry.email_alerted = true
       feed_entry.save
     end
   end

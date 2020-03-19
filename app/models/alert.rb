@@ -37,6 +37,8 @@ class Alert < ActiveRecord::Base
 
   has_many :group_permissions, dependent: :nullify
 
+  has_many :members, through: :groups
+
   belongs_to :project
   belongs_to :channel
 

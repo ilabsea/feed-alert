@@ -14,7 +14,7 @@ module SearchQuery
 
   module ClassMethods
 
-    def alert_criterias alert_options 
+    def alert_criterias alert_options
       keywords = alert_options[:keywords]
       alert_id = alert_options[:id]
       criterias = []
@@ -54,24 +54,33 @@ module SearchQuery
           }
       }
 
-      
-      dsl[:filter] = {
-                term: {
-                  alerted: options[:alerted]
-                }
-              }
+      unless options[:alerted].nil?
+        dsl[:filter] = {
+          term: {
+            alerted: options[:alerted]
+          }
+        }
+      end
+
+      unless options[:email_alerted].nil?
+        dsl[:filter] = {
+          term: {
+            email_alerted: options[:email_alerted]
+          }
+        }
+      end
 
       dsl = { query: {
                        filtered: dsl
                      }
             }
 
-      highlight_options = { 
-                            fragment_size: 180, 
+      highlight_options = {
+                            fragment_size: 180,
                             number_of_fragments: 2,
                           }
 
-      highlight = { 
+      highlight = {
         pre_tags: ["<em class='highlight'>"],
         post_tags: ["</em>"],
         fields: {
@@ -100,5 +109,4 @@ module SearchQuery
     end
 
   end
-
 end

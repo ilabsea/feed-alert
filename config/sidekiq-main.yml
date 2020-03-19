@@ -1,6 +1,4 @@
 :concurrency: 25
-development:
-  :pidfile: tmp/pids/sidekiq-main.pid
 
 production:
   :pidfile: ../../shared/tmp/pids/sidekiq-main.pid

@@ -15,3 +15,5 @@
 /config/application.yml
 /public/assets/*
 /spec/vcr/*
+
+app.env
