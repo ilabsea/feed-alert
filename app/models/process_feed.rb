@@ -28,12 +28,12 @@ class ProcessFeed
             if feed_entry.url != entry_attrs[:url]
               entry_attrs[:id] = feed_entry.id
               entry_attrs[:content] = ExtractContent.instance.fetch(entry_attrs[:url])
-              entry_attrs[:keywords] = alert.keywords.map(&:name)
+              entry_attrs[:keywords] = alert.keyword_sets.map(&:keyword).join(",").split(",")
               feed_entry = FeedEntry.create(entry_attrs)
             end
           else
             entry_attrs[:content] = ExtractContent.instance.fetch(entry_attrs[:url])
-            entry_attrs[:keywords] = alert.keywords.map(&:name)
+            entry_attrs[:keywords] = alert.keyword_sets.map(&:keyword).join(",").split(",")
             feed_entry = FeedEntry.create(entry_attrs)
           end
           sleep(ENV['SLEEP_BETWEEN_REQUEST_IN_SECOND'].to_i) if i < feed_jira.entries.length - 1
@@ -51,7 +51,6 @@ class ProcessFeed
       Rails.logger.info "Unexpected error : #{e.message},  alert: #{alert.name} with url: #{alert.url}"
       alert.mark_error("Unexpected error")
     end
-
   end
 
 end

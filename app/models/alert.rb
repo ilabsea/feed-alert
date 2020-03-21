@@ -18,6 +18,8 @@
 #  to_time              :string(255)
 #  project_id           :integer
 #  channel_id           :integer
+#  invalid_url          :integer          default(0)
+#  error_message        :string(255)
 #
 
 class Alert < ActiveRecord::Base
@@ -28,6 +30,9 @@ class Alert < ActiveRecord::Base
 
   has_many :alert_keywords, dependent: :destroy
   has_many :keywords, through: :alert_keywords
+
+  has_many :alert_keyword_sets, dependent: :destroy
+  has_many :keyword_sets, through: :alert_keyword_sets
 
   has_many :alert_places, dependent: :destroy
   has_many :places, through: :alert_places

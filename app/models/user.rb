@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
   has_many :channels
   has_many :group_messages
 
+  has_many :keyword_sets
+
   # password must be present within 6..72
   validates :password, presence: true, on: :create
   validates :password, length: { in: 6..72}, on: :create

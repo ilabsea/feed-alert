@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200302105526) do
+ActiveRecord::Schema.define(version: 20200306032001) do
 
   create_table "alert_groups", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 20200302105526) do
 
   add_index "alert_groups", ["alert_id"], name: "index_alert_groups_on_alert_id", using: :btree
   add_index "alert_groups", ["group_id"], name: "index_alert_groups_on_group_id", using: :btree
+
+  create_table "alert_keyword_sets", force: :cascade do |t|
+    t.integer  "alert_id",       limit: 4
+    t.integer  "keyword_set_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "alert_keyword_sets", ["alert_id"], name: "index_alert_keyword_sets_on_alert_id", using: :btree
+  add_index "alert_keyword_sets", ["keyword_set_id"], name: "index_alert_keyword_sets_on_keyword_set_id", using: :btree
 
   create_table "alert_keywords", force: :cascade do |t|
     t.integer  "alert_id",   limit: 4
@@ -167,6 +177,14 @@ ActiveRecord::Schema.define(version: 20200302105526) do
 
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
+  create_table "keyword_sets", force: :cascade do |t|
+    t.string   "name",       limit: 255,   null: false
+    t.text     "keyword",    limit: 65535, null: false
+    t.integer  "user_id",    limit: 4,     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "keywords", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -260,6 +278,8 @@ ActiveRecord::Schema.define(version: 20200302105526) do
 
   add_foreign_key "alert_groups", "alerts"
   add_foreign_key "alert_groups", "groups"
+  add_foreign_key "alert_keyword_sets", "alerts"
+  add_foreign_key "alert_keyword_sets", "keyword_sets"
   add_foreign_key "alert_keywords", "alerts"
   add_foreign_key "alert_keywords", "keywords"
   add_foreign_key "alert_places", "alerts"

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: group_messages
+#
+#  id              :integer          not null, primary key
+#  receiver_groups :text(65535)
+#  message         :text(65535)
+#  user_id         :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  email_alert     :boolean          default(FALSE)
+#  sms_alert       :boolean          default(FALSE)
+#  alert_type      :string(255)      default([])
+#
+
 class GroupMessage < ActiveRecord::Base
   belongs_to :user
 

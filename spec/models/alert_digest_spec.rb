@@ -5,9 +5,10 @@ RSpec.describe AlertDigest, type: :model do
   ActiveJob::Base.queue_adapter = :test
 
   let(:project) { create(:project) }
+  let!(:user) { create(:user) }
   let!(:alert) { create(:alert, project: project) }
-  let!(:keyword) { create(:keyword, name: 'instedd') }
-  let!(:alert_keyword) { create(:alert_keyword, alert_id: alert.id, keyword_id: keyword.id) }
+  let!(:keyword_set) { create(:keyword_set, keyword: 'instedd', user_id: user.id) }
+  let!(:alert_keyword_set) { create(:alert_keyword_set, alert_id: alert.id, keyword_set_id: keyword_set.id) }
   let(:email) { 'foo@example.com' }
 
   let!(:alert_digest) { AlertDigest.new(email, [alert.id]) }

@@ -16,7 +16,7 @@ class AlertsController < ApplicationController
     alert = Alert.find(params[:id])
     existing_keywords = alert.keywords.ids
 
-    keywords = Keyword.all
+    keywords = current_user.keyword_sets
     keywords = keywords.excludes(existing_keywords) if existing_keywords.length > 0
     keywords = keywords.from_query(params[:q]) if params[:q].present?
     render json: keywords

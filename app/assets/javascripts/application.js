@@ -23,6 +23,8 @@
 //= require bootstrap-switch
 //= require twitter/typeahead
 
+//= require tagify.min
+
 //= require shared/delete-bootstrap
 //= require shared/alert-animate
 //= require shared/hidden-content
@@ -51,7 +53,4 @@
 
 //= require project/sms_setting
 
-
-
-
-
+//= require keyword_sets/form

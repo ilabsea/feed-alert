@@ -45,7 +45,7 @@ gem 'sinatra', :require => nil
 gem 'sidekiq', '~> 3.5.4'
 gem "sidekiq-cron", "~> 0.3.0"
 
-gem 'roadie-rails'
+gem 'roadie-rails', '~> 1.1.0'
 gem 'nuntium_api', github: 'channainfo/nuntium-api-ruby', branch: 'encode_uri'
 
 gem 'whenever', :require => false
@@ -55,7 +55,7 @@ gem 'elasticsearch-model', '~> 0.1.9'
 gem 'elasticsearch-rails', '~> 0.1.9'
 gem 'elasticsearch', '~> 1.1.3'
 
-gem 'annotate'
+gem 'annotate', '~> 2.7.0'
 gem 'foreman'
 gem 'newrelic_rpm'
 
@@ -93,6 +93,7 @@ group :development, :test do
   gem 'ffaker'
   gem 'rspec-rails', '~> 3.9.0'
   gem 'spring-commands-rspec'
+  gem 'guard-rspec', require: false
 end
 
 group :production do
