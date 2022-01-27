@@ -42,7 +42,7 @@ gem 'rails4-autocomplete', '~> 1.1.1'
 gem 'feedjira'
 gem 'sinatra', :require => nil
 
-gem 'sidekiq', '~> 3.5.4'
+gem 'sidekiq', '~> 5.2.8'
 gem "sidekiq-cron", "~> 0.3.0"
 
 gem 'roadie-rails', '~> 1.1.0'
